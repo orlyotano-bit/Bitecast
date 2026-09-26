@@ -1,0 +1,53 @@
+name: BiteCast Keys scan
+
+# Runs in the cloud on a schedule — your PC can be off.
+on:
+  schedule:
+    # times are UTC. ~6am, 12pm, 6pm Eastern (EDT). Adjust as you like.
+    - cron: "0 10 * * *"
+    - cron: "0 16 * * *"
+    - cron: "0 22 * * *"
+  workflow_dispatch:          # lets you run it manually from the Actions tab
+    inputs:
+      mode:
+        description: "scan = full analysis · ping = just prove the phone gets a message"
+        type: choice
+        default: scan
+        options: [scan, ping]
+
+permissions:
+  contents: write          # so it can commit hotspots.geojson back to the repo
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      # A green run means "the phone got the report". If the push fails, the
+      # analyzer exits 2 and this step (and the run) shows RED on the Actions tab.
+      - name: Run analyzer
+        id: analyzer
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}   # set this in repo Settings → Secrets and variables → Actions
+          BITECAST_MODE: ${{ inputs.mode || 'scan' }}
+        run: python analyze.py
+
+      # Runs even when the push failed, so the map data still lands in the repo.
+      - name: Publish hotspots.geojson
+        if: ${{ always() && steps.analyzer.outcome != 'skipped' }}
+        run: |
+          if [ -f hotspots.geojson ]; then
+            git config user.name  "bitecast-bot"
+            git config user.email "bot@users.noreply.github.com"
+            git add hotspots.geojson structure.geojson 2>/dev/null || git add hotspots.geojson
+            git commit -m "update hotspots $(date -u +%FT%TZ)" || echo "no changes"
+            git push || echo "push skipped"
+          fi
