@@ -1,0 +1,1126 @@
+{
+ "type": "FeatureCollection",
+ "note": "FWC artificial reefs + NOAA AWOIS wrecks. Display/planning only \u2014 NOT for navigation.",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.382,
+     24.98967
+    ]
+   },
+   "properties": {
+    "name": "Duane",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.1183,
+     25.38477
+    ]
+   },
+   "properties": {
+    "name": "Scott Mason-Chaite",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.15983,
+     24.58283
+    ]
+   },
+   "properties": {
+    "name": "Seven Mile Bridge Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.0839,
+     25.53198
+    ]
+   },
+   "properties": {
+    "name": "Pioneer One",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.32365,
+     24.54182
+    ]
+   },
+   "properties": {
+    "name": "Big Pine Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.13038,
+     25.36712
+    ]
+   },
+   "properties": {
+    "name": "Hugo's April Fool",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.5829,
+     24.44903
+    ]
+   },
+   "properties": {
+    "name": "USS Saufley (DD-465)",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.5523,
+     24.48448
+    ]
+   },
+   "properties": {
+    "name": "Wilkes Barre-Stern Section",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.70214,
+     24.88529
+    ]
+   },
+   "properties": {
+    "name": "Patch Reef #1",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.82753,
+     24.73117
+    ]
+   },
+   "properties": {
+    "name": "Long Key Reef #3",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.57017,
+     24.86967
+    ]
+   },
+   "properties": {
+    "name": "Eagle",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.118,
+     25.416
+    ]
+   },
+   "properties": {
+    "name": "Almirante",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.09195,
+     25.48495
+    ]
+   },
+   "properties": {
+    "name": "Turbine Stacks",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.73647,
+     24.45995
+    ]
+   },
+   "properties": {
+    "name": "Hoyt Vandenberg",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.87717,
+     24.69417
+    ]
+   },
+   "properties": {
+    "name": "Key West Gulfside Reef #1",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.16667,
+     24.60555
+    ]
+   },
+   "properties": {
+    "name": "Seven Mile Bridge Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.5514,
+     24.84125
+    ]
+   },
+   "properties": {
+    "name": "Islamorada Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.82778,
+     24.73167
+    ]
+   },
+   "properties": {
+    "name": "Long Key Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.32497,
+     24.55027
+    ]
+   },
+   "properties": {
+    "name": "Big Pine Key Site",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.87817,
+     24.692
+    ]
+   },
+   "properties": {
+    "name": "Key West Gulfside Reef #4",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.82847,
+     24.72688
+    ]
+   },
+   "properties": {
+    "name": "Long Key Reef #2",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.56833,
+     24.86167
+    ]
+   },
+   "properties": {
+    "name": "Alexander Barge",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.13135,
+     25.36772
+    ]
+   },
+   "properties": {
+    "name": "Doc De Milly",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.77083,
+     24.4542
+    ]
+   },
+   "properties": {
+    "name": "Key West Tournament Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.46532,
+     24.55203
+    ]
+   },
+   "properties": {
+    "name": "American Shoal Reef #1",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.55115,
+     24.84195
+    ]
+   },
+   "properties": {
+    "name": "Islamorada Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.8185,
+     24.75684
+    ]
+   },
+   "properties": {
+    "name": "Long Key Viaduct",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.15167,
+     25.29445
+    ]
+   },
+   "properties": {
+    "name": "Alva Chapman Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.86667,
+     24.455
+    ]
+   },
+   "properties": {
+    "name": "Stargazer Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.32915,
+     24.55093
+    ]
+   },
+   "properties": {
+    "name": "Big Pine Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.08588,
+     25.5507
+    ]
+   },
+   "properties": {
+    "name": "Railroad Barge",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.82648,
+     24.73353
+    ]
+   },
+   "properties": {
+    "name": "Long Key Reef #5",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.12693,
+     25.3675
+    ]
+   },
+   "properties": {
+    "name": "Jet Fighters",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.28967,
+     24.59577
+    ]
+   },
+   "properties": {
+    "name": "Bahia Honda  Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.87682,
+     24.69068
+    ]
+   },
+   "properties": {
+    "name": "Key West Gulfside #2",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.96312,
+     24.65083
+    ]
+   },
+   "properties": {
+    "name": "Marathon Reef Site",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.15807,
+     24.58292
+    ]
+   },
+   "properties": {
+    "name": "Seven Mile Bridge Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.13022,
+     25.36888
+    ]
+   },
+   "properties": {
+    "name": "Berry Patch",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.75973,
+     24.42788
+    ]
+   },
+   "properties": {
+    "name": "Key West Tournament Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.46147,
+     24.53068
+    ]
+   },
+   "properties": {
+    "name": "Adolphus Busch Sr",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.55337,
+     24.4849
+    ]
+   },
+   "properties": {
+    "name": "Wilkes Barre-Bow Section",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.8289,
+     24.72668
+    ]
+   },
+   "properties": {
+    "name": "Long Key Reef #1",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.09152,
+     25.4846
+    ]
+   },
+   "properties": {
+    "name": "Turbine Stacks",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.31083,
+     25.06667
+    ]
+   },
+   "properties": {
+    "name": "Spiegel Grove",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.87917,
+     24.695
+    ]
+   },
+   "properties": {
+    "name": "Key West Gulfside Reef #5",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.76878,
+     24.43687
+    ]
+   },
+   "properties": {
+    "name": "USS Curb",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.09052,
+     25.56662
+    ]
+   },
+   "properties": {
+    "name": "Blue Fire",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.95752,
+     24.64102
+    ]
+   },
+   "properties": {
+    "name": "Marathon Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.82778,
+     24.73175
+    ]
+   },
+   "properties": {
+    "name": "Long Key Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.08738,
+     25.52982
+    ]
+   },
+   "properties": {
+    "name": "Sir Scott",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.5514,
+     24.8412
+    ]
+   },
+   "properties": {
+    "name": "Islamorada Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.55958,
+     24.83887
+    ]
+   },
+   "properties": {
+    "name": "Islamorada Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.894,
+     24.68767
+    ]
+   },
+   "properties": {
+    "name": "Key West Gulfside Reef #3",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.95925,
+     24.6398
+    ]
+   },
+   "properties": {
+    "name": "Marathon Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.46697,
+     24.55198
+    ]
+   },
+   "properties": {
+    "name": "American Shoal Reef #3",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.50887,
+     24.92325
+    ]
+   },
+   "properties": {
+    "name": "Davis Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -82.03989,
+     24.42035
+    ]
+   },
+   "properties": {
+    "name": "USS S-16Sub(SS-121)",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.73783,
+     24.46417
+    ]
+   },
+   "properties": {
+    "name": "Joe's Tug",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.70134,
+     24.8845
+    ]
+   },
+   "properties": {
+    "name": "Patch Reef #2",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.82925,
+     24.73377
+    ]
+   },
+   "properties": {
+    "name": "Long Key Reef #4",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.46667,
+     24.55145
+    ]
+   },
+   "properties": {
+    "name": "American Shoal Reef #2",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.09233,
+     25.38752
+    ]
+   },
+   "properties": {
+    "name": "Santa Rita",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.77083,
+     24.45417
+    ]
+   },
+   "properties": {
+    "name": "Key West Tournament Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.82642,
+     24.7365
+    ]
+   },
+   "properties": {
+    "name": "Long Key Reef #6",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.39638,
+     25.02193
+    ]
+   },
+   "properties": {
+    "name": "Wolfe Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.2907,
+     24.59592
+    ]
+   },
+   "properties": {
+    "name": "Bahia Honda  Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.55702,
+     24.83845
+    ]
+   },
+   "properties": {
+    "name": "Islamorada Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.70034,
+     24.88384
+    ]
+   },
+   "properties": {
+    "name": "Patch Reef #3",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.76633,
+     24.4535
+    ]
+   },
+   "properties": {
+    "name": "Cayman Salvage Master",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.965,
+     24.658
+    ]
+   },
+   "properties": {
+    "name": "Thunderbolt",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.1191,
+     25.41292
+    ]
+   },
+   "properties": {
+    "name": "Belcher Barge",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.50887,
+     24.92328
+    ]
+   },
+   "properties": {
+    "name": "Davis Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.83053,
+     24.7313
+    ]
+   },
+   "properties": {
+    "name": "Long Key Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.3795,
+     24.99517
+    ]
+   },
+   "properties": {
+    "name": "Bibb",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.5537,
+     24.459
+    ]
+   },
+   "properties": {
+    "name": "USS Fred T Berry (DD-858)",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.3255,
+     24.54487
+    ]
+   },
+   "properties": {
+    "name": "Big Pine Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.09065,
+     25.48693
+    ]
+   },
+   "properties": {
+    "name": "Exhaust Stacks",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.60107,
+     24.46013
+    ]
+   },
+   "properties": {
+    "name": "USS Kendrick (DD-612)",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.15598,
+     24.58367
+    ]
+   },
+   "properties": {
+    "name": "Seven Mile Bridge Reef",
+    "kind": "reef"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.7709,
+     24.92355
+    ]
+   },
+   "properties": {
+    "name": "Gunbor Reef",
+    "kind": "reef"
+   }
+  }
+ ]
+}
