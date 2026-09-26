@@ -27,7 +27,7 @@ planning aid, not legal advice. Always confirm current rules in the FWC
 "Fish Rules" app and at myfwc.com before fishing, and respect every closure.
 """
 
-import os, sys, json, math, datetime, urllib.parse
+import os, re, sys, json, math, datetime, urllib.parse
 import numpy as np
 import requests
 
@@ -499,6 +499,15 @@ def write_structure_geojson(points):
 NTFY_URL = os.environ.get("NTFY_URL", "https://ntfy.sh")   # override for a self-hosted ntfy
 NTFY_MAX_BYTES = 3900   # ntfy turns bodies over 4,096 bytes into a .txt attachment; stay under it
 _PRIORITY = {"min": 1, "low": 2, "default": 3, "high": 4, "max": 5, "urgent": 5}
+TOPIC_RE = re.compile(r"^[-_A-Za-z0-9]{1,64}$")   # ntfy's own rule for topic names
+
+def _clean_topic(raw):
+    """Accept the topic as typed, or as pasted from the app: 'ntfy.sh/topic',
+    'https://ntfy.sh/topic', with stray spaces or a trailing slash."""
+    t = (raw or "").strip()
+    if "/" in t:
+        t = t.rstrip("/").rsplit("/", 1)[-1].strip()
+    return t
 
 def _fit_ntfy(body):
     """Trim the body at a line boundary so the phone shows text, not an attachment."""
@@ -519,10 +528,16 @@ def push(body, title="BiteCast", tags="fish", priority="default"):
     characters like '—' and '•' are fine. (The old header-based call died on the
     em dash in the title before the request ever left the machine, and the error
     was swallowed, so the run looked green while the phone got nothing.)"""
-    topic = CONFIG["ntfy_topic"]
+    topic = _clean_topic(CONFIG["ntfy_topic"])
     if not topic or "CHANGE-ME" in topic:
         print("!! NTFY_TOPIC is not set (repo Settings → Secrets → Actions). Nothing was pushed.\n"
               "   Report that would have been sent:\n" + body)
+        return False
+    if not TOPIC_RE.match(topic):
+        bad = sorted({c for c in topic if not re.match(r"[-_A-Za-z0-9]", c)})
+        print(f"!! NTFY_TOPIC is not a valid ntfy topic ({len(topic)} chars, contains {bad}). "
+              "Allowed: letters, digits, '-' and '_', up to 64 chars. Put ONLY the topic word in the "
+              "secret, not the URL. Nothing was pushed.")
         return False
     payload = {
         "topic": topic,
@@ -543,7 +558,7 @@ def push(body, title="BiteCast", tags="fish", priority="default"):
         mid = r.json().get("id", "?")
     except ValueError:
         mid = "?"
-    print(f"Pushed to ntfy (topic {topic}, message id {mid}).")
+    print(f"Pushed to ntfy (message id {mid}).")   # topic deliberately not echoed into the public log
     return True
 
 def ping():
