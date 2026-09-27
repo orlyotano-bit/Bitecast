@@ -16,15 +16,15 @@ on:
         options: [scan, ping]
 
 permissions:
-  contents: write          # so it can commit hotspots.geojson back to the repo
+  contents: write          # so it can commit the result files back to the repo
 
 jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5          # v5+ runs on Node 24 (Node 20 left the runners 2026-09-23)
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6      # v6+ runs on Node 24
         with:
           python-version: "3.12"
 
@@ -41,13 +41,21 @@ jobs:
         run: python analyze.py
 
       # Runs even when the push failed, so the map data still lands in the repo.
-      - name: Publish hotspots.geojson
+      # Pulls first: if a file was uploaded to the repo while the scan ran, a plain push
+      # would be rejected and the fresh results silently lost.
+      - name: Publish result files
         if: ${{ always() && steps.analyzer.outcome != 'skipped' }}
         run: |
-          if [ -f hotspots.geojson ]; then
-            git config user.name  "bitecast-bot"
-            git config user.email "bot@users.noreply.github.com"
-            git add hotspots.geojson structure.geojson 2>/dev/null || git add hotspots.geojson
-            git commit -m "update hotspots $(date -u +%FT%TZ)" || echo "no changes"
-            git push || echo "push skipped"
+          git config user.name  "bitecast-bot"
+          git config user.email "bot@users.noreply.github.com"
+          added=0
+          for f in hotspots.geojson structure.geojson satgrid.json; do
+            if [ -f "$f" ]; then git add "$f" && added=1; fi
+          done
+          if [ "$added" = "1" ] && ! git diff --cached --quiet; then
+            git commit -m "update scan results $(date -u +%FT%TZ)"
+            git pull --rebase --autostash origin main || echo "rebase skipped"
+            git push || echo "push failed — results not published this run"
+          else
+            echo "no result changes to publish"
           fi
