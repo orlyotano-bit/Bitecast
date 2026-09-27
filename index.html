@@ -4,6 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>BiteCast — Fishing Conditions & Bite Forecast</title>
+<!-- Home-screen app (iPhone "Add to Home Screen" / Android install) -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BiteCast">
+<meta name="application-name" content="BiteCast">
+<meta name="theme-color" content="#082631">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -49,7 +59,8 @@
     content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.04; mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   }
-  .wrap{position:relative; z-index:1; max-width:760px; margin:0 auto; padding:22px 16px 60px;}
+  .wrap{position:relative; z-index:1; max-width:760px; margin:0 auto; padding:22px 16px 60px;
+    padding-top:calc(22px + env(safe-area-inset-top,0px)); padding-bottom:calc(60px + env(safe-area-inset-bottom,0px));}
 
   /* ---------- Header ---------- */
   header.top{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:18px;}
@@ -232,7 +243,7 @@
   .backdrop{position:fixed;inset:0;background:rgba(3,12,16,.74);backdrop-filter:blur(5px);z-index:80;display:flex;align-items:flex-end;justify-content:center;}
   @media(min-width:600px){.backdrop{align-items:center;padding:20px;}}
   .sheet{width:100%;max-width:520px;max-height:92vh;overflow-y:auto;background:var(--panel-solid);border:1px solid var(--hair-strong);
-    border-radius:24px 24px 0 0;box-shadow:0 -20px 60px -20px rgba(0,0,0,.8);padding:22px 18px 26px;}
+    border-radius:24px 24px 0 0;box-shadow:0 -20px 60px -20px rgba(0,0,0,.8);padding:22px 18px calc(26px + env(safe-area-inset-bottom,0px));}
   @media(min-width:600px){.sheet{border-radius:22px;}}
   .sheet h3{font-family:var(--serif);font-weight:600;font-size:1.34rem;margin:0 0 3px;}
   .sheet .desc{color:var(--muted);font-size:.85rem;margin:0 0 18px;line-height:1.5;}
@@ -649,7 +660,7 @@ let CURRENT_SNAPSHOT=null;    // conditions snapshot at render time, for the cat
 function toast(msg, ms=6000){
   let t=document.getElementById("bcToast");
   if(!t){ t=document.createElement("div"); t.id="bcToast";
-    t.style.cssText="position:fixed;left:50%;bottom:22px;transform:translateX(-50%);max-width:92vw;background:#1c2f38;color:#eafff8;border:1px solid #f4c87a;border-radius:12px;padding:10px 14px;font:14px system-ui,sans-serif;z-index:9999;box-shadow:0 6px 24px rgba(0,0,0,.5)";
+    t.style.cssText="position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:92vw;background:#1c2f38;color:#eafff8;border:1px solid #f4c87a;border-radius:12px;padding:10px 14px;font:14px system-ui,sans-serif;z-index:9999;box-shadow:0 6px 24px rgba(0,0,0,.5)";
     document.body.appendChild(t); }
   t.textContent=msg; t.style.display="block"; clearTimeout(t._h); t._h=setTimeout(()=>{ t.style.display="none"; }, ms);
 }
@@ -1568,8 +1579,16 @@ $("#refresh").addEventListener("click",()=>{
 });
 
 /* ============ settings panel ============ */
+/* Home-screen install state: iOS exposes navigator.standalone, everyone else the display-mode query. */
+function installState(){
+  const standalone = window.navigator.standalone===true || (window.matchMedia && matchMedia("(display-mode: standalone)").matches);
+  const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+  if(standalone) return " Installed on your home screen — the browser’s 7-day clean-up can’t touch it.";
+  if(ios) return " Tip: Share → Add to Home Screen. The installed copy opens full-screen and keeps its data for good.";
+  return "";
+}
 function fillSettingsUI(){
-  const sn=$("#storeNote"); if(sn) sn.textContent="Settings, saved spot, catch log and track record are stored on "+store.where()+". Use the log’s Backup button before switching devices.";
+  const sn=$("#storeNote"); if(sn) sn.textContent="Settings, saved spot, catch log and track record are stored on "+store.where()+". Use the log’s Backup button before switching devices."+installState();
   $("#s_alert").value=SETTINGS.alertScore; $("#v_alert").textContent=SETTINGS.alertScore;
   $("#s_windMax").value=SETTINGS.windMax; $("#v_windMax").textContent=SETTINGS.windMax+" mph";
   $("#s_windBad").value=SETTINGS.windBad; $("#v_windBad").textContent=SETTINGS.windBad+" mph";
