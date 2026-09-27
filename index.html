@@ -1598,7 +1598,9 @@ function initMap(){
   if(typeof L==="undefined"){ $("#map").innerHTML='<div class="mapnote">Map library didn’t load in this view. It works when the app is saved or hosted.</div>'; return; }
   const start = (CURRENT&&CURRENT.latitude!=null)?[CURRENT.latitude,CURRENT.longitude]:[41.0537,-71.959];
   const map=L.map("map",{zoomControl:true,attributionControl:true}).setView(start,10);
-  const dark=L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{maxZoom:19,subdomains:"abcd",attribution:"© OpenStreetMap, © CARTO"});
+  // Dark base = Esri Dark Gray Canvas + its place-name labels (CARTO's dark tiles now demand an API key — #17).
+  const dark=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",{maxNativeZoom:16,maxZoom:19,attribution:"Dark basemap © Esri, HERE, Garmin, © OpenStreetMap contributors"});
+  const darkRef=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",{maxNativeZoom:16,maxZoom:19,opacity:0.95});
   const sat =L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Imagery © Esri"});
   const depth=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}",{maxNativeZoom:13,maxZoom:19,attribution:"Ocean basemap © Esri, GEBCO, NOAA"});
   const depthRef=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}",{maxNativeZoom:13,maxZoom:19,opacity:0.9});
@@ -1606,8 +1608,8 @@ function initMap(){
   const gd=new Date(Date.now()-2*864e5).toISOString().slice(0,10);
   const chl=L.tileLayer(`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_Chlorophyll_A/default/${gd}/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png`,{maxNativeZoom:6,maxZoom:19,opacity:0.7,attribution:"Chlorophyll © NASA GIBS"});
   const sst=L.tileLayer(`https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/GHRSST_L4_MUR_Sea_Surface_Temperature/default/${gd}/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png`,{maxNativeZoom:6,maxZoom:19,opacity:0.7,attribution:"SST © NASA GIBS"});
-  dark.addTo(map);
-  mapState.map=map; mapState.layers={dark,sat,depth,depthRef,sea,chl,sst}; mapState.baseName="dark";
+  dark.addTo(map); darkRef.addTo(map);
+  mapState.map=map; mapState.layers={dark,darkRef,sat,depth,depthRef,sea,chl,sst}; mapState.baseName="dark";
   if(CURRENT&&CURRENT.latitude!=null) placeMarker(CURRENT.latitude,CURRENT.longitude);
   map.on("click",e=>setSpotFromMap(e.latlng.lat,e.latlng.lng));
 }
@@ -1621,10 +1623,10 @@ function restackOverlays(){
 function swapBase(which){
   if(!mapState.map) return;
   const m=mapState.map, Y=mapState.layers;
-  [Y.dark,Y.sat,Y.depth,Y.depthRef].forEach(l=>{ if(m.hasLayer(l)) m.removeLayer(l); });
+  [Y.dark,Y.darkRef,Y.sat,Y.depth,Y.depthRef].forEach(l=>{ if(m.hasLayer(l)) m.removeLayer(l); });
   if(which==="sat") Y.sat.addTo(m);
   else if(which==="depth"){ Y.depth.addTo(m); Y.depthRef.addTo(m); }
-  else Y.dark.addTo(m);
+  else { Y.dark.addTo(m); Y.darkRef.addTo(m); }
   mapState.baseName=which;
   $("#lyrDark").classList.toggle("active",which==="dark");
   $("#lyrSat").classList.toggle("active",which==="sat");
