@@ -602,6 +602,7 @@ def analyze():
     }
     write_geojson(spots[:40], meta)
     write_structure_geojson(structures)
+    write_satgrid(lats, lons, C, sst_f, meta)
     return report_and_push(openable, blocked, sp, in_season, moon_ok, p, month, regime)
 
 # ============================ OUTPUT ============================
@@ -618,6 +619,25 @@ def write_geojson(spots, meta=None):
     with open("hotspots.geojson", "w") as f:
         json.dump(fc, f, indent=1)
     print(f"Wrote hotspots.geojson ({len(spots)} features)")
+
+def write_satgrid(lats, lons, chl, sst_f, meta):
+    """The chlorophyll + sea-temperature values on the analysis grid, for the web app's
+    condition cards. Browsers can't read NOAA's ERDDAP directly (no CORS header), so the
+    app looks up its spot in this file instead, which lives next to it on GitHub Pages."""
+    def rows(a, nd):
+        return [[None if not np.isfinite(v) else round(float(v), nd) for v in row] for row in a]
+    out = {
+        "generated_at": meta.get("generated_at"),
+        "chl_source": meta["chl"]["source"], "chl_image_date": meta["chl"]["image_date"],
+        "chl_composite_days": meta["chl"].get("composite_days", 1), "chl_units": "mg m-3",
+        "sst_source": meta["sst"]["source"], "sst_image_date": meta["sst"]["image_date"], "sst_units": "F",
+        "cell_deg": round(float(abs(lats[1] - lats[0])), 4) if len(lats) > 1 else None,
+        "lats": [round(float(v), 4) for v in lats], "lons": [round(float(v), 4) for v in lons],
+        "chl": rows(chl, 3), "sst_f": rows(sst_f, 1),
+    }
+    with open("satgrid.json", "w") as f:
+        json.dump(out, f, separators=(",", ":"))
+    print(f"Wrote satgrid.json ({len(lats)}x{len(lons)} cells)")
 
 def write_structure_geojson(points):
     fc = {"type": "FeatureCollection",

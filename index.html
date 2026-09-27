@@ -580,7 +580,7 @@
   <footer>
     <div class="status" id="status"></div>
     <div class="confline" id="confLine"></div>
-    <b>Sources:</b> Weather, water temp, waves &amp; ocean current from Open-Meteo · Tides from NOAA CO-OPS (US) or modeled sea level · Chlorophyll-a and sea-temperature grids from NOAA CoastWatch (VIIRS / blended-analysis satellite feeds, newest fresh source used and named) · Moon phase computed locally. Waves, water, current, tide &amp; chlorophyll are marine/satellite data and cover coastal &amp; ocean areas (satellite readings can have gaps under cloud cover). The <b>bite score</b> is a heuristic guide based on pressure, wind, light, tide movement, sea state, water productivity and moon — not a guarantee. Always check official marine forecasts before heading out.
+    <b>Sources:</b> Weather, water temp, waves &amp; ocean current from Open-Meteo · Tides from NOAA CO-OPS (US) or modeled sea level · Chlorophyll-a, sea-temperature grids and Keys hotspots from BiteCast's own cloud scan (NOAA CoastWatch satellite feeds, three times a day; each reading names its source and image date) · Moon phase computed locally. Waves, water, current, tide &amp; chlorophyll are marine/satellite data and cover coastal &amp; ocean areas (satellite readings can have gaps under cloud cover). The <b>bite score</b> is a heuristic guide based on pressure, wind, light, tide movement, sea state, water productivity and moon — not a guarantee. Always check official marine forecasts before heading out.
   </footer>
 </div>
 
@@ -752,78 +752,42 @@ async function getMarine(la,lo){
   return fetchJSON(tryUrl("sea_surface_temperature,ocean_current_velocity,ocean_current_direction,wave_height")); // retry w/o sea level
 }
 
-/* ============ satellite sources (NOAA CoastWatch ERDDAP) — LADDERS ============
-   The MODIS-Aqua feeds this app was born on stopped updating in 2022. A fixed dataset id
-   is a trap, so both the chlorophyll card and the edge finder walk a ladder: try sources in
-   order of quality, read the newest image's date, refuse anything older than maxAgeDays,
-   and say which one was used. Mirrors SST_SOURCES / CHL_SOURCES in analyze.py. */
-const ERDDAP_PFEG="https://coastwatch.pfeg.noaa.gov/erddap", ERDDAP_CW="https://coastwatch.noaa.gov/erddap";
-const SST_SOURCES=[
-  {label:"MUR 1 km",            server:ERDDAP_PFEG, dataset:"jplMURSST41",            v:"analysed_sst", days:1, maxAgeDays:4},
-  {label:"Geo-Polar 5 km",      server:ERDDAP_PFEG, dataset:"nesdisGeoPolarSSTN5NRT", v:"analysed_sst", days:1, maxAgeDays:4},
-  {label:"Coral Reef Watch 5 km",server:ERDDAP_PFEG, dataset:"NOAA_DHW",              v:"CRW_SST",      days:1, maxAgeDays:7}
-];
-const CHL_SOURCES=[
-  {label:"VIIRS NOAA-20 4 km",         server:ERDDAP_CW,   dataset:"noaacwN20VIIRSchlaDaily",  v:"chlor_a", days:7, maxAgeDays:5},
-  {label:"VIIRS S-NPP 4 km",           server:ERDDAP_CW,   dataset:"noaacwNPPVIIRSchlaDaily",  v:"chlor_a", days:7, maxAgeDays:5},
-  {label:"VIIRS NOAA-20 4 km",         server:ERDDAP_PFEG, dataset:"nesdisVHNnoaa20chlaDaily", v:"chlor_a", days:7, maxAgeDays:5},
-  {label:"VIIRS S-NPP 4 km",           server:ERDDAP_PFEG, dataset:"nesdisVHNchlaDaily",       v:"chlor_a", days:7, maxAgeDays:5},
-  {label:"VIIRS gap-filled 9 km",      server:ERDDAP_PFEG, dataset:"nesdisVHNnoaaSNPPnoaa20NRTchlaGapfilledDaily", v:"chlor_a", days:1, maxAgeDays:5}
-];
-const timeSel = s => s.days>1 ? `[last-${s.days-1}:last]` : `[(last)]`;
-const ageDays = iso => { const t=Date.parse(iso); return isNaN(t)? null : (Date.now()-t)/864e5; };
-// ERDDAP rejects a request whose bracket count doesn't match the variable's dimensions, and the
-// VIIRS chlorophyll products carry a dummy "altitude" axis the old MODIS ones didn't. So read each
-// dataset's structure (.dds) once and build the request to match: extra axes take index 0.
-const DIMS_CACHE=new Map();
-async function datasetDims(s){
-  const key=s.server+"|"+s.dataset+"|"+s.v;
-  if(DIMS_CACHE.has(key)) return DIMS_CACHE.get(key);
-  let dims=null;
-  try{
-    const r=await fetch(`${s.server}/griddap/${s.dataset}.dds`);
-    if(r.ok){ const txt=await r.text(); const m=txt.match(new RegExp("\\b"+s.v+"((?:\\[\\w+ = \\d+\\])+)"));
-      if(m) dims=[...m[1].matchAll(/\[(\w+) = \d+\]/g)].map(x=>x[1]); }
-  }catch(e){}
-  DIMS_CACHE.set(key,dims); return dims;
+/* ============ satellite data — from BiteCast's own cloud scan ============
+   Browsers can't read NOAA's ERDDAP directly (no CORS header), and a phone shouldn't be
+   crunching satellite grids anyway. The analyzer (analyze.py, GitHub Actions, 3x/day) walks
+   a ladder of NOAA feeds with freshness checks and publishes its results NEXT TO THIS PAGE:
+     hotspots.geojson  — the fused edge/fish-suitability hotspots (+ protected-zone flags)
+     structure.geojson — FWC reefs + wrecks
+     satgrid.json      — chlorophyll + sea temperature on the analysis grid (for the cards)
+   Each file says when it was made and which satellite images fed it. */
+const SCAN={};                                          // per-session cache of the published files
+const scanBust=()=>`?v=${Math.floor(Date.now()/6e5)}`;  // new URL every 10 min (GitHub Pages caches ~10 min)
+async function loadScanFile(name){
+  if(SCAN[name]!==undefined) return SCAN[name];
+  SCAN[name]=await fetchJSON(name+scanBust());          // relative: same folder as this page
+  return SCAN[name];
 }
-async function buildSel(s, latSel, lonSel){
-  const dims=(await datasetDims(s))||["time","latitude","longitude"];
-  return s.v+dims.map(d=>{ const dl=d.toLowerCase();
-    if(dl==="time") return timeSel(s);
-    if(dl==="latitude"||dl==="lat") return latSel;
-    if(dl==="longitude"||dl==="lon") return lonSel;
-    return "[0]"; }).join("");
-}
-async function fetchGridJSON(s, latSel, lonSel){
-  // one request; if the server dislikes the mixed index/value form for the extra axis, retry with the value form
-  const sel=await buildSel(s, latSel, lonSel);
-  let j=await fetchJSON(`${s.server}/griddap/${s.dataset}.json?${sel}`);
-  if(!j && sel.includes("[0]")) j=await fetchJSON(`${s.server}/griddap/${s.dataset}.json?${sel.replace("[0]","[(0.0)]")}`);
-  return j;
-}
+const ageDays = iso => { const t=Date.parse(/^\d{4}-\d\d-\d\d$/.test(iso||"")? iso+"T12:00:00Z" : iso); return isNaN(t)? null : (Date.now()-t)/864e5; };
+function nearestIdx(sorted, v){ let best=0,bd=Infinity; for(let i=0;i<sorted.length;i++){ const d=Math.abs(sorted[i]-v); if(d<bd){bd=d;best=i;} } return best; }
 
 async function getChlorophyll(la,lo){
-  // Nearest grid cell, newest non-null reading within the source's window; the source is
-  // skipped when its newest image is older than maxAgeDays. Returns {value,time,label,age}.
-  for(const s of CHL_SOURCES){
-    const j=await fetchGridJSON(s, `[(${la})]`, `[(${lo})]`);
-    const t=j&&j.table; const rows=t&&t.rows;
-    if(!rows||!rows.length) continue;
-    const ct=t.columnNames.indexOf("time"), cv=t.columnNames.indexOf(s.v);
-    if(ct<0||cv<0) continue;
-    const newest=rows.reduce((m,r)=>(!m||r[ct]>m)?r[ct]:m,null);
-    const age=ageDays(newest);
-    if(age==null||age>s.maxAgeDays) continue;          // stale feed — next rung
-    const sorted=[...rows].sort((a,b)=>a[ct]<b[ct]?1:-1); // newest first
-    for(const r of sorted){
-      const v=r[cv];
-      if(v!=null && !isNaN(v) && v>0) return {value:+v, time:r[ct], label:s.label, age:ageDays(r[ct])};
-    }
-    // feed is fresh but this cell was cloudy all week → try the next rung (coarser / gap-filled)
+  // Nearest cell of the scan's grid; if that cell is blank (cloud/land) look one cell around.
+  // Spots outside the scanned box (the Keys) get no reading — that's honest, not a fault.
+  const g=await loadScanFile("satgrid.json");
+  if(!g||!g.lats||!g.lons||!g.chl) return null;
+  const step=(g.cell_deg||0.05)*1.01;
+  const i=nearestIdx(g.lats,la), j=nearestIdx(g.lons,lo);
+  if(Math.abs(g.lats[i]-la)>step||Math.abs(g.lons[j]-lo)>step) return null;
+  let v=g.chl[i][j];
+  if(v==null){
+    const around=[];
+    for(let di=-1;di<=1;di++) for(let dj=-1;dj<=1;dj++){ const r=g.chl[i+di]; const x=r&&r[j+dj]; if(x!=null) around.push(x); }
+    if(around.length){ around.sort((a,b)=>a-b); v=around[Math.floor(around.length/2)]; }
   }
-  return null;
+  if(v==null||!(v>0)) return null;
+  return {value:+v, time:g.chl_image_date, label:`${g.chl_source} · cloud scan`, age:ageDays(g.chl_image_date), scanned:g.generated_at};
 }
+
 function chlInfo(mg){
   if(mg<0.1)  return {label:"Clear blue water",  color:"#57c4ff", note:"Low plankton — clean offshore water. Hunt the temp/color breaks for pelagics."};
   if(mg<0.3)  return {label:"Clean blue-green",  color:"#36d4c4", note:"Light productivity — often the prime edge where bait gathers."};
@@ -832,7 +796,7 @@ function chlInfo(mg){
   return       {label:"Turbid / bloom",          color:"#e8b24d", note:"Very murky or algal bloom — sight-feeders struggle."};
 }
 function fmtDay(iso){
-  const d=new Date(iso); if(isNaN(d)) return "";
+  const d=new Date(/^\d{4}-\d\d-\d\d$/.test(iso||"")? iso+"T12:00:00Z" : iso); if(isNaN(d)) return "";
   return d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}); // year shown — a 2022 image must never pass for this year's
 }
 function waveState(ft, period){
@@ -1720,113 +1684,80 @@ $("#lyrChl").addEventListener("click",()=>toggleOverlay("Chl", mapState.layers.c
 $("#lyrSst").addEventListener("click",()=>toggleOverlay("Sst", mapState.layers.sst));
 $("#lyrRadar").addEventListener("click",e=>toggleRadar(e.currentTarget));
 
-/* ============ edge / front finder (Florida Keys) ============ */
-const KEYS_BOX={latMin:24.3,latMax:25.6,lonMin:-82.4,lonMax:-80.0};
+/* ============ edge / hotspot finder (Florida Keys) — reads the cloud scan ============ */
 let edgeLayer=null, edgeMeta=null;
-async function fetchGridSrc(s){
-  // One source over the Keys box → {grid[lat][lon], lats (desc), lons (asc), time, age, nTimes}.
-  // Several daily slices are collapsed to the per-cell MEDIAN (fills cloud holes).
-  const b=KEYS_BOX;
-  const j=await fetchGridJSON(s, `[(${b.latMax}):(${b.latMin})]`, `[(${b.lonMin}):(${b.lonMax})]`);
-  if(!j||!j.table||!j.table.rows) return null;
-  const cols=j.table.columnNames, rows=j.table.rows;
-  const ci=cols.indexOf("latitude"), cj=cols.indexOf("longitude"), cv=cols.indexOf(s.v), ct=cols.indexOf("time");
-  if(ci<0||cj<0||cv<0) return null;
-  const cells=new Map(), times=new Set(); let newest=null;
-  for(const r of rows){
-    if(ct>=0){ times.add(r[ct]); if(!newest||r[ct]>newest) newest=r[ct]; }
-    const v=r[cv]; if(v==null||isNaN(v)) continue;
-    const k=(+r[ci])+","+(+r[cj]); let a=cells.get(k); if(!a){ a=[]; cells.set(k,a); } a.push(+v);
-  }
-  const lats=[...new Set(rows.map(r=>+r[ci]))].sort((a,b)=>b-a);
-  const lons=[...new Set(rows.map(r=>+r[cj]))].sort((a,b)=>a-b);
-  const grid=lats.map(la=>lons.map(lo=>{ const a=cells.get(la+","+lo); if(!a) return null; a.sort((x,y)=>x-y); return a[Math.floor(a.length/2)]; }));
-  return {grid,lats,lons,time:newest,age:ageDays(newest),nTimes:Math.max(1,times.size)};
-}
-async function loadLadder(sources, log){
-  for(const s of sources){
-    const g=await fetchGridSrc(s);
-    if(!g){ log.push(`${s.label}: no answer`); continue; }
-    if(g.age==null||g.age>s.maxAgeDays){ log.push(`${s.label}: stale (${g.time?g.time.slice(0,10):"undated"})`); continue; }
-    g.source=s; return g;
-  }
-  return null;
-}
-function nearestIdx(sorted, v){ // sorted asc or desc, small arrays
-  let best=0, bd=Infinity; for(let i=0;i<sorted.length;i++){ const d=Math.abs(sorted[i]-v); if(d<bd){bd=d;best=i;} } return best;
-}
-function resampleTo(src, lats, lons){ // nearest-cell resample of src.grid onto the lats/lons axes
-  const ii=lats.map(la=>nearestIdx(src.lats,la)), jj=lons.map(lo=>nearestIdx(src.lons,lo));
-  return ii.map(i=>jj.map(j=>src.grid[i][j]));
-}
-function gridGradMag(g,i,j){
-  const up=g[i-1]&&g[i-1][j], dn=g[i+1]&&g[i+1][j], lf=g[i][j-1], rt=g[i][j+1];
-  if(up==null||dn==null||lf==null||rt==null) return null;
-  const dY=(dn-up)/2, dX=(rt-lf)/2; return Math.sqrt(dX*dX+dY*dY);
-}
 function colorForEdge(s){ return s>0.6?"#ff6b6b":s>0.4?"#f4c87a":"#3dd6b0"; }
+const fmtWhen = iso => { const d=new Date(iso); return isNaN(d)?"":d.toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}); };
 async function runEdgeFinder(){
-  const btn=$("#edgeBtn"); const orig=btn.textContent; btn.disabled=true; btn.textContent="Scanning satellite grids…";
-  const res=$("#edgeResults"); res.classList.remove("hide"); res.innerHTML='<div class="edgeloading">Pulling chlorophyll + temperature grids over the Keys…</div>';
+  const btn=$("#edgeBtn"); const orig=btn.textContent; btn.disabled=true; btn.textContent="Loading the latest cloud scan…";
+  const res=$("#edgeResults"); res.classList.remove("hide"); res.innerHTML='<div class="edgeloading">Reading the analyzer’s hotspot file…</div>';
   try{
-    const log=[];
-    const [chlG, sstG]=await Promise.all([loadLadder(CHL_SOURCES,log), loadLadder(SST_SOURCES,log)]);
-    if(!chlG||!sstG){
-      const missing=[!chlG&&"chlorophyll",!sstG&&"sea temperature"].filter(Boolean).join(" and ");
-      res.innerHTML=`<div class="edgeloading">No <b>fresh</b> satellite ${missing} right now — every source was down or older than its limit (${log.join(" · ")}). Try again after the next satellite pass.</div>`;
+    const hs=await loadScanFile("hotspots.geojson");
+    if(!hs||!Array.isArray(hs.features)){
+      res.innerHTML='<div class="edgeloading">The cloud scan’s hotspot file isn’t reachable from here. It lives next to this page on GitHub Pages and is refreshed three times a day by the analyzer — open BiteCast from its web address to see it.</div>';
       return;
     }
-    const lats=chlG.lats, lons=chlG.lons;
-    const cg=chlG.grid;                                   // analysis grid = the chlorophyll grid
-    const sg=resampleTo(sstG, lats, lons);                // temperature brought onto it, nearest cell
-    edgeMeta={sst:sstG, chl:chlG};
-    let maxS=0,maxC=0; const gS=[],gC=[];
-    for(let i=0;i<lats.length;i++){ gS.push([]); gC.push([]);
-      for(let j=0;j<lons.length;j++){ const s=gridGradMag(sg,i,j), c=gridGradMag(cg,i,j); gS[i].push(s); gC[i].push(c);
-        if(s!=null&&s>maxS)maxS=s; if(c!=null&&c>maxC)maxC=c; } }
-    const spots=[];
-    if(maxS>0&&maxC>0){
-      for(let i=0;i<lats.length;i++) for(let j=0;j<lons.length;j++){
-        const s=gS[i][j], c=gC[i][j]; if(s==null||c==null) continue;
-        const score=Math.sqrt((s/maxS)*(c/maxC));
-        if(score>0.2) spots.push({lat:lats[i],lon:lons[j],score, sstF:(sg[i][j]!=null?sg[i][j]*9/5+32:null), chl:cg[i][j]});
-      }
-    }
-    spots.sort((a,b)=>b.score-a.score);
-    const top=spots.slice(0,18);
-    drawEdges(top); renderEdgeList(top);
+    edgeMeta=hs.meta||{};
+    const spots=hs.features.map(f=>Object.assign({lat:f.geometry.coordinates[1], lon:f.geometry.coordinates[0]}, f.properties));
+    const open=spots.filter(s=>!s.protected).sort((a,b)=>b.fish_score-a.fish_score);
+    const blocked=spots.filter(s=>s.protected);
+    drawEdges(open.slice(0,18), blocked);
+    renderEdgeList(open.slice(0,18), blocked);
   }catch(e){ $("#edgeResults").innerHTML='<div class="edgeloading">Edge scan failed: '+e.message+'</div>'; }
   finally{ btn.disabled=false; btn.textContent=orig; }
 }
-function drawEdges(top){
+function edgePopup(h, idx){
+  const f=(v,unit,dp=1)=> v!=null&&isFinite(v)? (+v).toFixed(dp)+unit : "—";
+  const tags=(h.tags&&h.tags.length)? `<br><span style="color:#3dd6b0">${h.tags.join(" · ")}</span>` : "";
+  const near=h.near_structure? `<br>Near: ${h.near_structure} (${f(h.near_structure_nm," nm",2)})` : "";
+  const warn=h.protected? `<br><b style="color:#ff6b6b">PROTECTED / CLOSED — do not fish</b><br><span style="font-size:12px">${(h.flags||[]).join("<br>")}</span>` : "";
+  return `<b>${h.protected?"Closed water":"Edge #"+(idx+1)}</b><br>${h.lat.toFixed(3)}°N ${Math.abs(h.lon).toFixed(3)}°W`+
+    `<br>Score: ${Math.round((h.fish_score||0)*100)}/100 · Water: ${f(h.sst_f,"°F")} · Chl: ${f(h.chl," mg/m³",2)}`+
+    `<br>Depth: ${h.depth_ft!=null?h.depth_ft+" ft":"—"} · Current: ${f(h.cur_kt," kt")} · ${h.dist_home_nm!=null? h.dist_home_nm+" nm from home":""}`+
+    tags+near+warn+
+    (h.protected?"":`<br><button onclick="setSpotFromMap(${h.lat},${h.lon})" style="margin-top:7px;padding:5px 10px;border-radius:7px;border:1px solid #3dd6b0;background:#0c2a34;color:#eafff8;font-weight:600;cursor:pointer">Load conditions here</button>`);
+}
+function drawEdges(top, blocked){
   if(!mapState.map) return;
   if(edgeLayer) mapState.map.removeLayer(edgeLayer);
   edgeLayer=L.layerGroup();
   top.forEach((h,idx)=>{
-    const col=colorForEdge(h.score);
+    const col=colorForEdge(h.fish_score);
     const mk=L.circleMarker([h.lat,h.lon],{radius:7,color:col,weight:1.5,fillColor:col,fillOpacity:.75});
-    mk.bindPopup(`<b>Edge #${idx+1}</b><br>${h.lat.toFixed(3)}°N ${Math.abs(h.lon).toFixed(3)}°W<br>Water: ${h.sstF!=null&&isFinite(h.sstF)?h.sstF.toFixed(1)+"°F":"—"}<br>Chl: ${h.chl!=null?h.chl.toFixed(2)+" mg/m³":"—"}<br>Edge strength: ${Math.round(h.score*100)}/100<br><button onclick="setSpotFromMap(${h.lat},${h.lon})" style="margin-top:7px;padding:5px 10px;border-radius:7px;border:1px solid #3dd6b0;background:#0c2a34;color:#eafff8;font-weight:600;cursor:pointer">Load conditions here</button>`);
-    edgeLayer.addLayer(mk);
+    mk.bindPopup(edgePopup(h,idx)); edgeLayer.addLayer(mk);
+  });
+  (blocked||[]).forEach(h=>{
+    const mk=L.circleMarker([h.lat,h.lon],{radius:7,color:"#ff6b6b",weight:2,fillColor:"#ff6b6b",fillOpacity:.25,dashArray:"3 3"});
+    mk.bindPopup(edgePopup(h,0)); edgeLayer.addLayer(mk);
   });
   edgeLayer.addTo(mapState.map);
-  if(top.length) mapState.map.fitBounds(L.latLngBounds(top.map(h=>[h.lat,h.lon])).pad(0.3));
+  const all=top.concat(blocked||[]);
+  if(all.length) mapState.map.fitBounds(L.latLngBounds(all.map(h=>[h.lat,h.lon])).pad(0.3));
 }
-function renderEdgeList(top){
+function renderEdgeList(top, blocked){
   const res=$("#edgeResults"); res.innerHTML="";
-  if(!top.length){ res.innerHTML='<div class="edgeloading">No clear edges in the latest cloud-free data — try again after the next satellite pass, or the water’s simply uniform right now.</div>'; return; }
-  res.appendChild(el("div","edgehdr","Top edges in the Keys — strongest combined temp + color breaks (tap to load)"));
-  top.slice(0,6).forEach(h=>{
-    const row=el("button","edgerow");
-    row.innerHTML=`<span class="er-dot" style="color:${colorForEdge(h.score)};background:${colorForEdge(h.score)}"></span>
-      <span class="er-loc">${h.lat.toFixed(2)}°N ${Math.abs(h.lon).toFixed(2)}°W <span>· ${h.sstF!=null&&isFinite(h.sstF)?h.sstF.toFixed(0)+"°F":"—"}, chl ${h.chl!=null?h.chl.toFixed(2):"—"}</span></span>
-      <span class="er-score">${Math.round(h.score*100)}</span>`;
-    row.onclick=()=>{ if(mapState.map) mapState.map.setView([h.lat,h.lon],Math.max(mapState.map.getZoom(),10)); setSpotFromMap(h.lat,h.lon); };
-    res.appendChild(row);
-  });
   const m=edgeMeta||{};
-  const src = g => g ? `${g.source.label} (${fmtDay(g.time)}${g.nTimes>1?`, ${g.nTimes}-day stack`:""})` : "—";
-  res.appendChild(el("div","edgenote",`Data used — temperature: ${src(m.sst)} · colour: ${src(m.chl)}. Combined temp + colour breaks; edges shift each pass and thin out under clouds. Pelagics ride these breaks — mind seasonal closures on aggregation sites.`));
+  if(!top.length){ res.innerHTML='<div class="edgeloading">The last scan found no strong open-water edges in its fresh satellite data. Edges come and go with each pass.</div>'; }
+  else{
+    res.appendChild(el("div","edgehdr","Top hotspots in the Keys — fused temp + colour breaks, structure, current & weed (tap to load)"));
+    top.slice(0,6).forEach(h=>{
+      const row=el("button","edgerow");
+      const bits=[h.sst_f!=null?(+h.sst_f).toFixed(0)+"°F":null, h.chl!=null?"chl "+(+h.chl).toFixed(2):null, h.depth_ft!=null?h.depth_ft+" ft":null, (h.tags||[])[0]].filter(Boolean).join(", ");
+      row.innerHTML=`<span class="er-dot" style="color:${colorForEdge(h.fish_score)};background:${colorForEdge(h.fish_score)}"></span>
+        <span class="er-loc">${h.lat.toFixed(2)}°N ${Math.abs(h.lon).toFixed(2)}°W <span>· ${bits}</span></span>
+        <span class="er-score">${Math.round((h.fish_score||0)*100)}</span>`;
+      row.onclick=()=>{ if(mapState.map) mapState.map.setView([h.lat,h.lon],Math.max(mapState.map.getZoom(),10)); setSpotFromMap(h.lat,h.lon); };
+      res.appendChild(row);
+    });
+  }
+  if(blocked&&blocked.length) res.appendChild(el("div","edgenote",`⚠ ${blocked.length} strong edge${blocked.length>1?"s fall":" falls"} in protected or closed water — shown red on the map, never listed.`));
+  const gen=m.generated_at? fmtWhen(m.generated_at) : "unknown time";
+  const age=m.generated_at? ageDays(m.generated_at) : null;
+  const stale=(age!=null&&age>1.5)? ` <b style="color:#f4c87a">(over ${Math.floor(age)} days old — the analyzer may have stopped; check the Actions tab)</b>` : "";
+  const src=(k)=> m[k]? `${m[k].source} (${fmtDay(m[k].image_date)}${m[k].composite_days>1?`, ${m[k].composite_days}-day stack`:""})` : "—";
+  res.appendChild(el("div","edgenote",`From the cloud scan of ${gen}${stale} — temperature: ${src("sst")} · colour: ${src("chl")} · layers: ${(m.layers||[]).join(", ")||"—"}. Edges shift each pass and thin out after cloudy weeks. Pelagics ride these breaks — mind seasonal closures on aggregation sites.`));
 }
+
 $("#edgeBtn").addEventListener("click",runEdgeFinder);
 
 /* ============ spawning window ============ */
