@@ -305,6 +305,9 @@
   .fishmini{flex:none}
   .er-score{font-family:var(--mono);font-weight:700;color:var(--ink);}
   .edgenote{font-size:.74rem;color:var(--faint);margin-top:6px;line-height:1.5;}
+  .edgeexport{margin:10px 0 4px;}
+  .edgeexport .lyr{width:100%;padding:11px 12px;font-size:.9rem;}
+  .edgeexport code{font-family:var(--mono);font-size:.72rem;color:var(--muted);}
 
   /* spawning window */
   .spawnbox{border:1px solid var(--hair);border-radius:17px;background:var(--panel);padding:15px 16px;box-shadow:var(--shadow);}
@@ -1766,7 +1769,7 @@ $("#lyrBathy").addEventListener("click",()=>{ toggleOverlay("Bathy", mapState.la
 $("#lyrRadar").addEventListener("click",e=>toggleRadar(e.currentTarget));
 
 /* ============ edge / hotspot finder (Florida Keys) — reads the cloud scan ============ */
-let edgeLayer=null, edgeMeta=null;
+let edgeLayer=null, edgeMeta=null, EDGE_LAST=null;   // EDGE_LAST = {top, blocked} from the last edge finder run
 function colorForEdge(s){ return s>0.6?"#ff6b6b":s>0.4?"#f4c87a":"#3dd6b0"; }
 const fmtWhen = iso => { const d=new Date(iso); return isNaN(d)?"":d.toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}); };
 async function runEdgeFinder(){
@@ -1782,8 +1785,9 @@ async function runEdgeFinder(){
     const spots=hs.features.map(f=>Object.assign({lat:f.geometry.coordinates[1], lon:f.geometry.coordinates[0]}, f.properties));
     const open=spots.filter(s=>!s.protected).sort((a,b)=>b.fish_score-a.fish_score);
     const blocked=spots.filter(s=>s.protected);
-    drawEdges(open.slice(0,18), blocked);
-    renderEdgeList(open.slice(0,18), blocked);
+    EDGE_LAST={top:open.slice(0,18), blocked};
+    drawEdges(EDGE_LAST.top, blocked);
+    renderEdgeList(EDGE_LAST.top, blocked);
   }catch(e){ $("#edgeResults").innerHTML='<div class="edgeloading">Edge scan failed: '+e.message+'</div>'; }
   finally{ btn.disabled=false; btn.textContent=orig; }
 }
@@ -1857,6 +1861,11 @@ function renderEdgeList(top, blocked){
       row.onclick=()=>{ if(mapState.map) mapState.map.setView([h.lat,h.lon],Math.max(mapState.map.getZoom(),10)); setSpotFromMap(h.lat,h.lon); };
       res.appendChild(row);
     });
+    const ex=el("div","edgeexport");
+    ex.innerHTML=`<button class="lyr active" id="edgeGpxBtn">Send ${top.length} spot${top.length>1?"s":""} to Navionics / GPSMAP (GPX)</button>
+      <div class="edgenote">On the iPhone the share sheet opens: pick <b>Boating</b> (Navionics markers) or <b>ActiveCaptain</b> (syncs to the GPSMAP over Wi-Fi); <b>Save to Files</b> keeps a copy. On a laptop the file downloads — copy it into <code>Garmin\\UserData</code> on a memory card, then on the plotter <b>Info → User Data → Data Transfer → File Type: GPX → Merge from Card</b>. Names are 10 characters (BC1 MAHI = BiteCast spot 1, mahi); the comment carries the details. Only fishable spots are included — protected water never leaves the app. Old BC points stay on the plotter until you delete them.</div>`;
+    res.appendChild(ex);
+    $("#edgeGpxBtn").addEventListener("click", shareEdgeGPX);
     res.appendChild(el("div","edgenote",`<span style="color:${MODE_COLOR.troll}">■</span> trolling edge (pelagics) · <span style="color:${MODE_COLOR.bottom}">■</span> bottom / structure · <span style="color:${MODE_COLOR.inshore}">■</span> inshore · <span style="color:#ff6fb5">◯</span> pink ring = that species' spawning window is on (likely aggregation — fish gently, check closures) · <span style="color:#ff6b6b">◯</span> red ring = protected/closed water. Species calls are general Keys guidance from depth, temperature, season, moon and what the water is doing — not a promise.`));
   }
   if(blocked&&blocked.length) res.appendChild(el("div","edgenote",`⚠ ${blocked.length} strong edge${blocked.length>1?"s fall":" falls"} in protected or closed water — shown with a red ring on the map, never listed.`));
@@ -1868,6 +1877,75 @@ function renderEdgeList(top, blocked){
   res.appendChild(el("div","edgenote",`From the cloud scan of ${gen}${stale}${reduced} — temperature: ${src("sst")} · colour: ${src("chl")} · layers: ${(m.layers||[]).join(", ")||"—"}. Edges shift each pass and thin out after cloudy weeks. Pelagics ride these breaks — mind seasonal closures on aggregation sites.`));
 }
 $("#edgeBtn").addEventListener("click",runEdgeFinder);
+
+/* ---------- hotspots -> GPX (Navionics Boating, Garmin ActiveCaptain / GPSMAP, Files) ----------
+   Waypoint names are <= 10 ASCII characters (the GPSMAP 10x2 limit): "BC3 MUTTN" = BiteCast spot 3, mutton.
+   The comment (what Garmin shows) is ASCII too; the description carries the full story. Depth and water
+   temperature ride in Garmin's own GPX extension so the plotter shows them as waypoint depth/temp.      */
+const SPECIES_CODE={mahi:"MAHI", sailfish:"SAIL", blackfin:"BFT", wahoo:"WAHOO", kingfish:"KING", mutton:"MUTTN",
+  yellowtail:"YTAIL", graysnapper:"MANGR", grouper:"GROUP", permit:"PERMT", tarpon:"TARPN"};
+const xmlEsc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const ascii=s=>String(s).normalize("NFKD").replace(/[‐-―]/g,"-").replace(/[^\x20-\x7e]/g,"").replace(/\s+/g," ").trim();
+function buildEdgeGPX(top, meta){
+  const m=meta||{}, when=m.generated_at&&!isNaN(new Date(m.generated_at))? new Date(m.generated_at) : new Date();
+  const iso=when.toISOString().replace(/\.\d{3}Z$/,"Z");
+  const scanTxt=iso.slice(0,10)+" "+iso.slice(11,16)+"Z";
+  const srcTxt=k=> (m[k]&&m[k].image_date)? `${m[k].source} ${m[k].image_date}` : "unavailable";
+  const n=(v,dp)=> (v!=null&&isFinite(v))? (+v).toFixed(dp) : null;
+  let out=`<?xml version="1.0" encoding="UTF-8"?>\n`+
+    `<gpx version="1.1" creator="BiteCast" xmlns="http://www.topografix.com/GPX/1/1" `+
+    `xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" `+
+    `xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd">\n`+
+    `  <metadata>\n    <name>BiteCast edges ${xmlEsc(scanTxt)}</name>\n`+
+    `    <desc>${xmlEsc(ascii(`BiteCast satellite edge finder, cloud scan ${scanTxt}. Temperature: ${srcTxt("sst")}. Colour: ${srcTxt("chl")}. Planning aid from satellite data - NOT for navigation. Protected and closed water is excluded. Confirm rules in Fish Rules / myfwc.com.`))}</desc>\n`+
+    `    <time>${iso}</time>\n  </metadata>\n`;
+  top.forEach((h,i)=>{
+    const rank=i+1, code=SPECIES_CODE[h.species]||"EDGE";
+    const name=`BC${rank} ${code}`.slice(0,10);
+    const score=Math.round((h.fish_score||0)*100);
+    const mode=h.mode&&h.mode!=="unknown"? h.mode : "edge";
+    const parts=[`${score}/100 ${mode}`, n(h.sst_f,0)!=null?`${n(h.sst_f,0)}F`:null, h.depth_ft!=null?`${Math.round(h.depth_ft)}ft`:null,
+      (h.tags&&h.tags[0])||null, h.near_structure? `${n(h.near_structure_nm,1)}nm ${h.near_structure}`:null].filter(Boolean);
+    const cmt=ascii(parts.join(", ")+" | scan "+scanTxt);
+    const desc=ascii([`BiteCast hotspot #${rank}`+(h.species_label?` - ${h.species_label} (${MODE_LABEL[h.mode]||mode})`:"")+".",
+      `Edge strength ${score}/100.`,
+      [n(h.sst_f,1)!=null?`water ${n(h.sst_f,1)} F`:null, n(h.chl,2)!=null?`chlorophyll ${n(h.chl,2)} mg/m3`:null,
+       h.depth_ft!=null?`depth ${Math.round(h.depth_ft)} ft`:null, n(h.cur_kt,1)!=null?`current ${n(h.cur_kt,1)} kt`:null].filter(Boolean).join(", ")+".",
+      (h.tags&&h.tags.length)? `Water: ${h.tags.join(", ")}.` : null,
+      h.near_structure? `Nearest structure: ${h.near_structure} ${n(h.near_structure_nm,1)} nm (display only, not verified).` : null,
+      h.dist_home_nm!=null? `${h.dist_home_nm} nm from home.` : null,
+      h.spawning? `Spawning window for this species is ON - likely aggregation, fish gently and check closures.` : null,
+      (h.also&&h.also.length)? `Also possible: ${h.also.map(a=>a.label).join(", ")}.` : null,
+      `Cloud scan ${scanTxt}. Planning aid - not for navigation.`].filter(Boolean).join(" "));
+    const ext=[];
+    if(n(h.sst_f,1)!=null) ext.push(`<gpxx:Temperature>${((+h.sst_f-32)*5/9).toFixed(1)}</gpxx:Temperature>`);
+    if(h.depth_ft!=null&&isFinite(h.depth_ft)) ext.push(`<gpxx:Depth>${(+h.depth_ft*0.3048).toFixed(1)}</gpxx:Depth>`);
+    ext.push(`<gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>`);
+    out+=`  <wpt lat="${(+h.lat).toFixed(5)}" lon="${(+h.lon).toFixed(5)}">\n    <time>${iso}</time>\n    <name>${xmlEsc(name)}</name>\n`+
+      `    <cmt>${xmlEsc(cmt)}</cmt>\n    <desc>${xmlEsc(desc)}</desc>\n    <sym>Fish</sym>\n    <type>BiteCast hotspot</type>\n`+
+      `    <extensions><gpxx:WaypointExtension>${ext.join("")}</gpxx:WaypointExtension></extensions>\n  </wpt>\n`;
+  });
+  return out+`</gpx>\n`;
+}
+/* Share sheet when the browser has one (iPhone: Boating, ActiveCaptain, Files...), plain download otherwise (laptop). */
+async function deliverFile(filename, text, type){
+  const blob=new Blob([text],{type:type||"text/plain"});
+  if(navigator.share && navigator.canShare){
+    try{
+      const file=new File([blob], filename, {type:blob.type});
+      if(navigator.canShare({files:[file]})){ await navigator.share({files:[file], title:filename}); return "shared"; }
+    }catch(e){ if(e&&e.name==="AbortError") return "cancelled"; /* fall through to a download */ }
+  }
+  download(filename, text, type); return "downloaded";
+}
+function shareEdgeGPX(){
+  const top=(EDGE_LAST&&EDGE_LAST.top)||[];
+  if(!top.length){ toast("Run the edge finder first — nothing to send yet."); return; }
+  const m=edgeMeta||{}, when=m.generated_at&&!isNaN(new Date(m.generated_at))? new Date(m.generated_at) : new Date();
+  const stamp=when.toISOString().slice(0,16).replace("T","_").replace(":","")+"Z";
+  const gpx=buildEdgeGPX(top, m);
+  deliverFile(`BiteCast_${stamp}.gpx`, gpx, "application/gpx+xml").then(r=>{ if(r==="downloaded") toast("GPX saved — copy it into Garmin\\UserData on the plotter's card, or open it with Navionics."); });
+}
 
 /* ============ spawning window ============ */
 const SPECIES={
@@ -2311,14 +2389,14 @@ function exportGPX(){
   let gpx=`<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="BiteCast" xmlns="http://www.topografix.com/GPX/1/1">\n`;
   pts.forEach(p=>{ gpx+=`  <wpt lat="${p.lat}" lon="${p.lon}"><name>${esc(p.name)}</name>${p.desc?`<desc>${esc(p.desc)}</desc>`:""}</wpt>\n`; });
   gpx+=`</gpx>\n`;
-  download("bitecast-waypoints.gpx", gpx, "application/gpx+xml");
+  deliverFile("bitecast-catchlog.gpx", gpx, "application/gpx+xml");
 }
 $("#logBtn").addEventListener("click", openLog);
 $("#logClose").addEventListener("click", ()=> $("#logModal").classList.add("hide"));
 $("#logModal").addEventListener("click", e=>{ if(e.target.id==="logModal") $("#logModal").classList.add("hide"); });
 $("#logSave").addEventListener("click", saveCatch);
 $("#logGpx").addEventListener("click", exportGPX);
-$("#logJson").addEventListener("click", ()=> download("bitecast-log-backup.json", JSON.stringify(LOG,null,2), "application/json"));
+$("#logJson").addEventListener("click", ()=> deliverFile("bitecast-log-backup.json", JSON.stringify(LOG,null,2), "application/json"));
 $("#fcastClose").addEventListener("click", ()=> $("#fcastModal").classList.add("hide"));
 $("#fcastModal").addEventListener("click", e=>{ if(e.target.id==="fcastModal") $("#fcastModal").classList.add("hide"); });
 
