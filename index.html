@@ -1754,8 +1754,9 @@ function renderEdgeList(top, blocked){
   const gen=m.generated_at? fmtWhen(m.generated_at) : "unknown time";
   const age=m.generated_at? ageDays(m.generated_at) : null;
   const stale=(age!=null&&age>1.5)? ` <b style="color:#f4c87a">(over ${Math.floor(age)} days old — the analyzer may have stopped; check the Actions tab)</b>` : "";
-  const src=(k)=> m[k]? `${m[k].source} (${fmtDay(m[k].image_date)}${m[k].composite_days>1?`, ${m[k].composite_days}-day stack`:""})` : "—";
-  res.appendChild(el("div","edgenote",`From the cloud scan of ${gen}${stale} — temperature: ${src("sst")} · colour: ${src("chl")} · layers: ${(m.layers||[]).join(", ")||"—"}. Edges shift each pass and thin out after cloudy weeks. Pelagics ride these breaks — mind seasonal closures on aggregation sites.`));
+  const src=(k)=> (m[k]&&m[k].image_date)? `${m[k].source} (${fmtDay(m[k].image_date)}${m[k].composite_days>1?`, ${m[k].composite_days}-day stack`:""})` : `<b style="color:#f4c87a">unavailable that run</b>`;
+  const reduced=m.degraded? ` <b style="color:#f4c87a">⚠ Reduced confidence: ${m.degraded}.</b>` : "";
+  res.appendChild(el("div","edgenote",`From the cloud scan of ${gen}${stale}${reduced} — temperature: ${src("sst")} · colour: ${src("chl")} · layers: ${(m.layers||[]).join(", ")||"—"}. Edges shift each pass and thin out after cloudy weeks. Pelagics ride these breaks — mind seasonal closures on aggregation sites.`));
 }
 
 $("#edgeBtn").addEventListener("click",runEdgeFinder);

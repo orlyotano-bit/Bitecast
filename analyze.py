@@ -278,29 +278,62 @@ def age_days(iso):
     except ValueError:
         return None
 
-def load_from_ladder(kind, sources, box, stride):
+def latest_time(server, dataset, timeout=30):
+    """The dataset's newest time step, via a tiny axis-only request (no data pulled).
+    Returns an ISO string, or None if the server didn't answer. Lets a rung be judged
+    stale before the heavy grid request is ever made."""
+    try:
+        r = requests.get(f"{server}/griddap/{dataset}.json?time[last]", timeout=timeout)
+        if r.status_code != 200:
+            why = re.sub(r"\s+", " ", r.text)[:120].strip()
+            print(f"  ! {dataset} time check: HTTP {r.status_code} {why}")
+            return None
+        t = r.json().get("table", {})
+        ci = t.get("columnNames", []).index("time")
+        return t["rows"][0][ci]
+    except Exception as e:
+        print(f"  ! {dataset} time check: {e}")
+        return None
+
+RETRY_WAIT_S = int(os.environ.get("BITECAST_RETRY_WAIT", "60"))   # 0 in tests
+
+def load_from_ladder(kind, sources, box, stride, passes=2):
     """Walk a SST/CHL ladder; return the first FRESH grid (with its source attached) or None.
-    Every rung's outcome is printed so the run log shows exactly what fed the score."""
-    for s in sources:
-        tsel = f"[last-{s['days'] - 1}:last]" if s["days"] > 1 else "[(last)]"
-        g = fetch_grid(s["dataset"], s["var"], box, stride, server=s["server"], time_sel=tsel)
-        if not g:
-            print(f"  {kind}: {s['label']} — no answer, next rung")
-            continue
-        age = age_days(g["time"])
-        if age is None:
-            print(f"  {kind}: {s['label']} — image has no date, next rung")
-            continue
-        if age > s["max_age_days"]:
-            print(f"  {kind}: {s['label']} — newest image {g['time'][:10]} is {age:.0f} days old "
-                  f"(limit {s['max_age_days']}) — STALE, next rung")
-            continue
-        comp = f", {g['n_times']}-day composite" if g["n_times"] > 1 else ""
-        print(f"  {kind}: {s['label']} — newest image {g['time'][:10]} ({age:.1f} days old{comp})  OK")
-        g["source"] = s
-        g["date"] = g["time"][:10]
-        return g
-    print(f"  !! {kind}: every source in the ladder was down or stale")
+    Every rung's outcome is printed so the run log shows exactly what fed the score.
+    If the whole ladder fails, wait RETRY_WAIT_S and walk it once more — ERDDAP reloads
+    and 503 moments usually last well under a minute."""
+    for attempt in range(1, passes + 1):
+        if attempt > 1:
+            print(f"  {kind}: whole ladder failed — waiting {RETRY_WAIT_S}s and trying once more")
+            import time; time.sleep(RETRY_WAIT_S)
+        for s in sources:
+            # cheap pre-check: is the newest image fresh enough to be worth pulling?
+            newest = latest_time(s["server"], s["dataset"])
+            if newest:
+                age = age_days(newest)
+                if age is not None and age > s["max_age_days"]:
+                    print(f"  {kind}: {s['label']} — newest image {str(newest)[:10]} is {age:.0f} days old "
+                          f"(limit {s['max_age_days']}) — STALE, next rung")
+                    continue
+            tsel = f"[last-{s['days'] - 1}:last]" if s["days"] > 1 else "[(last)]"
+            g = fetch_grid(s["dataset"], s["var"], box, s.get("stride", stride), server=s["server"], time_sel=tsel)
+            if not g:
+                print(f"  {kind}: {s['label']} — no answer, next rung")
+                continue
+            age = age_days(g["time"])
+            if age is None:
+                print(f"  {kind}: {s['label']} — image has no date, next rung")
+                continue
+            if age > s["max_age_days"]:
+                print(f"  {kind}: {s['label']} — newest image {g['time'][:10]} is {age:.0f} days old "
+                      f"(limit {s['max_age_days']}) — STALE, next rung")
+                continue
+            comp = f", {g['n_times']}-day composite" if g["n_times"] > 1 else ""
+            print(f"  {kind}: {s['label']} — newest image {g['time'][:10]} ({age:.1f} days old{comp})  OK")
+            g["source"] = s
+            g["date"] = g["time"][:10]
+            return g
+    print(f"  !! {kind}: every source in the ladder was down or stale (after {passes} passes)")
     return None
 
 def resample_to(src, tgt_lats, tgt_lons):
@@ -447,25 +480,46 @@ def analyze():
         print("  bathy: srtm15plus unavailable — falling back to ETOPO")
         bathy = fetch_grid("etopo180", "altitude", box, max(stride, 1), time_sel="")
 
-    if not chl or not sst:
-        missing = " and ".join(k for k, v in (("chlorophyll", chl), ("sea temperature", sst)) if not v)
-        msg = (f"BiteCast: no FRESH satellite {missing} today — every source in the ladder was "
-               "down or older than its limit. No edge report this run (the run log lists each "
-               "source and its image date).")
+    if not chl and not sst:
+        msg = ("BiteCast: no FRESH satellite chlorophyll or sea temperature today — every source "
+               "in both ladders was down or older than its limit, twice. No edge report this run "
+               "(the run log lists each source and its image date).")
         print(msg)
         return push(msg, title="BiteCast — data unavailable", tags="warning,fish")
-    data_line = (f"Data: SST {sst['source']['label']} ({sst['date']}) · "
-                 f"chl {chl['source']['label']} ({chl['date']})")
 
-    lats, lons = chl["lats"], chl["lons"]
-    C = chl["grid"]
-    S = resample_to(sst, lats, lons)
+    # One side missing is a degraded report, not no report: temperature-only fronts still
+    # find the Florida-Current wall; colour-only fronts still find the green/blue line.
+    degraded = None
+    if chl and sst:
+        data_line = (f"Data: SST {sst['source']['label']} ({sst['date']}) · "
+                     f"chl {chl['source']['label']} ({chl['date']})")
+    elif sst:
+        degraded = "colour unavailable this run — TEMPERATURE-ONLY fronts"
+        data_line = f"Data: SST {sst['source']['label']} ({sst['date']}) · chl UNAVAILABLE ({degraded})"
+    else:
+        degraded = "sea temperature unavailable this run — COLOUR-ONLY fronts"
+        data_line = f"Data: SST UNAVAILABLE · chl {chl['source']['label']} ({chl['date']}) ({degraded})"
+    if degraded:
+        print(f"  !! {degraded}")
+
+    # analysis grid: the chlorophyll grid when we have it, else the SST grid thinned to a
+    # sane size (MUR is 1 km — 31k cells over the box — which is more than the fusion needs)
+    if chl:
+        lats, lons = chl["lats"], chl["lons"]
+        C = chl["grid"]
+        S = resample_to(sst, lats, lons) if sst else np.full_like(C, np.nan)
+    else:
+        k = max(1, int(math.ceil(math.sqrt(sst["grid"].size / 12000.0))))
+        lats, lons = sst["lats"][::k], sst["lons"][::k]
+        S = sst["grid"][::k, ::k]
+        C = np.full_like(S, np.nan)
+        print(f"  grid: SST grid thinned x{k} → {len(lats)}x{len(lons)} cells")
     D = resample_to(bathy, lats, lons) if bathy else None  # metres, negative below sea level
 
-    # --- fronts (coincident temp + colour breaks) ---
-    sstF = norm98(grad_mag(S))
-    chlF = norm98(grad_mag(np.log(np.clip(C, 1e-3, None))))
-    front = np.sqrt(sstF * chlF)
+    # --- fronts (coincident temp + colour breaks; single-layer when one side is missing) ---
+    sstF = norm98(grad_mag(S)) if sst else None
+    chlF = norm98(grad_mag(np.log(np.clip(C, 1e-3, None)))) if chl else None
+    front = np.sqrt(sstF * chlF) if (sst and chl) else (sstF if sst else chlF)
 
     # --- structure + species depth band from bathymetry ---
     sp = SPECIES[CONFIG["target_species"]]
@@ -590,11 +644,18 @@ def analyze():
     openable = [s for s in spots if not s["protected"]][:CONFIG["top_n"]]
     blocked = [s for s in spots if s["protected"]][:4]
 
+    def src_meta(g, composite=False):
+        if not g:
+            return {"source": "unavailable this run", "dataset": None, "image_date": None}
+        m = {"source": g["source"]["label"], "dataset": g["source"]["dataset"], "image_date": g["date"]}
+        if composite:
+            m["composite_days"] = g["n_times"]
+        return m
     meta = {
         "generated_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "sst": {"source": sst["source"]["label"], "dataset": sst["source"]["dataset"], "image_date": sst["date"]},
-        "chl": {"source": chl["source"]["label"], "dataset": chl["source"]["dataset"], "image_date": chl["date"],
-                "composite_days": chl["n_times"]},
+        "sst": src_meta(sst), "chl": src_meta(chl, composite=True),
+        "degraded": degraded,                       # None, or why this run is single-layer
+        "front_type": "temp+colour" if (sst and chl) else ("temperature-only" if sst else "colour-only"),
         "grid_cells": int(np.isfinite(fish).sum()),
         "layers": [name for name, on in (("front", True), ("bathymetry", D is not None), ("reefs_wrecks", reefN is not None),
                                          ("currents", edgeN is not None), ("sargassum", weedN is not None)) if on],
@@ -602,8 +663,11 @@ def analyze():
     }
     write_geojson(spots[:40], meta)
     write_structure_geojson(structures)
-    write_satgrid(lats, lons, C, sst_f, meta)
-    return report_and_push(openable, blocked, sp, in_season, moon_ok, p, month, regime)
+    if chl:
+        write_satgrid(lats, lons, C, sst_f, meta)   # only with real colour data — never overwrite the
+    else:                                           # app's last good chlorophyll grid with blanks
+        print("satgrid.json left as is (no chlorophyll this run)")
+    return report_and_push(openable, blocked, sp, in_season, moon_ok, p, month, regime, degraded=degraded)
 
 # ============================ OUTPUT ============================
 def write_geojson(spots, meta=None):
@@ -728,11 +792,13 @@ def ping():
     print("PING OK — check your phone." if ok else "PING FAILED — see the message above.")
     return ok
 
-def report_and_push(openable, blocked, sp, in_season, moon_ok, p, month, regime=None):
+def report_and_push(openable, blocked, sp, in_season, moon_ok, p, month, regime=None, degraded=None):
     moon_pct = round((1 - math.cos(2*math.pi*p)) / 2 * 100)
     lines = []
     if regime:
         lines += regime + [""]
+    if degraded:
+        lines.append(f"⚠ Reduced confidence: {degraded}.")
     if openable:
         lines.append("Top fishable edges (ranked by strength):")
         for s in sorted(openable, key=lambda x: -x["fish_score"]):
@@ -765,10 +831,12 @@ def report_and_push(openable, blocked, sp, in_season, moon_ok, p, month, regime=
     lines.append("Confirm all rules in the Fish Rules app before fishing. Respect every closure.")
 
     body = "\n".join(lines)
-    # alert priority high only when there's genuinely good open water and nothing's closed
-    pr = "high" if (openable and not closed) else "default"
+    # alert priority high only when there's genuinely good open water, nothing's closed,
+    # and both satellite layers were in play
+    pr = "high" if (openable and not closed and not degraded) else "default"
     print("\n" + body + "\n")
-    return push(body, title="BiteCast — Keys edge report", priority=pr)
+    title = "BiteCast — Keys edge report" + (" (reduced)" if degraded else "")
+    return push(body, title=title, priority=pr)
 
 if __name__ == "__main__":
     # A green Actions run now means "the phone got the report". If the push fails
