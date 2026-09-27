@@ -6,151 +6,31 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -80.3125,
-     25.0625
+     -80.1042,
+     25.4792
     ]
    },
    "properties": {
-    "lat": 25.0625,
-    "lon": -80.3125,
-    "fish_score": 0.696,
-    "front": 0.786,
-    "structure": 0.334,
-    "sst_f": 84.6,
-    "chl": 0.199,
-    "depth_ft": 118,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.15,
+    "lat": 25.4792,
+    "lon": -80.1042,
+    "fish_score": 0.641,
+    "front": 0.528,
+    "structure": 0.482,
+    "sst_f": 83.9,
+    "chl": 0.097,
+    "depth_ft": 177,
+    "cur_kt": 1.09,
+    "convergence": 1.0,
+    "weed": 0.267,
     "tags": [
+     "current edge",
+     "convergence/accumulation",
      "on structure"
     ],
-    "near_structure": "Spiegel Grove (reef)",
-    "near_structure_nm": 0.27,
+    "near_structure": "Turbine Stacks (reef)",
+    "near_structure_nm": 0.75,
     "spawn_score": 0.0,
-    "dist_home_nm": 19.3,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.7708,
-     24.7292
-    ]
-   },
-   "properties": {
-    "lat": 24.7292,
-    "lon": -80.7708,
-    "fish_score": 0.674,
-    "front": 1.0,
-    "structure": 0.44,
-    "sst_f": 84.4,
-    "chl": 0.688,
-    "depth_ft": 184,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.178,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "dist_home_nm": 13.8,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.5625,
-     24.8542
-    ]
-   },
-   "properties": {
-    "lat": 24.8542,
-    "lon": -80.5625,
-    "fish_score": 0.661,
-    "front": 0.833,
-    "structure": 0.354,
-    "sst_f": 85.0,
-    "chl": 0.191,
-    "depth_ft": 226,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [
-     "on structure"
-    ],
-    "near_structure": "Alexander Barge (reef)",
-    "near_structure_nm": 0.55,
-    "spawn_score": 0.0,
-    "dist_home_nm": 5.4,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.5208,
-     24.8958
-    ]
-   },
-   "properties": {
-    "lat": 24.8958,
-    "lon": -80.5208,
-    "fish_score": 0.649,
-    "front": 0.967,
-    "structure": 0.383,
-    "sst_f": 85.7,
-    "chl": 0.277,
-    "depth_ft": 174,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.178,
-    "tags": [],
-    "near_structure": "Davis Reef (reef)",
-    "near_structure_nm": 1.77,
-    "spawn_score": 0.0,
-    "dist_home_nm": 6.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.8125,
-     24.6875
-    ]
-   },
-   "properties": {
-    "lat": 24.6875,
-    "lon": -80.8125,
-    "fish_score": 0.649,
-    "front": 0.947,
-    "structure": 0.473,
-    "sst_f": 84.5,
-    "chl": 0.129,
-    "depth_ft": 276,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.093,
-    "tags": [],
-    "near_structure": "Long Key Reef #1 (reef)",
-    "near_structure_nm": 2.52,
-    "spawn_score": 0.0,
-    "dist_home_nm": 17.1,
+    "dist_home_nm": 44.1,
     "flags": [],
     "protected": false
    }
@@ -167,600 +47,22 @@
    "properties": {
     "lat": 25.5625,
     "lon": -80.1042,
-    "fish_score": 0.615,
+    "fish_score": 0.63,
     "front": 0.845,
     "structure": 0.378,
     "sst_f": 83.5,
     "chl": 0.252,
     "depth_ft": 30,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.107,
-    "tags": [],
+    "cur_kt": 1.23,
+    "convergence": 0.227,
+    "weed": 0.114,
+    "tags": [
+     "current edge"
+    ],
     "near_structure": "Blue Fire (reef)",
     "near_structure_nm": 0.78,
     "spawn_score": 0.0,
     "dist_home_nm": 48.0,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.1042,
-     25.5208
-    ]
-   },
-   "properties": {
-    "lat": 25.5208,
-    "lon": -80.1042,
-    "fish_score": 0.596,
-    "front": 0.783,
-    "structure": 0.431,
-    "sst_f": 83.7,
-    "chl": 0.108,
-    "depth_ft": 56,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.214,
-    "tags": [],
-    "near_structure": "Sir Scott (reef)",
-    "near_structure_nm": 1.06,
-    "spawn_score": 0.0,
-    "dist_home_nm": 46.0,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.3125,
-     25.2292
-    ]
-   },
-   "properties": {
-    "lat": 25.2292,
-    "lon": -80.3125,
-    "fish_score": 0.566,
-    "front": 0.881,
-    "structure": 0.028,
-    "sst_f": 83.5,
-    "chl": 3.676,
-    "depth_ft": 10,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 1.0,
-    "tags": [
-     "likely weed line"
-    ],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "dist_home_nm": 25.4,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.3958,
-     25.0208
-    ]
-   },
-   "properties": {
-    "lat": 25.0208,
-    "lon": -80.3958,
-    "fish_score": 0.555,
-    "front": 0.573,
-    "structure": 0.221,
-    "sst_f": 85.0,
-    "chl": 1.443,
-    "depth_ft": 26,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [
-     "on structure"
-    ],
-    "near_structure": "Wolfe Reef (reef)",
-    "near_structure_nm": 0.07,
-    "spawn_score": 0.0,
-    "dist_home_nm": 14.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.6458,
-     24.8125
-    ]
-   },
-   "properties": {
-    "lat": 24.8125,
-    "lon": -80.6458,
-    "fish_score": 0.555,
-    "front": 0.756,
-    "structure": 0.392,
-    "sst_f": 84.0,
-    "chl": 0.247,
-    "depth_ft": 174,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.164,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "dist_home_nm": 6.5,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.1042,
-     25.6042
-    ]
-   },
-   "properties": {
-    "lat": 25.6042,
-    "lon": -80.1042,
-    "fish_score": 0.552,
-    "front": 0.819,
-    "structure": 0.36,
-    "sst_f": 83.6,
-    "chl": 1.108,
-    "depth_ft": 46,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": "Blue Fire (reef)",
-    "near_structure_nm": 2.37,
-    "spawn_score": 0.0,
-    "dist_home_nm": 50.0,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.4792,
-     24.9375
-    ]
-   },
-   "properties": {
-    "lat": 24.9375,
-    "lon": -80.4792,
-    "fish_score": 0.551,
-    "front": 0.784,
-    "structure": 0.333,
-    "sst_f": 84.7,
-    "chl": 0.225,
-    "depth_ft": 92,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.085,
-    "tags": [],
-    "near_structure": "Davis Reef (reef)",
-    "near_structure_nm": 1.83,
-    "spawn_score": 0.0,
-    "dist_home_nm": 8.3,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.8125,
-     24.7292
-    ]
-   },
-   "properties": {
-    "lat": 24.7292,
-    "lon": -80.8125,
-    "fish_score": 0.55,
-    "front": 0.674,
-    "structure": 0.3,
-    "sst_f": 84.2,
-    "chl": 1.708,
-    "depth_ft": 62,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.15,
-    "tags": [],
-    "near_structure": "Long Key Reef #5 (reef)",
-    "near_structure_nm": 0.81,
-    "spawn_score": 0.0,
-    "dist_home_nm": 15.2,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.5625,
-     24.4792
-    ]
-   },
-   "properties": {
-    "lat": 24.4792,
-    "lon": -81.5625,
-    "fish_score": 0.544,
-    "front": 0.53,
-    "structure": 0.474,
-    "sst_f": 84.5,
-    "chl": 0.124,
-    "depth_ft": 276,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.071,
-    "tags": [
-     "on structure"
-    ],
-    "near_structure": "Wilkes Barre-Bow Section (reef)",
-    "near_structure_nm": 0.61,
-    "spawn_score": 0.0,
-    "dist_home_nm": 57.3,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.1042,
-     25.4792
-    ]
-   },
-   "properties": {
-    "lat": 25.4792,
-    "lon": -80.1042,
-    "fish_score": 0.535,
-    "front": 0.528,
-    "structure": 0.482,
-    "sst_f": 83.9,
-    "chl": 0.097,
-    "depth_ft": 177,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.25,
-    "tags": [
-     "on structure"
-    ],
-    "near_structure": "Turbine Stacks (reef)",
-    "near_structure_nm": 0.75,
-    "spawn_score": 0.0,
-    "dist_home_nm": 44.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.0625,
-     25.6042
-    ]
-   },
-   "properties": {
-    "lat": 25.6042,
-    "lon": -80.0625,
-    "fish_score": 0.53,
-    "front": 0.554,
-    "structure": 0.99,
-    "sst_f": 84.2,
-    "chl": 0.157,
-    "depth_ft": 371,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.385,
-    "tags": [],
-    "near_structure": "Blue Fire (reef)",
-    "near_structure_nm": 2.72,
-    "spawn_score": 0.0,
-    "dist_home_nm": 51.4,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.8958,
-     25.1042
-    ]
-   },
-   "properties": {
-    "lat": 25.1042,
-    "lon": -80.8958,
-    "fish_score": 0.526,
-    "front": 0.744,
-    "structure": 0.335,
-    "sst_f": 84.3,
-    "chl": 4.947,
-    "depth_ft": 295,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "dist_home_nm": 18.2,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.4375,
-     24.7708
-    ]
-   },
-   "properties": {
-    "lat": 24.7708,
-    "lon": -81.4375,
-    "fish_score": 0.526,
-    "front": 0.811,
-    "structure": 0.014,
-    "sst_f": 84.3,
-    "chl": 2.9,
-    "depth_ft": 3,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 1.0,
-    "tags": [
-     "likely weed line"
-    ],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "dist_home_nm": 44.9,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.5625,
-     24.8958
-    ]
-   },
-   "properties": {
-    "lat": 24.8958,
-    "lon": -80.5625,
-    "fish_score": 0.523,
-    "front": 0.835,
-    "structure": 0.266,
-    "sst_f": 84.7,
-    "chl": 0.838,
-    "depth_ft": 23,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": "Eagle (reef)",
-    "near_structure_nm": 1.63,
-    "spawn_score": 0.0,
-    "dist_home_nm": 4.0,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.7292,
-     24.7292
-    ]
-   },
-   "properties": {
-    "lat": 24.7292,
-    "lon": -80.7292,
-    "fish_score": 0.521,
-    "front": 0.675,
-    "structure": 0.437,
-    "sst_f": 84.7,
-    "chl": 0.235,
-    "depth_ft": 292,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.085,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "dist_home_nm": 12.7,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.6042,
-     24.8542
-    ]
-   },
-   "properties": {
-    "lat": 24.8542,
-    "lon": -80.6042,
-    "fish_score": 0.517,
-    "front": 0.724,
-    "structure": 0.334,
-    "sst_f": 83.9,
-    "chl": 0.241,
-    "depth_ft": 112,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": "Alexander Barge (reef)",
-    "near_structure_nm": 2.0,
-    "spawn_score": 0.0,
-    "dist_home_nm": 4.2,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.3542,
-     25.0208
-    ]
-   },
-   "properties": {
-    "lat": 25.0208,
-    "lon": -80.3542,
-    "fish_score": 0.512,
-    "front": 0.7,
-    "structure": 0.312,
-    "sst_f": 85.4,
-    "chl": 0.545,
-    "depth_ft": 115,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.129,
-    "tags": [],
-    "near_structure": "Bibb (reef)",
-    "near_structure_nm": 2.07,
-    "spawn_score": 0.0,
-    "dist_home_nm": 16.2,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.6875,
-     24.7708
-    ]
-   },
-   "properties": {
-    "lat": 24.7708,
-    "lon": -80.6875,
-    "fish_score": 0.512,
-    "front": 0.656,
-    "structure": 0.419,
-    "sst_f": 84.4,
-    "chl": 0.238,
-    "depth_ft": 210,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.121,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "dist_home_nm": 9.5,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.2292,
-     25.1875
-    ]
-   },
-   "properties": {
-    "lat": 25.1875,
-    "lon": -80.2292,
-    "fish_score": 0.506,
-    "front": 0.673,
-    "structure": 0.326,
-    "sst_f": 84.4,
-    "chl": 0.545,
-    "depth_ft": 59,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.185,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "dist_home_nm": 27.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.2708,
-     25.1042
-    ]
-   },
-   "properties": {
-    "lat": 25.1042,
-    "lon": -80.2708,
-    "fish_score": 0.505,
-    "front": 0.648,
-    "structure": 0.381,
-    "sst_f": 84.6,
-    "chl": 0.129,
-    "depth_ft": 197,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.164,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "dist_home_nm": 22.5,
     "flags": [],
     "protected": false
    }
@@ -777,16 +79,18 @@
    "properties": {
     "lat": 25.3542,
     "lon": -80.1458,
-    "fish_score": 0.503,
+    "fish_score": 0.618,
     "front": 0.522,
     "structure": 0.44,
     "sst_f": 83.8,
     "chl": 0.103,
     "depth_ft": 69,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.513,
+    "cur_kt": 1.09,
+    "convergence": 1.0,
+    "weed": 0.549,
     "tags": [
+     "current edge",
+     "convergence/accumulation",
      "likely weed line"
     ],
     "near_structure": "Doc De Milly (reef)",
@@ -802,87 +106,29 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -80.5208,
-     24.9375
+     -80.1042,
+     25.5208
     ]
    },
    "properties": {
-    "lat": 24.9375,
-    "lon": -80.5208,
-    "fish_score": 0.502,
-    "front": 0.8,
-    "structure": 0.179,
-    "sst_f": 84.0,
-    "chl": 1.035,
-    "depth_ft": 13,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": "Davis Reef (reef)",
-    "near_structure_nm": 1.07,
+    "lat": 25.5208,
+    "lon": -80.1042,
+    "fish_score": 0.617,
+    "front": 0.783,
+    "structure": 0.431,
+    "sst_f": 83.7,
+    "chl": 0.108,
+    "depth_ft": 56,
+    "cur_kt": 1.23,
+    "convergence": 0.227,
+    "weed": 0.229,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Sir Scott (reef)",
+    "near_structure_nm": 1.06,
     "spawn_score": 0.0,
-    "dist_home_nm": 6.0,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.4375,
-     24.5208
-    ]
-   },
-   "properties": {
-    "lat": 24.5208,
-    "lon": -81.4375,
-    "fish_score": 0.498,
-    "front": 0.625,
-    "structure": 0.419,
-    "sst_f": 83.8,
-    "chl": 0.153,
-    "depth_ft": 190,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.071,
-    "tags": [],
-    "near_structure": "Adolphus Busch Sr (reef)",
-    "near_structure_nm": 1.44,
-    "spawn_score": 0.0,
-    "dist_home_nm": 50.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.8958,
-     24.3125
-    ]
-   },
-   "properties": {
-    "lat": 24.3125,
-    "lon": -80.8958,
-    "fish_score": 0.494,
-    "front": 0.908,
-    "structure": 0.447,
-    "sst_f": 86.5,
-    "chl": 0.069,
-    "depth_ft": 1175,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.071,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "dist_home_nm": 39.3,
+    "dist_home_nm": 46.0,
     "flags": [],
     "protected": false
    }
@@ -899,80 +145,23 @@
    "properties": {
     "lat": 25.2708,
     "lon": -80.1875,
-    "fish_score": 0.492,
+    "fish_score": 0.614,
     "front": 0.697,
     "structure": 0.321,
     "sst_f": 84.1,
     "chl": 0.402,
     "depth_ft": 33,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.171,
-    "tags": [],
+    "cur_kt": 1.09,
+    "convergence": 1.0,
+    "weed": 0.275,
+    "tags": [
+     "current edge",
+     "convergence/accumulation"
+    ],
     "near_structure": "Alva Chapman Reef (reef)",
     "near_structure_nm": 2.41,
     "spawn_score": 0.0,
     "dist_home_nm": 32.0,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.7292,
-     24.9792
-    ]
-   },
-   "properties": {
-    "lat": 24.9792,
-    "lon": -80.7292,
-    "fish_score": 0.491,
-    "front": 0.907,
-    "structure": 0.005,
-    "sst_f": 84.2,
-    "chl": 8.627,
-    "depth_ft": 7,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "dist_home_nm": 6.5,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.1875,
-     25.2292
-    ]
-   },
-   "properties": {
-    "lat": 25.2292,
-    "lon": -80.1875,
-    "fish_score": 0.491,
-    "front": 0.577,
-    "structure": 0.456,
-    "sst_f": 84.2,
-    "chl": 0.432,
-    "depth_ft": 151,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.228,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "dist_home_nm": 30.4,
     "flags": [],
     "protected": false
    }
@@ -989,16 +178,19 @@
    "properties": {
     "lat": 25.3125,
     "lon": -80.1458,
-    "fish_score": 0.491,
+    "fish_score": 0.613,
     "front": 0.532,
     "structure": 0.498,
     "sst_f": 84.3,
     "chl": 0.145,
     "depth_ft": 223,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.164,
-    "tags": [],
+    "cur_kt": 1.09,
+    "convergence": 1.0,
+    "weed": 0.267,
+    "tags": [
+     "current edge",
+     "convergence/accumulation"
+    ],
     "near_structure": "Alva Chapman Reef (reef)",
     "near_structure_nm": 1.13,
     "spawn_score": 0.0,
@@ -1012,27 +204,551 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -80.9375,
-     24.6458
+     -80.5625,
+     24.8542
     ]
    },
    "properties": {
-    "lat": 24.6458,
-    "lon": -80.9375,
-    "fish_score": 0.486,
-    "front": 0.541,
-    "structure": 0.491,
-    "sst_f": 84.3,
-    "chl": 0.139,
-    "depth_ft": 240,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.071,
-    "tags": [],
-    "near_structure": "Marathon Reef (reef)",
-    "near_structure_nm": 1.13,
+    "lat": 24.8542,
+    "lon": -80.5625,
+    "fish_score": 0.592,
+    "front": 0.833,
+    "structure": 0.354,
+    "sst_f": 85.0,
+    "chl": 0.191,
+    "depth_ft": 226,
+    "cur_kt": 0.37,
+    "convergence": 0.0,
+    "weed": 0.221,
+    "tags": [
+     "current edge",
+     "on structure"
+    ],
+    "near_structure": "Alexander Barge (reef)",
+    "near_structure_nm": 0.55,
     "spawn_score": 0.0,
-    "dist_home_nm": 23.5,
+    "dist_home_nm": 5.4,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.7708,
+     24.7292
+    ]
+   },
+   "properties": {
+    "lat": 24.7292,
+    "lon": -80.7708,
+    "fish_score": 0.59,
+    "front": 1.0,
+    "structure": 0.44,
+    "sst_f": 84.4,
+    "chl": 0.688,
+    "depth_ft": 184,
+    "cur_kt": 0.42,
+    "convergence": 0.024,
+    "weed": 0.206,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "dist_home_nm": 13.8,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.1875,
+     25.3125
+    ]
+   },
+   "properties": {
+    "lat": 25.3125,
+    "lon": -80.1875,
+    "fish_score": 0.589,
+    "front": 0.685,
+    "structure": 0.205,
+    "sst_f": 83.5,
+    "chl": 0.352,
+    "depth_ft": 26,
+    "cur_kt": 1.09,
+    "convergence": 1.0,
+    "weed": 0.267,
+    "tags": [
+     "current edge",
+     "convergence/accumulation"
+    ],
+    "near_structure": "Alva Chapman Reef (reef)",
+    "near_structure_nm": 2.23,
+    "spawn_score": 0.0,
+    "dist_home_nm": 33.7,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.1042,
+     25.6042
+    ]
+   },
+   "properties": {
+    "lat": 25.6042,
+    "lon": -80.1042,
+    "fish_score": 0.582,
+    "front": 0.819,
+    "structure": 0.36,
+    "sst_f": 83.6,
+    "chl": 1.108,
+    "depth_ft": 46,
+    "cur_kt": 1.23,
+    "convergence": 0.227,
+    "weed": 0.0,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Blue Fire (reef)",
+    "near_structure_nm": 2.37,
+    "spawn_score": 0.0,
+    "dist_home_nm": 50.0,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.8125,
+     24.6875
+    ]
+   },
+   "properties": {
+    "lat": 24.6875,
+    "lon": -80.8125,
+    "fish_score": 0.575,
+    "front": 0.947,
+    "structure": 0.473,
+    "sst_f": 84.5,
+    "chl": 0.129,
+    "depth_ft": 276,
+    "cur_kt": 0.42,
+    "convergence": 0.024,
+    "weed": 0.191,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Long Key Reef #1 (reef)",
+    "near_structure_nm": 2.52,
+    "spawn_score": 0.0,
+    "dist_home_nm": 17.1,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.5208,
+     24.8958
+    ]
+   },
+   "properties": {
+    "lat": 24.8958,
+    "lon": -80.5208,
+    "fish_score": 0.573,
+    "front": 0.967,
+    "structure": 0.383,
+    "sst_f": 85.7,
+    "chl": 0.277,
+    "depth_ft": 174,
+    "cur_kt": 0.37,
+    "convergence": 0.0,
+    "weed": 0.236,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Davis Reef (reef)",
+    "near_structure_nm": 1.77,
+    "spawn_score": 0.0,
+    "dist_home_nm": 6.1,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.3125,
+     25.0625
+    ]
+   },
+   "properties": {
+    "lat": 25.0625,
+    "lon": -80.3125,
+    "fish_score": 0.573,
+    "front": 0.786,
+    "structure": 0.334,
+    "sst_f": 84.6,
+    "chl": 0.199,
+    "depth_ft": 118,
+    "cur_kt": 1.58,
+    "convergence": 0.0,
+    "weed": 0.206,
+    "tags": [
+     "on structure"
+    ],
+    "near_structure": "Spiegel Grove (reef)",
+    "near_structure_nm": 0.27,
+    "spawn_score": 0.0,
+    "dist_home_nm": 19.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.1458,
+     25.2708
+    ]
+   },
+   "properties": {
+    "lat": 25.2708,
+    "lon": -80.1458,
+    "fish_score": 0.559,
+    "front": 0.439,
+    "structure": 0.507,
+    "sst_f": 84.6,
+    "chl": 0.135,
+    "depth_ft": 318,
+    "cur_kt": 1.09,
+    "convergence": 1.0,
+    "weed": 0.244,
+    "tags": [
+     "current edge",
+     "convergence/accumulation"
+    ],
+    "near_structure": "Alva Chapman Reef (reef)",
+    "near_structure_nm": 1.45,
+    "spawn_score": 0.0,
+    "dist_home_nm": 33.7,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.0625,
+     25.6042
+    ]
+   },
+   "properties": {
+    "lat": 25.6042,
+    "lon": -80.0625,
+    "fish_score": 0.557,
+    "front": 0.554,
+    "structure": 0.99,
+    "sst_f": 84.2,
+    "chl": 0.157,
+    "depth_ft": 371,
+    "cur_kt": 1.23,
+    "convergence": 0.227,
+    "weed": 0.244,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Blue Fire (reef)",
+    "near_structure_nm": 2.72,
+    "spawn_score": 0.0,
+    "dist_home_nm": 51.4,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.1042,
+     25.3958
+    ]
+   },
+   "properties": {
+    "lat": 25.3958,
+    "lon": -80.1042,
+    "fish_score": 0.557,
+    "front": 0.302,
+    "structure": 0.504,
+    "sst_f": 84.5,
+    "chl": 0.132,
+    "depth_ft": 335,
+    "cur_kt": 1.09,
+    "convergence": 1.0,
+    "weed": 0.603,
+    "tags": [
+     "current edge",
+     "convergence/accumulation",
+     "likely weed line"
+    ],
+    "near_structure": "Santa Rita (reef)",
+    "near_structure_nm": 0.81,
+    "spawn_score": 0.0,
+    "dist_home_nm": 40.4,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.4792,
+     24.9375
+    ]
+   },
+   "properties": {
+    "lat": 24.9375,
+    "lon": -80.4792,
+    "fish_score": 0.553,
+    "front": 0.784,
+    "structure": 0.333,
+    "sst_f": 84.7,
+    "chl": 0.225,
+    "depth_ft": 92,
+    "cur_kt": 1.45,
+    "convergence": 0.148,
+    "weed": 0.206,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Davis Reef (reef)",
+    "near_structure_nm": 1.83,
+    "spawn_score": 0.0,
+    "dist_home_nm": 8.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.8958,
+     24.3125
+    ]
+   },
+   "properties": {
+    "lat": 24.3125,
+    "lon": -80.8958,
+    "fish_score": 0.542,
+    "front": 0.908,
+    "structure": 0.447,
+    "sst_f": 86.5,
+    "chl": 0.069,
+    "depth_ft": 1175,
+    "cur_kt": 1.49,
+    "convergence": 0.176,
+    "weed": 0.221,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "dist_home_nm": 39.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.7292,
+     24.7292
+    ]
+   },
+   "properties": {
+    "lat": 24.7292,
+    "lon": -80.7292,
+    "fish_score": 0.54,
+    "front": 0.675,
+    "structure": 0.437,
+    "sst_f": 84.7,
+    "chl": 0.235,
+    "depth_ft": 292,
+    "cur_kt": 0.95,
+    "convergence": 0.081,
+    "weed": 0.214,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "dist_home_nm": 12.7,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.1458,
+     25.3958
+    ]
+   },
+   "properties": {
+    "lat": 25.3958,
+    "lon": -80.1458,
+    "fish_score": 0.533,
+    "front": 0.438,
+    "structure": 0.328,
+    "sst_f": 83.6,
+    "chl": 0.149,
+    "depth_ft": 16,
+    "cur_kt": 1.09,
+    "convergence": 1.0,
+    "weed": 0.542,
+    "tags": [
+     "current edge",
+     "convergence/accumulation",
+     "likely weed line"
+    ],
+    "near_structure": "Scott Mason-Chaite (reef)",
+    "near_structure_nm": 1.63,
+    "spawn_score": 0.0,
+    "dist_home_nm": 38.8,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.1458,
+     25.4375
+    ]
+   },
+   "properties": {
+    "lat": 25.4375,
+    "lon": -80.1458,
+    "fish_score": 0.518,
+    "front": 0.536,
+    "structure": 0.27,
+    "sst_f": 83.8,
+    "chl": 0.149,
+    "depth_ft": 7,
+    "cur_kt": 1.09,
+    "convergence": 1.0,
+    "weed": 0.0,
+    "tags": [
+     "current edge",
+     "convergence/accumulation"
+    ],
+    "near_structure": "Almirante (reef)",
+    "near_structure_nm": 1.99,
+    "spawn_score": 0.0,
+    "dist_home_nm": 40.7,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.2292,
+     25.3125
+    ]
+   },
+   "properties": {
+    "lat": 25.3125,
+    "lon": -80.2292,
+    "fish_score": 0.511,
+    "front": 0.552,
+    "structure": 0.021,
+    "sst_f": 83.1,
+    "chl": 1.906,
+    "depth_ft": 20,
+    "cur_kt": 1.09,
+    "convergence": 1.0,
+    "weed": 0.221,
+    "tags": [
+     "current edge",
+     "convergence/accumulation"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "dist_home_nm": 32.1,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.1042,
+     25.4375
+    ]
+   },
+   "properties": {
+    "lat": 25.4375,
+    "lon": -80.1042,
+    "fish_score": 0.509,
+    "front": 0.255,
+    "structure": 0.505,
+    "sst_f": 84.3,
+    "chl": 0.097,
+    "depth_ft": 279,
+    "cur_kt": 1.09,
+    "convergence": 1.0,
+    "weed": 0.259,
+    "tags": [
+     "current edge",
+     "convergence/accumulation"
+    ],
+    "near_structure": "Almirante (reef)",
+    "near_structure_nm": 1.49,
+    "spawn_score": 0.0,
+    "dist_home_nm": 42.2,
     "flags": [],
     "protected": false
    }
@@ -1049,16 +765,18 @@
    "properties": {
     "lat": 24.9792,
     "lon": -80.3958,
-    "fish_score": 0.477,
+    "fish_score": 0.501,
     "front": 0.578,
     "structure": 0.319,
     "sst_f": 84.8,
     "chl": 0.158,
     "depth_ft": 210,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
+    "cur_kt": 1.45,
+    "convergence": 0.148,
+    "weed": 0.191,
+    "tags": [
+     "current edge"
+    ],
     "near_structure": "Duane (reef)",
     "near_structure_nm": 0.98,
     "spawn_score": 0.0,
@@ -1072,27 +790,29 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.5208,
-     24.4792
+     -80.6458,
+     24.8125
     ]
    },
    "properties": {
-    "lat": 24.4792,
-    "lon": -81.5208,
-    "fish_score": 0.473,
-    "front": 0.584,
-    "structure": 0.509,
-    "sst_f": 84.7,
-    "chl": 0.11,
-    "depth_ft": 328,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.135,
-    "tags": [],
-    "near_structure": "Wilkes Barre-Stern Section (reef)",
-    "near_structure_nm": 1.75,
+    "lat": 24.8125,
+    "lon": -80.6458,
+    "fish_score": 0.501,
+    "front": 0.756,
+    "structure": 0.392,
+    "sst_f": 84.0,
+    "chl": 0.247,
+    "depth_ft": 174,
+    "cur_kt": 0.37,
+    "convergence": 0.0,
+    "weed": 0.214,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
     "spawn_score": 0.0,
-    "dist_home_nm": 55.3,
+    "dist_home_nm": 6.5,
     "flags": [],
     "protected": false
    }
@@ -1102,27 +822,29 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.6042,
-     24.4792
+     -80.0625,
+     25.5625
     ]
    },
    "properties": {
-    "lat": 24.4792,
-    "lon": -81.6042,
-    "fish_score": 0.47,
-    "front": 0.526,
-    "structure": 0.445,
+    "lat": 25.5625,
+    "lon": -80.0625,
+    "fish_score": 0.499,
+    "front": 0.411,
+    "structure": 1.0,
     "sst_f": 84.4,
-    "chl": 0.159,
-    "depth_ft": 246,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.085,
-    "tags": [],
-    "near_structure": "USS Kendrick (DD-612) (reef)",
-    "near_structure_nm": 1.16,
+    "chl": 0.238,
+    "depth_ft": 390,
+    "cur_kt": 1.23,
+    "convergence": 0.227,
+    "weed": 0.236,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Railroad Barge (reef)",
+    "near_structure_nm": 1.45,
     "spawn_score": 0.0,
-    "dist_home_nm": 59.4,
+    "dist_home_nm": 49.4,
     "flags": [],
     "protected": false
    }
@@ -1132,27 +854,124 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.7292,
-     24.4375
+     -80.8125,
+     24.7292
     ]
    },
    "properties": {
-    "lat": 24.4375,
-    "lon": -81.7292,
-    "fish_score": 0.47,
-    "front": 0.536,
-    "structure": 0.5,
-    "sst_f": 85.0,
-    "chl": 0.078,
-    "depth_ft": 315,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.192,
-    "tags": [],
-    "near_structure": "Hoyt Vandenberg (reef)",
-    "near_structure_nm": 1.41,
+    "lat": 24.7292,
+    "lon": -80.8125,
+    "fish_score": 0.496,
+    "front": 0.674,
+    "structure": 0.3,
+    "sst_f": 84.2,
+    "chl": 1.708,
+    "depth_ft": 62,
+    "cur_kt": 0.42,
+    "convergence": 0.024,
+    "weed": 0.183,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Long Key Reef #5 (reef)",
+    "near_structure_nm": 0.81,
     "spawn_score": 0.0,
-    "dist_home_nm": 66.6,
+    "dist_home_nm": 15.2,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.8958,
+     25.1042
+    ]
+   },
+   "properties": {
+    "lat": 25.1042,
+    "lon": -80.8958,
+    "fish_score": 0.483,
+    "front": 0.744,
+    "structure": 0.335,
+    "sst_f": 84.3,
+    "chl": 4.947,
+    "depth_ft": 295,
+    "cur_kt": 1.02,
+    "convergence": 0.177,
+    "weed": 0.0,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "dist_home_nm": 18.2,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.5625,
+     24.8958
+    ]
+   },
+   "properties": {
+    "lat": 24.8958,
+    "lon": -80.5625,
+    "fish_score": 0.482,
+    "front": 0.835,
+    "structure": 0.266,
+    "sst_f": 84.7,
+    "chl": 0.838,
+    "depth_ft": 23,
+    "cur_kt": 0.37,
+    "convergence": 0.0,
+    "weed": 0.145,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Eagle (reef)",
+    "near_structure_nm": 1.63,
+    "spawn_score": 0.0,
+    "dist_home_nm": 4.0,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.1875,
+     25.5208
+    ]
+   },
+   "properties": {
+    "lat": 25.5208,
+    "lon": -80.1875,
+    "fish_score": 0.479,
+    "front": 0.559,
+    "structure": 0.014,
+    "sst_f": 82.8,
+    "chl": 3.335,
+    "depth_ft": 7,
+    "cur_kt": 1.23,
+    "convergence": 0.227,
+    "weed": 1.0,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "dist_home_nm": 43.3,
     "flags": [],
     "protected": false
    }
@@ -1163,26 +982,28 @@
     "type": "Point",
     "coordinates": [
      -80.6042,
-     24.8125
+     24.8542
     ]
    },
    "properties": {
-    "lat": 24.8125,
+    "lat": 24.8542,
     "lon": -80.6042,
-    "fish_score": 0.46,
-    "front": 0.599,
-    "structure": 0.326,
-    "sst_f": 85.7,
-    "chl": 0.139,
-    "depth_ft": 272,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": "Islamorada Reef (reef)",
-    "near_structure_nm": 2.9,
+    "fish_score": 0.478,
+    "front": 0.724,
+    "structure": 0.334,
+    "sst_f": 83.9,
+    "chl": 0.241,
+    "depth_ft": 112,
+    "cur_kt": 0.37,
+    "convergence": 0.0,
+    "weed": 0.16,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Alexander Barge (reef)",
+    "near_structure_nm": 2.0,
     "spawn_score": 0.0,
-    "dist_home_nm": 6.6,
+    "dist_home_nm": 4.2,
     "flags": [],
     "protected": false
    }
@@ -1192,27 +1013,285 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.2708,
-     24.5625
+     -80.6875,
+     24.7708
     ]
    },
    "properties": {
-    "lat": 24.5625,
-    "lon": -81.2708,
-    "fish_score": 0.459,
-    "front": 0.543,
-    "structure": 0.415,
-    "sst_f": 84.2,
-    "chl": 0.314,
-    "depth_ft": 184,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.107,
-    "tags": [],
-    "near_structure": "Bahia Honda  Reef (reef)",
-    "near_structure_nm": 2.25,
+    "lat": 24.7708,
+    "lon": -80.6875,
+    "fish_score": 0.472,
+    "front": 0.656,
+    "structure": 0.419,
+    "sst_f": 84.4,
+    "chl": 0.238,
+    "depth_ft": 210,
+    "cur_kt": 0.37,
+    "convergence": 0.0,
+    "weed": 0.244,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
     "spawn_score": 0.0,
-    "dist_home_nm": 41.0,
+    "dist_home_nm": 9.5,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.1875,
+     25.3542
+    ]
+   },
+   "properties": {
+    "lat": 25.3542,
+    "lon": -80.1875,
+    "fish_score": 0.468,
+    "front": 0.344,
+    "structure": 0.061,
+    "sst_f": 83.3,
+    "chl": 0.352,
+    "depth_ft": 10,
+    "cur_kt": 1.09,
+    "convergence": 1.0,
+    "weed": 0.702,
+    "tags": [
+     "current edge",
+     "convergence/accumulation",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "dist_home_nm": 35.5,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.2292,
+     25.1875
+    ]
+   },
+   "properties": {
+    "lat": 25.1875,
+    "lon": -80.2292,
+    "fish_score": 0.466,
+    "front": 0.673,
+    "structure": 0.326,
+    "sst_f": 84.4,
+    "chl": 0.545,
+    "depth_ft": 59,
+    "cur_kt": 1.64,
+    "convergence": 0.072,
+    "weed": 0.259,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "dist_home_nm": 27.1,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.3958,
+     25.0208
+    ]
+   },
+   "properties": {
+    "lat": 25.0208,
+    "lon": -80.3958,
+    "fish_score": 0.466,
+    "front": 0.573,
+    "structure": 0.221,
+    "sst_f": 85.0,
+    "chl": 1.443,
+    "depth_ft": 26,
+    "cur_kt": 1.58,
+    "convergence": 0.0,
+    "weed": 0.053,
+    "tags": [
+     "on structure"
+    ],
+    "near_structure": "Wolfe Reef (reef)",
+    "near_structure_nm": 0.07,
+    "spawn_score": 0.0,
+    "dist_home_nm": 14.1,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.5625,
+     24.4792
+    ]
+   },
+   "properties": {
+    "lat": 24.4792,
+    "lon": -81.5625,
+    "fish_score": 0.465,
+    "front": 0.53,
+    "structure": 0.474,
+    "sst_f": 84.5,
+    "chl": 0.124,
+    "depth_ft": 276,
+    "cur_kt": 0.58,
+    "convergence": 0.0,
+    "weed": 0.153,
+    "tags": [
+     "on structure"
+    ],
+    "near_structure": "Wilkes Barre-Bow Section (reef)",
+    "near_structure_nm": 0.61,
+    "spawn_score": 0.0,
+    "dist_home_nm": 57.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.5208,
+     24.9375
+    ]
+   },
+   "properties": {
+    "lat": 24.9375,
+    "lon": -80.5208,
+    "fish_score": 0.46,
+    "front": 0.8,
+    "structure": 0.179,
+    "sst_f": 84.0,
+    "chl": 1.035,
+    "depth_ft": 13,
+    "cur_kt": 0.37,
+    "convergence": 0.0,
+    "weed": 0.046,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Davis Reef (reef)",
+    "near_structure_nm": 1.07,
+    "spawn_score": 0.0,
+    "dist_home_nm": 6.0,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.4375,
+     24.9375
+    ]
+   },
+   "properties": {
+    "lat": 24.9375,
+    "lon": -80.4375,
+    "fish_score": 0.46,
+    "front": 0.519,
+    "structure": 0.31,
+    "sst_f": 84.9,
+    "chl": 0.125,
+    "depth_ft": 233,
+    "cur_kt": 1.45,
+    "convergence": 0.148,
+    "weed": 0.214,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "dist_home_nm": 10.5,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.1458,
+     25.5208
+    ]
+   },
+   "properties": {
+    "lat": 25.5208,
+    "lon": -80.1458,
+    "fish_score": 0.458,
+    "front": 0.632,
+    "structure": 0.05,
+    "sst_f": 82.9,
+    "chl": 3.02,
+    "depth_ft": 20,
+    "cur_kt": 1.23,
+    "convergence": 0.227,
+    "weed": 0.0,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "dist_home_nm": 44.6,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.9375,
+     24.6458
+    ]
+   },
+   "properties": {
+    "lat": 24.6458,
+    "lon": -80.9375,
+    "fish_score": 0.456,
+    "front": 0.541,
+    "structure": 0.491,
+    "sst_f": 84.3,
+    "chl": 0.139,
+    "depth_ft": 240,
+    "cur_kt": 0.42,
+    "convergence": 0.024,
+    "weed": 0.259,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Marathon Reef (reef)",
+    "near_structure_nm": 1.13,
+    "spawn_score": 0.0,
+    "dist_home_nm": 23.5,
     "flags": [],
     "protected": false
    }
