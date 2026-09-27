@@ -288,8 +288,10 @@
   .edgerow{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:transparent;border:1px solid var(--hair);border-radius:11px;padding:10px 12px;margin-bottom:7px;cursor:pointer;color:var(--ink);font-family:var(--sans);transition:.2s;}
   .edgerow:hover{border-color:var(--hair-strong);}
   .er-dot{width:11px;height:11px;border-radius:50%;flex:none;box-shadow:0 0 8px currentColor;}
-  .er-loc{flex:1;font-family:var(--mono);font-size:.85rem;}
+  .er-loc{flex:1;font-family:var(--mono);font-size:.85rem;line-height:1.35;}
   .er-loc span{color:var(--faint);}
+  .er-loc b{font-family:var(--sans);font-size:.92rem;}
+  .fishmini{flex:none}
   .er-score{font-family:var(--mono);font-weight:700;color:var(--ink);}
   .edgenote{font-size:.74rem;color:var(--faint);margin-top:6px;line-height:1.5;}
 
@@ -420,6 +422,15 @@
   .patrow b{color:var(--ink);font-weight:600;}
   .confline{font-size:.74rem;color:var(--faint);margin-top:6px;line-height:1.5;}
   .hide{display:none !important;}
+
+/* fish markers (hotspots) */
+.fishmk{position:relative;width:38px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;filter:drop-shadow(0 1px 2px rgba(0,0,0,.7));}
+.fishmk svg{width:36px;height:22px;overflow:visible}
+.fishmk.spawn{box-shadow:0 0 0 2.5px #ff6fb5, 0 0 10px 2px rgba(255,111,181,.55);background:rgba(20,10,30,.45)}
+.fishmk.prot{box-shadow:0 0 0 2.5px #ff6b6b;background:rgba(60,10,10,.5)}
+.fishmk.prot svg{filter:grayscale(1) opacity(.75)}
+.fishmini{display:inline-block;vertical-align:middle;width:24px;height:15px;margin-right:6px}
+.fishmini svg{width:24px;height:15px}
 </style>
 </head>
 <body>
@@ -536,6 +547,7 @@
         <button class="btn-ghost" id="setReset">Reset defaults</button>
         <button class="btn-save" id="setSave">Save</button>
       </div>
+      <div class="ts" id="storeNote" style="margin-top:10px;opacity:.75"></div>
     </div>
   </div>
 
@@ -628,9 +640,38 @@ let mapState={map:null,marker:null,base:null,layers:{}};
 let spawnSpecies="mutton";   // selected target species for spawning window
 let __waterTempF=null;       // last rendered water temp, for the spawn dropdown
 let CURRENT_SNAPSHOT=null;    // conditions snapshot at render time, for the catch log
+/* Persistence. Born as a claude.ai artifact, the app only knew window.storage — which does
+   not exist on GitHub Pages or a home-screen install, so nothing survived a reload (#9).
+   Order now: the browser's own localStorage (present everywhere the app is hosted, survives
+   reloads and home-screen launches on iOS) → window.storage when the app runs inside claude.ai.
+   Both are tried on read so data saved under either regime is found; a failed save is
+   reported once instead of vanishing. */
+function toast(msg, ms=6000){
+  let t=document.getElementById("bcToast");
+  if(!t){ t=document.createElement("div"); t.id="bcToast";
+    t.style.cssText="position:fixed;left:50%;bottom:22px;transform:translateX(-50%);max-width:92vw;background:#1c2f38;color:#eafff8;border:1px solid #f4c87a;border-radius:12px;padding:10px 14px;font:14px system-ui,sans-serif;z-index:9999;box-shadow:0 6px 24px rgba(0,0,0,.5)";
+    document.body.appendChild(t); }
+  t.textContent=msg; t.style.display="block"; clearTimeout(t._h); t._h=setTimeout(()=>{ t.style.display="none"; }, ms);
+}
 const store={
-  async get(k){ try{ if(window.storage&&window.storage.get){ const r=await window.storage.get(k); return r&&r.value?JSON.parse(r.value):null; } }catch(e){} return null; },
-  async set(k,v){ try{ if(window.storage&&window.storage.set){ await window.storage.set(k,JSON.stringify(v)); } }catch(e){} }
+  _warned:false,
+  _ls(){ try{ return window.localStorage; }catch(e){ return null; } },
+  async get(k){
+    const ls=this._ls();
+    if(ls){ try{ const raw=ls.getItem(k); if(raw!=null) return JSON.parse(raw); }catch(e){} }
+    try{ if(window.storage&&window.storage.get){ const r=await window.storage.get(k); if(r&&r.value!=null){ const v=JSON.parse(r.value); if(ls){ try{ ls.setItem(k, r.value); }catch(e){} } return v; } } }catch(e){}
+    return null;
+  },
+  async set(k,v){
+    const raw=JSON.stringify(v); let ok=false;
+    const ls=this._ls();
+    if(ls){ try{ ls.setItem(k, raw); ok=true; }catch(e){} }         // quota / private mode → falls through
+    try{ if(window.storage&&window.storage.set){ await window.storage.set(k, raw); ok=true; } }catch(e){}
+    if(!ok && !this._warned){ this._warned=true; try{ toast("Couldn’t save — this browser is blocking storage (private mode?). Settings and log won’t persist."); }catch(e){} }
+    return ok;
+  },
+  async remove(k){ const ls=this._ls(); if(ls){ try{ ls.removeItem(k); }catch(e){} } try{ if(window.storage&&window.storage.delete) await window.storage.delete(k); }catch(e){} },
+  where(){ return this._ls()? "this device (browser storage)" : (window.storage? "claude.ai" : "nowhere — storage blocked"); }
 };
 function parseCoords(s){
   const m=String(s).match(/^\s*(-?\d{1,2}(?:\.\d+)?)\s*[, ]\s*(-?\d{1,3}(?:\.\d+)?)\s*$/);
@@ -1528,6 +1569,7 @@ $("#refresh").addEventListener("click",()=>{
 
 /* ============ settings panel ============ */
 function fillSettingsUI(){
+  const sn=$("#storeNote"); if(sn) sn.textContent="Settings, saved spot, catch log and track record are stored on "+store.where()+". Use the log’s Backup button before switching devices.";
   $("#s_alert").value=SETTINGS.alertScore; $("#v_alert").textContent=SETTINGS.alertScore;
   $("#s_windMax").value=SETTINGS.windMax; $("#v_windMax").textContent=SETTINGS.windMax+" mph";
   $("#s_windBad").value=SETTINGS.windBad; $("#v_windBad").textContent=SETTINGS.windBad+" mph";
@@ -1726,30 +1768,56 @@ async function runEdgeFinder(){
   }catch(e){ $("#edgeResults").innerHTML='<div class="edgeloading">Edge scan failed: '+e.message+'</div>'; }
   finally{ btn.disabled=false; btn.textContent=orig; }
 }
+/* --- species silhouettes (viewBox 0 0 40 24, fish faces right) --- */
+const FISH_SVG={   // [body paths..., extras] in a 40x24 box, fish faces right
+  mahi:      {d:"M5 13C5 5 12 3 22 4c7 1 11 5 12 8-1 3-5 6-12 7C13 20 6 18 5 13Z M8 6C14-1 24 0 31 6l-4 1C22 3 14 3 9 7Z M34 12l6-9-3 9 3 9Z", eye:[9,9]},
+  sailfish:  {d:"M6 13c4-3 16-4 24-2-4 3-16 4-24 2Z M6 12l-6-1 6 2Z M11 10C12-2 26-2 30 9l-3 1C24 3 14 3 12 10Z M30 11l8-8-3 9 3 9Z", eye:[9,11.5]},
+  blackfin:  {d:"M4 12C8 5 24 4 32 11 24 19 8 19 4 12Z M19 6l3-4 2 4Z M19 18l3 4 2-4Z M32 11l7-7-3 8 3 8Z M13 7l2-3 2 3Z", eye:[9,11]},
+  wahoo:     {d:"M2 12c6-3 24-4 31-1-7 4-25 4-31 1Z M10 9l2-4 2 4 2-4 2 4 2-4 2 4 2-4 2 4Z M33 11l5-5-2 6 2 6Z", eye:[6,11]},
+  kingfish:  {d:"M2 12c6-4 24-4 30-1-6 4-24 4-30 1Z M12 9l3-4 3 4Z M20 9l3-3 2 3Z M31 11l8-7-4 8 4 8Z", eye:[6,11], dots:[[14,12],[19,11.5],[24,11.5]]},
+  mutton:    {d:"M3 12c3-7 13-9 21-7 5 1 7 4 8 7-3 5-14 8-24 6-3-1-5-3-5-6Z M9 6l2-4 2 4 2-4 2 4 2-4 2 4 2-3 1 3Z M32 12l6-5-2 5 2 5Z", eye:[7,10], spot:[24,9]},
+  yellowtail:{d:"M3 12c3-6 13-8 21-6 5 1 7 4 8 6-3 5-14 7-24 5-3-1-5-3-5-5Z M10 7l2-3 2 3 2-3 2 3 2-3 2 3Z M31 12l9-8-4 8 4 8Z", eye:[7,10.5], stripe:true},
+  graysnapper:{d:"M3 12c3-7 13-9 21-7 5 1 7 4 8 7-3 5-14 8-24 6-3-1-5-3-5-6Z M9 6l2-4 2 4 2-4 2 4 2-4 2 4 2-3 1 3Z M32 12l6-5-2 5 2 5Z", eye:[7,10]},
+  grouper:   {d:"M3 13c0-7 9-10 19-9 8 1 12 5 12 8 0 4-6 9-16 8-9 0-15-2-15-7Z M9 5l2-3 2 3 2-3 2 3 2-3 2 3 2-3 2 3Z M34 12c4-3 5 3 0 2Z", eye:[8,10], mouth:"M3 13l4 1"},
+  permit:    {d:"M5 12C9 4 21 1 29 12 21 23 9 20 5 12Z M14 4c2-7 8-7 10-1l-4 1Z M14 20c2 7 8 7 10 1l-4-1Z M29 12l10-9-4 9 4 9Z", eye:[9,10]},
+  tarpon:    {d:"M3 12c5-5 21-7 29-2-8 6-24 7-29 2Z M32 11l8-9-4 10 4 10Z M3 12l3-3 1 3Z M20 7l2-3 1 3Z", eye:[7,10]},
+  generic:   {d:"M4 12c4-8 20-9 27 0-7 9-23 8-27 0Z M31 12l7-6-3 6 3 6Z", eye:[8,10]}
+};
+const MODE_COLOR={troll:"#f4c87a", bottom:"#3dd6b0", inshore:"#7fc8ff", unknown:"#c9d6df"};
+const MODE_LABEL={troll:"trolling edge", bottom:"bottom / structure", inshore:"inshore", unknown:"edge"};
+function fishSVG(h, size){
+  const f=FISH_SVG[h.species]||FISH_SVG.generic, col=MODE_COLOR[h.mode]||MODE_COLOR.unknown;
+  let extra=`<circle cx="${f.eye[0]}" cy="${f.eye[1]}" r="1.2" fill="#0a1a20"/>`;
+  if(f.spot) extra+=`<circle cx="${f.spot[0]}" cy="${f.spot[1]}" r="1.5" fill="#0a1a20"/>`;
+  if(f.dots) extra+=f.dots.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="0.9" fill="#0a1a20"/>`).join("");
+  if(f.stripe) extra+=`<path d="M7 12.5 L30 12" stroke="#ffd84a" stroke-width="1.4" fill="none"/>`;
+  if(f.mouth) extra+=`<path d="${f.mouth}" stroke="#0a1a20" stroke-width="1" fill="none"/>`;
+  return `<svg viewBox="-1 -3 42 30" width="${size}" height="${Math.round(size*0.7)}"><path d="${f.d}" fill="${col}" stroke="#0a1a20" stroke-width="1.1" stroke-linejoin="round"/>${extra}</svg>`;
+}
+function fishIcon(h){
+  const cls="fishmk"+(h.protected?" prot":(h.spawning?" spawn":""));
+  return L.divIcon({html:`<div class="${cls}">${fishSVG(h,36)}</div>`, className:"", iconSize:[38,24], iconAnchor:[19,12], popupAnchor:[0,-10]});
+}
 function edgePopup(h, idx){
   const f=(v,unit,dp=1)=> v!=null&&isFinite(v)? (+v).toFixed(dp)+unit : "—";
   const tags=(h.tags&&h.tags.length)? `<br><span style="color:#3dd6b0">${h.tags.join(" · ")}</span>` : "";
   const near=h.near_structure? `<br>Near: ${h.near_structure} (${f(h.near_structure_nm," nm",2)})` : "";
+  const who=h.species? `<br><b>Best bet: ${h.species_label}</b> — ${MODE_LABEL[h.mode]||h.mode}`+
+      (h.spawning? `<br><b style="color:#ff6fb5">Spawning window — likely aggregation. Fish gently, mind closures.</b>`:"")+
+      ((h.also&&h.also.length)? `<br><span style="font-size:12px;color:#9fb3bd">also: ${h.also.map(a=>a.label).join(", ")}</span>`:"") : "";
   const warn=h.protected? `<br><b style="color:#ff6b6b">PROTECTED / CLOSED — do not fish</b><br><span style="font-size:12px">${(h.flags||[]).join("<br>")}</span>` : "";
-  return `<b>${h.protected?"Closed water":"Edge #"+(idx+1)}</b><br>${h.lat.toFixed(3)}°N ${Math.abs(h.lon).toFixed(3)}°W`+
+  return `<b>${h.protected?"Closed water":"Hotspot #"+(idx+1)}</b><br>${h.lat.toFixed(3)}°N ${Math.abs(h.lon).toFixed(3)}°W`+
     `<br>Score: ${Math.round((h.fish_score||0)*100)}/100 · Water: ${f(h.sst_f,"°F")} · Chl: ${f(h.chl," mg/m³",2)}`+
     `<br>Depth: ${h.depth_ft!=null?h.depth_ft+" ft":"—"} · Current: ${f(h.cur_kt," kt")} · ${h.dist_home_nm!=null? h.dist_home_nm+" nm from home":""}`+
-    tags+near+warn+
+    who+tags+near+warn+
     (h.protected?"":`<br><button onclick="setSpotFromMap(${h.lat},${h.lon})" style="margin-top:7px;padding:5px 10px;border-radius:7px;border:1px solid #3dd6b0;background:#0c2a34;color:#eafff8;font-weight:600;cursor:pointer">Load conditions here</button>`);
 }
 function drawEdges(top, blocked){
   if(!mapState.map) return;
   if(edgeLayer) mapState.map.removeLayer(edgeLayer);
   edgeLayer=L.layerGroup();
-  top.forEach((h,idx)=>{
-    const col=colorForEdge(h.fish_score);
-    const mk=L.circleMarker([h.lat,h.lon],{radius:7,color:col,weight:1.5,fillColor:col,fillOpacity:.75});
-    mk.bindPopup(edgePopup(h,idx)); edgeLayer.addLayer(mk);
-  });
-  (blocked||[]).forEach(h=>{
-    const mk=L.circleMarker([h.lat,h.lon],{radius:7,color:"#ff6b6b",weight:2,fillColor:"#ff6b6b",fillOpacity:.25,dashArray:"3 3"});
-    mk.bindPopup(edgePopup(h,0)); edgeLayer.addLayer(mk);
-  });
+  top.forEach((h,idx)=>{ const mk=L.marker([h.lat,h.lon],{icon:fishIcon(h), title:`${h.species_label||"edge"} · ${Math.round((h.fish_score||0)*100)}`}); mk.bindPopup(edgePopup(h,idx)); edgeLayer.addLayer(mk); });
+  (blocked||[]).forEach(h=>{ const mk=L.marker([h.lat,h.lon],{icon:fishIcon(h)}); mk.bindPopup(edgePopup(h,0)); edgeLayer.addLayer(mk); });
   edgeLayer.addTo(mapState.map);
   const all=top.concat(blocked||[]);
   if(all.length) mapState.map.fitBounds(L.latLngBounds(all.map(h=>[h.lat,h.lon])).pad(0.3));
@@ -1759,18 +1827,20 @@ function renderEdgeList(top, blocked){
   const m=edgeMeta||{};
   if(!top.length){ res.innerHTML='<div class="edgeloading">The last scan found no strong open-water edges in its fresh satellite data. Edges come and go with each pass.</div>'; }
   else{
-    res.appendChild(el("div","edgehdr","Top hotspots in the Keys — fused temp + colour breaks, structure, current & weed (tap to load)"));
+    res.appendChild(el("div","edgehdr","Top hotspots in the Keys — best-bet species from the conditions at each spot (tap to load)"));
     top.slice(0,6).forEach(h=>{
       const row=el("button","edgerow");
-      const bits=[h.sst_f!=null?(+h.sst_f).toFixed(0)+"°F":null, h.chl!=null?"chl "+(+h.chl).toFixed(2):null, h.depth_ft!=null?h.depth_ft+" ft":null, (h.tags||[])[0]].filter(Boolean).join(", ");
-      row.innerHTML=`<span class="er-dot" style="color:${colorForEdge(h.fish_score)};background:${colorForEdge(h.fish_score)}"></span>
-        <span class="er-loc">${h.lat.toFixed(2)}°N ${Math.abs(h.lon).toFixed(2)}°W <span>· ${bits}</span></span>
+      const bits=[h.sst_f!=null?(+h.sst_f).toFixed(0)+"°F":null, h.depth_ft!=null?h.depth_ft+" ft":null, (h.tags||[])[0]].filter(Boolean).join(", ");
+      const who=h.species? `<b style="color:${MODE_COLOR[h.mode]||"#fff"}">${h.species_label}</b> <span>· ${MODE_LABEL[h.mode]||""}${h.spawning?' · <span style="color:#ff6fb5">spawning</span>':''}</span>` : "edge";
+      row.innerHTML=`<span class="fishmini">${fishSVG(h,24)}</span>
+        <span class="er-loc">${who}<br><span>${h.lat.toFixed(2)}°N ${Math.abs(h.lon).toFixed(2)}°W · ${bits}</span></span>
         <span class="er-score">${Math.round((h.fish_score||0)*100)}</span>`;
       row.onclick=()=>{ if(mapState.map) mapState.map.setView([h.lat,h.lon],Math.max(mapState.map.getZoom(),10)); setSpotFromMap(h.lat,h.lon); };
       res.appendChild(row);
     });
+    res.appendChild(el("div","edgenote",`<span style="color:${MODE_COLOR.troll}">■</span> trolling edge (pelagics) · <span style="color:${MODE_COLOR.bottom}">■</span> bottom / structure · <span style="color:${MODE_COLOR.inshore}">■</span> inshore · <span style="color:#ff6fb5">◯</span> pink ring = that species' spawning window is on (likely aggregation — fish gently, check closures) · <span style="color:#ff6b6b">◯</span> red ring = protected/closed water. Species calls are general Keys guidance from depth, temperature, season, moon and what the water is doing — not a promise.`));
   }
-  if(blocked&&blocked.length) res.appendChild(el("div","edgenote",`⚠ ${blocked.length} strong edge${blocked.length>1?"s fall":" falls"} in protected or closed water — shown red on the map, never listed.`));
+  if(blocked&&blocked.length) res.appendChild(el("div","edgenote",`⚠ ${blocked.length} strong edge${blocked.length>1?"s fall":" falls"} in protected or closed water — shown with a red ring on the map, never listed.`));
   const gen=m.generated_at? fmtWhen(m.generated_at) : "unknown time";
   const age=m.generated_at? ageDays(m.generated_at) : null;
   const stale=(age!=null&&age>1.5)? ` <b style="color:#f4c87a">(over ${Math.floor(age)} days old — the analyzer may have stopped; check the Actions tab)</b>` : "";
@@ -1778,7 +1848,6 @@ function renderEdgeList(top, blocked){
   const reduced=m.degraded? ` <b style="color:#f4c87a">⚠ Reduced confidence: ${m.degraded}.</b>` : "";
   res.appendChild(el("div","edgenote",`From the cloud scan of ${gen}${stale}${reduced} — temperature: ${src("sst")} · colour: ${src("chl")} · layers: ${(m.layers||[]).join(", ")||"—"}. Edges shift each pass and thin out after cloudy weeks. Pelagics ride these breaks — mind seasonal closures on aggregation sites.`));
 }
-
 $("#edgeBtn").addEventListener("click",runEdgeFinder);
 
 /* ============ spawning window ============ */
