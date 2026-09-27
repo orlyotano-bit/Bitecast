@@ -119,6 +119,73 @@ SPECIES = {
                     "note": "Atlantic shallow-water grouper is CLOSED Jan 1–Apr 30. Gag has extra restrictions."},
 }
 
+# ======================= FISH GUIDE (per-hotspot best bet) =======================
+# Which fish a given cell most likely suits, from depth, water temp, month and what the
+# cell is doing (weed line / current edge / convergence / structure). "mode" says how you
+# fish it: troll (pelagics on edges), bottom (structure), inshore. General Keys guidance,
+# not a promise. Bottom species also carry their SPAWNING window from SPECIES above.
+FISH_GUIDE = [
+    {"id": "mahi",       "label": "Mahi (dolphin)",     "mode": "troll",  "months": list(range(1, 13)), "peak": [4,5,6,7],
+     "temp": (74, 88), "depth": (90, 4000),  "wants": ["likely weed line", "convergence/accumulation", "current edge"]},
+    {"id": "sailfish",   "label": "Sailfish",           "mode": "troll",  "months": [11,12,1,2,3,4,5],  "peak": [12,1,2,3],
+     "temp": (68, 82), "depth": (80, 400),   "wants": ["current edge", "convergence/accumulation"]},
+    {"id": "blackfin",   "label": "Blackfin tuna",      "mode": "troll",  "months": list(range(1, 13)), "peak": [3,4,5,10,11],
+     "temp": (72, 86), "depth": (180, 1200), "wants": ["on structure", "current edge"]},
+    {"id": "wahoo",      "label": "Wahoo",              "mode": "troll",  "months": [10,11,12,1,2,3],   "peak": [11,12,1],
+     "temp": (70, 82), "depth": (150, 900),  "wants": ["current edge", "on structure"]},
+    {"id": "kingfish",   "label": "King mackerel",      "mode": "troll",  "months": [11,12,1,2,3,4],    "peak": [12,1,2,3],
+     "temp": (64, 78), "depth": (40, 160),   "wants": ["current edge", "on structure"]},
+    {"id": "mutton",     "label": "Mutton snapper",     "mode": "bottom", "months": list(range(1, 13)), "peak": [5,6,7,8],
+     "temp": (72, 86), "depth": (40, 300),   "wants": ["on structure"], "spawn": "mutton"},
+    {"id": "yellowtail", "label": "Yellowtail snapper", "mode": "bottom", "months": list(range(1, 13)), "peak": [4,5,6,7,8],
+     "temp": (70, 88), "depth": (30, 140),   "wants": ["on structure"]},
+    {"id": "graysnapper","label": "Gray snapper",       "mode": "bottom", "months": list(range(1, 13)), "peak": [6,7,8,9],
+     "temp": (74, 88), "depth": (15, 180),   "wants": ["on structure"], "spawn": "graysnapper"},
+    {"id": "grouper",    "label": "Black / gag grouper","mode": "bottom", "months": list(range(1, 13)), "peak": [11,12,1,2,3],
+     "temp": (66, 80), "depth": (60, 330),   "wants": ["on structure"], "spawn": "grouper"},
+    {"id": "permit",     "label": "Permit",             "mode": "bottom", "months": list(range(1, 13)), "peak": [4,5,6,7],
+     "temp": (74, 86), "depth": (40, 220),   "wants": ["on structure"], "spawn": "permit"},
+    {"id": "tarpon",     "label": "Tarpon",             "mode": "inshore","months": [3,4,5,6,7,8],      "peak": [4,5,6],
+     "temp": (74, 86), "depth": (6, 60),     "wants": ["current edge"], "spawn": "tarpon"},
+]
+
+def classify_spot(depth_ft, sst_f, tags, slope_v, month, moon_p):
+    """Best-bet species for one cell. Returns {"species","label","mode","spawning","also":[...]}.
+    Depth and water temp gate hard; season, moon and the cell's tags shade the ranking."""
+    tags = set(tags or [])
+    on_struct = ("on structure" in tags) or (slope_v is not None and slope_v >= 0.5)
+    ranked = []
+    for f in FISH_GUIDE:
+        if depth_ft is None:
+            d_ok = 0.5
+        else:
+            lo, hi = f["depth"]
+            d_ok = 1.0 if lo <= depth_ft <= hi else max(0.0, 1 - min(abs(depth_ft - lo), abs(depth_ft - hi)) / 80.0)
+        if sst_f is None:
+            t_ok = 0.7
+        else:
+            lo, hi = f["temp"]
+            t_ok = 1.0 if lo <= sst_f <= hi else (0.5 if (lo - 3) <= sst_f <= (hi + 3) else 0.15)
+        season = 1.2 if month in f["peak"] else (1.0 if month in f["months"] else 0.25)
+        hits = sum(1 for w in f["wants"] if (w in tags) or (w == "on structure" and on_struct))
+        if f["mode"] == "bottom" and not on_struct:
+            hits -= 0.5                                  # bottom fish without bottom structure: weak call
+        boost = 0.6 + 0.25 * max(hits, 0)
+        score = d_ok * t_ok * season * boost
+        spawning = False
+        sp = SPECIES.get(f.get("spawn") or "")
+        if sp and month in sp["months"] and lunar_match(moon_p, sp["lunar"]) and d_ok >= 0.8 and \
+                (sst_f is None or sp["temp"][0] - 2 <= sst_f <= sp["temp"][1] + 2):
+            spawning = True
+            score *= 1.15
+        ranked.append((score, f, spawning))
+    ranked.sort(key=lambda r: -r[0])
+    best_s, best, best_spawn = ranked[0]
+    if best_s < 0.15:
+        return {"species": None, "label": "no clear species match", "mode": "unknown", "spawning": False, "also": []}
+    return {"species": best["id"], "label": best["label"], "mode": best["mode"], "spawning": best_spawn,
+            "also": [{"species": f["id"], "label": f["label"], "score": round(s / best_s, 2)} for s, f, _ in ranked[1:3] if s > 0.15]}
+
 # ===================== CONSERVATION / REGULATIONS =====================
 # Approximate centres + radii (nautical miles) for no-take / seasonal sanctuary zones
 # relevant to the Keys. Coordinates are APPROXIMATE — confirm exact boundaries on
@@ -669,17 +736,23 @@ def analyze():
                 near, nd = f"{ns['name']} ({ns['kind']})", round(dist, 2)
                 if dist <= CONFIG["structure_radius_nm"]:
                     tags.append("on structure")
+        depth_v = None if D is None or np.isnan(D[i, j]) else round(float(abs(D[i, j]) * 3.28084))
+        sst_v = None if np.isnan(sst_f[i, j]) else round(float(sst_f[i, j]), 1)
+        slope_v = None if np.isnan(slope[i, j]) else float(slope[i, j])
+        who = classify_spot(depth_v, sst_v, tags, slope_v, month, p)
         spots.append({
             "lat": round(lat, 4), "lon": round(lon, 4),
             "fish_score": round(float(score), 3),
-            "front": round(float(front[i, j]), 3),
-            "structure": round(float(slope[i, j]), 3),
-            "sst_f": None if np.isnan(sst_f[i, j]) else round(float(sst_f[i, j]), 1),
+            "front": round(float(np.nan_to_num(front[i, j])), 3),
+            "structure": round(float(np.nan_to_num(slope[i, j])), 3),
+            "sst_f": sst_v,
             "chl": None if np.isnan(C[i, j]) else round(float(C[i, j]), 3),
-            "depth_ft": None if D is None or np.isnan(D[i, j]) else round(float(abs(D[i, j]) * 3.28084)),
+            "depth_ft": depth_v,
             "cur_kt": cur, "convergence": cvg, "weed": wd, "tags": tags,
             "near_structure": near, "near_structure_nm": nd,
-            "spawn_score": round(float(spawn[i, j]), 3),
+            "spawn_score": round(float(np.nan_to_num(spawn[i, j])), 3),
+            "species": who["species"], "species_label": who["label"], "mode": who["mode"],
+            "spawning": who["spawning"], "also": who["also"],
             "dist_home_nm": round(haversine_nm(CONFIG["home"]["lat"], CONFIG["home"]["lon"], lat, lon), 1),
             "flags": [f"{k}: {m}" for k, m in fl],
             "protected": protected,
@@ -766,12 +839,33 @@ def render_overlay(grid, lats, lons, kind, upscale=1):
         t = (np.log10(np.clip(g, 0.03, 10)) - np.log10(0.03)) / (np.log10(10) - np.log10(0.03))
         stops = [(20, 40, 160), (30, 130, 220), (60, 210, 200), (90, 200, 90), (230, 220, 60), (230, 60, 40)]
         vmin, vmax, units = 0.03, 10.0, "mg/m³ (log scale)"
-    elif kind == "bathy":   # depth in feet, log-ish: shallows pale aqua → shelf → deep navy; land transparent
+    elif kind == "bathy":   # chart-style DEPTH BANDS (ft) with contour lines; land transparent
         depth_ft = np.where(g < 0, -g * 3.28084, np.nan)
-        g = depth_ft
-        vmin, vmax, units = 0.0, 2000.0, "ft (log scale)"
-        t = (np.log10(np.clip(depth_ft, 3, 2000)) - np.log10(3)) / (np.log10(2000) - np.log10(3))
-        stops = [(215, 245, 250), (150, 220, 235), (90, 180, 220), (50, 120, 200), (30, 70, 160), (15, 30, 90)]
+        edges = [0, 10, 30, 60, 120, 300, 600, 1500, 99999]
+        colours = [(228, 246, 250), (170, 226, 240), (120, 196, 232), (80, 160, 220),
+                   (55, 118, 200), (40, 80, 170), (28, 50, 130), (14, 26, 80)]
+        band = np.digitize(np.nan_to_num(depth_ft, nan=0.0), edges[1:-1])   # 0..7
+        rgb = np.array(colours, np.uint8)[band]
+        # contour line where the band changes between neighbours (down/right)
+        line = np.zeros(depth_ft.shape, bool)
+        line[:-1, :] |= band[:-1, :] != band[1:, :]
+        line[:, :-1] |= band[:, :-1] != band[:, 1:]
+        rgb[line] = (rgb[line] * 0.55).astype(np.uint8)
+        alpha = np.where(np.isfinite(depth_ft), 215, 0).astype(np.uint8)
+        rgba = np.dstack([rgb, alpha])
+        if lats[0] < lats[-1]:
+            rgba = rgba[::-1]
+        img = Image.fromarray(rgba, "RGBA")
+        if upscale > 1:
+            img = img.resize((img.width * upscale, img.height * upscale), Image.NEAREST)
+        buf = io.BytesIO(); img.save(buf, "PNG", optimize=True)
+        dlat = abs(float(lats[1] - lats[0])) / 2 if len(lats) > 1 else 0.02
+        dlon = abs(float(lons[1] - lons[0])) / 2 if len(lons) > 1 else 0.02
+        bounds = [[round(float(min(lats)) - dlat, 4), round(float(min(lons)) - dlon, 4)],
+                  [round(float(max(lats)) + dlat, 4), round(float(max(lons)) + dlon, 4)]]
+        return {"png_b64": base64.b64encode(buf.getvalue()).decode("ascii"), "bounds": bounds,
+                "vmin": 0, "vmax": 1500, "units": "ft bands: 0-10, 10-30, 30-60, 60-120, 120-300, 300-600, 600-1500, deeper",
+                "px": [img.width, img.height]}
     else:               # SST °F: fixed 74 → 90 so colours mean the same thing every day
         vmin, vmax, units = 74.0, 90.0, "°F"
         t = (g - vmin) / (vmax - vmin)
@@ -819,8 +913,8 @@ def write_satgrid(lats, lons, chl, sst_f, meta, chl_native=None, sst_native=None
         ov = render_overlay(g, sst_native["lats"], sst_native["lons"], "sst", upscale=1 if g.size > 10000 else 4)
         if ov: out["overlays"]["sst"] = dict(ov, source=meta["sst"]["source"], image_date=meta["sst"]["image_date"])
     if bathy_native:
-        b, k = thin(bathy_native, max_cells=50000)      # ≤ ~50k px keeps the picture under ~100 KB
-        ov = render_overlay(b["grid"], b["lats"], b["lons"], "bathy", upscale=1)
+        b, k = thin(bathy_native, max_cells=50000)      # ≤ ~50k cells; band colours compress well
+        ov = render_overlay(b["grid"], b["lats"], b["lons"], "bathy", upscale=2)
         if ov: out["overlays"]["bathy"] = dict(ov, source=f"{CONFIG['bathy_dataset']} seafloor (~{cell_km(b):.1f} km)",
                                                image_date=None, note="planning only — NOT for navigation")
     with open("satgrid.json", "w") as f:
@@ -929,7 +1023,9 @@ def report_and_push(openable, blocked, sp, in_season, moon_ok, p, month, regime=
             mark = ("  [" + ", ".join(s["tags"]) + "]") if s.get("tags") else ""
             struct = (f"  ~{s['near_structure_nm']}nm from {s['near_structure']}"
                       if s.get("near_structure") else "")
-            lines.append(f"• {s['lat']}N {abs(s['lon'])}W  edge {int(s['fish_score']*100)}/100"
+            who = (f"  → {s['species_label']} ({s['mode']}{', SPAWNING window — fish gently' if s.get('spawning') else ''})"
+                   if s.get("species") else "")
+            lines.append(f"• {s['lat']}N {abs(s['lon'])}W  edge {int(s['fish_score']*100)}/100{who}"
                          f"{', '+str(s['sst_f'])+'F' if s['sst_f'] else ''}"
                          f"{', chl '+str(s['chl']) if s['chl'] else ''}"
                          f"{', '+str(s['cur_kt'])+'kt' if s.get('cur_kt') else ''}"
