@@ -6,7 +6,7 @@ pulls free satellite + bathymetry data, finds the productive water, and texts yo
 phone, while **refusing to point you at closed or protected water**.
 
 ## What it does each run
-1. Pulls **SST**, **chlorophyll**, and **bathymetry** grids over the Keys (NOAA ERDDAP — free, no key).
+1. Pulls **SST**, **chlorophyll**, and **bathymetry** grids over the Keys (NOAA ERDDAP — free, no key). SST and chlorophyll each come from a **ladder** of datasets (`SST_SOURCES` / `CHL_SOURCES` in `analyze.py`): the run tries them in order of quality, reads the date of the newest image, **refuses anything older than that source's limit**, and logs which one it used. Daily 4 km chlorophyll images are stacked into a **7-day median composite** to fill cloud holes. (The MODIS-Aqua feeds this tool started on stopped updating in 2022 — a fixed dataset id is a trap; a ladder with a freshness check isn't.)
 2. Detects **temperature fronts** and **colour breaks**, and the places where they **coincide** (the high-odds water).
 3. Adds **bottom structure** (drop-offs / ledges / humps from the depth gradient) and a **species depth band** — now off **~500 m bathymetry** (SRTM15+, which folds in NOAA's Coastal Relief Model near the coast) instead of the old ~1.85 km grid.
 4. Pulls **known wrecks & artificial reefs** (FWC's 4,400+ reef points + NOAA AWOIS wrecks) and (a) boosts hotspots that sit **on structure**, (b) tags every top spot with the **nearest wreck/reef and its distance**, and (c) writes **`structure.geojson`** so you can drop the reef/wreck pins on a map or chartplotter.
@@ -65,7 +65,8 @@ analyst. **Not needed if** this free tool + the in-app NASA overlays already cov
 using the same satellite feeds, just auto-analyzed for edges.
 
 ## Caveats
-- Satellite data is **MODIS 8-day (~4 km)**: expect **cloud gaps** and broad (not pinpoint) edges.
+- Satellite grids are **4–9 km** (chlorophyll) and **1–5 km** (SST) depending on which rung of the ladder was fresh that day — the run log and the push's "Data:" line say which. Expect broad (not pinpoint) edges, and thinner coverage after a cloudy week.
+- `hotspots.geojson` carries a `meta` block (`generated_at`, the SST/chl source and image dates, layers that loaded) so a stale file can never pass for a fresh one.
 - Coordinates for protected zones are **approximate** — confirm exact boundaries officially.
 - The spawning model is **general guidance**, not a guarantee, and never a reason to fish a closure.
 - **First-run check:** ERDDAP dataset IDs and variable names occasionally change. If a run logs `currents unavailable` or `sargassum unavailable`, paste the dataset's URL into a browser to confirm it's still live and the variable name still matches (the analyzer prints the dataset IDs it uses). Currents live on `coastwatch.noaa.gov/erddap`, sargassum on `cwcgom.aoml.noaa.gov/erddap`. The score keeps working on whatever layers do load.

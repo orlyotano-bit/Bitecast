@@ -10,8 +10,13 @@ a spot. It pushes a summary to your phone (ntfy) and writes hotspots.geojson
 (which the web app can load).
 
 Data (all free, no key):
-  * SST          NOAA ERDDAP  erdMH1sstd8day   (MODIS-Aqua, 8-day, ~4 km)
-  * Chlorophyll  NOAA ERDDAP  erdMH1chla8day   (MODIS-Aqua, 8-day, ~4 km)
+  * SST + Chlorophyll come from a LADDER of NOAA ERDDAP datasets (see SST_SOURCES /
+                 CHL_SOURCES). Each run tries them in order of quality, reads the date of
+                 the newest image, REFUSES anything older than its max_age_days, and logs
+                 which one it used. (The MODIS-Aqua feeds this tool was born on stopped
+                 updating in 2022 — a fixed dataset id is a trap; a ladder with a freshness
+                 check is not.) Daily 4 km chlorophyll images are stacked into a 7-day
+                 median composite to fill cloud holes.
   * Bathymetry   NOAA ERDDAP  srtm15plus       (~500 m — folds in NOAA's Coastal Relief
                  Model near the coast; ~3.7x finer than the old ETOPO)
   * Currents     NOAA CoastWatch  noaacwBLENDEDNRTcurrentsDaily  (altimetry geostrophic,
@@ -27,7 +32,7 @@ planning aid, not legal advice. Always confirm current rules in the FWC
 "Fish Rules" app and at myfwc.com before fishing, and respect every closure.
 """
 
-import os, re, sys, json, math, datetime, urllib.parse
+import os, re, sys, json, math, datetime, warnings, urllib.parse
 import numpy as np
 import requests
 
@@ -70,6 +75,31 @@ CONFIG = {
     "bathy_stride": 2,                 # srtm15plus is dense; stride 2 ≈ ~900 m (still ~2x finer than ETOPO)
     "structure_radius_nm": 0.75,       # how close to a reef/wreck counts as "on structure"
 }
+
+# ======================= SST / CHLOROPHYLL LADDERS =======================
+# Tried top to bottom; the first dataset that answers AND whose newest image is no older
+# than max_age_days wins. "days" > 1 pulls that many daily slices and takes the per-pixel
+# median (fills cloud holes). Verified on the NOAA catalog 2026-09-26 unless marked.
+SST_SOURCES = [
+    {"label": "MUR 1 km (gap-free analysis)",          "server": ERDDAP_PFEG, "dataset": "jplMURSST41",
+     "var": "analysed_sst", "days": 1, "max_age_days": 4},     # was 5 weeks behind on 2026-09-26 — kept on top for when it catches up
+    {"label": "Geo-Polar blended 5 km (gap-free)",     "server": ERDDAP_PFEG, "dataset": "nesdisGeoPolarSSTN5NRT",
+     "var": "analysed_sst", "days": 1, "max_age_days": 4},
+    {"label": "Coral Reef Watch 5 km",                 "server": ERDDAP_PFEG, "dataset": "NOAA_DHW",
+     "var": "CRW_SST", "days": 1, "max_age_days": 7},
+]
+CHL_SOURCES = [
+    {"label": "VIIRS NOAA-20 4 km, 7-day composite",   "server": ERDDAP_CW,   "dataset": "noaacwN20VIIRSchlaDaily",
+     "var": "chlor_a", "days": 7, "max_age_days": 5},          # origin server — id from the catalog, unverified from the sandbox
+    {"label": "VIIRS S-NPP 4 km, 7-day composite",     "server": ERDDAP_CW,   "dataset": "noaacwNPPVIIRSchlaDaily",
+     "var": "chlor_a", "days": 7, "max_age_days": 5},          # origin server — unverified from the sandbox
+    {"label": "VIIRS NOAA-20 4 km, 7-day composite (mirror)", "server": ERDDAP_PFEG, "dataset": "nesdisVHNnoaa20chlaDaily",
+     "var": "chlor_a", "days": 7, "max_age_days": 5},
+    {"label": "VIIRS S-NPP 4 km, 7-day composite (mirror)",   "server": ERDDAP_PFEG, "dataset": "nesdisVHNchlaDaily",
+     "var": "chlor_a", "days": 7, "max_age_days": 5},
+    {"label": "VIIRS gap-filled 9 km (DINEOF)",        "server": ERDDAP_PFEG, "dataset": "nesdisVHNnoaaSNPPnoaa20NRTchlaGapfilledDaily",
+     "var": "chlor_a", "days": 1, "max_age_days": 5},          # coarse but reliably current — the safety net
+]
 
 # ============================ SPECIES =============================
 # General Keys guidance (spawning season / lunar tendency / temp window °F / depth band ft).
@@ -155,7 +185,10 @@ def species_closed(species, month):
     return None
 
 # ============================ DATA ============================
-def fetch_grid(dataset, var, box, stride=1, timeout=60, server=ERDDAP_PFEG, time_sel="[(last)]"):
+def fetch_grid(dataset, var, box, stride=1, timeout=90, server=ERDDAP_PFEG, time_sel="[(last)]"):
+    """Pull one variable over the box. Returns {"grid","lats","lons","time","n_times"} or None.
+    If time_sel spans several slices (e.g. "[last-6:last]") the per-pixel MEDIAN over time
+    is returned — a cheap cloud-hole filler. "time" is the newest slice's ISO date."""
     b = box
     sel = f"{var}{time_sel}[({b['latmax']}):{stride}:({b['latmin']})][({b['lonmin']}):{stride}:({b['lonmax']})]"
     url = f"{server}/griddap/{dataset}.json?{urllib.parse.quote(sel, safe='()[]:.,-')}"
@@ -169,18 +202,60 @@ def fetch_grid(dataset, var, box, stride=1, timeout=60, server=ERDDAP_PFEG, time
             return None
         cols, rows = t["columnNames"], t["rows"]
         ci, cj, cv = cols.index("latitude"), cols.index("longitude"), cols.index(var)
+        ct = cols.index("time") if "time" in cols else None
         lats = sorted({row[ci] for row in rows}, reverse=True)
         lons = sorted({row[cj] for row in rows})
         li = {v: i for i, v in enumerate(lats)}
         lj = {v: i for i, v in enumerate(lons)}
-        g = np.full((len(lats), len(lons)), np.nan)
+        times = sorted({row[ct] for row in rows}) if ct is not None else [None]
+        ti = {v: i for i, v in enumerate(times)}
+        stack = np.full((len(times), len(lats), len(lons)), np.nan)
         for row in rows:
             if row[cv] is not None:
-                g[li[row[ci]], lj[row[cj]]] = row[cv]
-        return {"grid": g, "lats": np.array(lats), "lons": np.array(lons)}
+                stack[ti[row[ct]] if ct is not None else 0, li[row[ci]], lj[row[cj]]] = row[cv]
+        with warnings.catch_warnings():                 # all-NaN pixels are expected (clouds/land)
+            warnings.simplefilter("ignore", category=RuntimeWarning)
+            g = np.nanmedian(stack, axis=0) if len(times) > 1 else stack[0]
+        return {"grid": g, "lats": np.array(lats), "lons": np.array(lons),
+                "time": times[-1], "n_times": len(times)}
     except Exception as e:
         print(f"  ! {dataset}: {e}")
         return None
+
+def age_days(iso):
+    """Age of an ERDDAP ISO timestamp in days (float), or None if unparseable."""
+    if not iso:
+        return None
+    try:
+        t = datetime.datetime.fromisoformat(str(iso).replace("Z", "+00:00"))
+        return (datetime.datetime.now(datetime.timezone.utc) - t).total_seconds() / 86400.0
+    except ValueError:
+        return None
+
+def load_from_ladder(kind, sources, box, stride):
+    """Walk a SST/CHL ladder; return the first FRESH grid (with its source attached) or None.
+    Every rung's outcome is printed so the run log shows exactly what fed the score."""
+    for s in sources:
+        tsel = f"[last-{s['days'] - 1}:last]" if s["days"] > 1 else "[(last)]"
+        g = fetch_grid(s["dataset"], s["var"], box, stride, server=s["server"], time_sel=tsel)
+        if not g:
+            print(f"  {kind}: {s['label']} — no answer, next rung")
+            continue
+        age = age_days(g["time"])
+        if age is None:
+            print(f"  {kind}: {s['label']} — image has no date, next rung")
+            continue
+        if age > s["max_age_days"]:
+            print(f"  {kind}: {s['label']} — newest image {g['time'][:10]} is {age:.0f} days old "
+                  f"(limit {s['max_age_days']}) — STALE, next rung")
+            continue
+        comp = f", {g['n_times']}-day composite" if g["n_times"] > 1 else ""
+        print(f"  {kind}: {s['label']} — newest image {g['time'][:10]} ({age:.1f} days old{comp})  OK")
+        g["source"] = s
+        g["date"] = g["time"][:10]
+        return g
+    print(f"  !! {kind}: every source in the ladder was down or stale")
+    return None
 
 def resample_to(src, tgt_lats, tgt_lons):
     """Nearest-neighbour resample src grid onto target lat/lon axes."""
@@ -318,8 +393,8 @@ def weed_anomaly(afai):
 def analyze():
     box, stride = CONFIG["box"], CONFIG["stride"]
     print("Fetching satellite + bathymetry grids over the Florida Keys…")
-    chl = fetch_grid("erdMH1chla8day", "chlorophyll", box, stride)
-    sst = fetch_grid("erdMH1sstd8day", "sst", box, stride)
+    chl = load_from_ladder("chl", CHL_SOURCES, box, stride)
+    sst = load_from_ladder("SST", SST_SOURCES, box, stride)
     bathy = fetch_grid(CONFIG["bathy_dataset"], CONFIG["bathy_var"], box,
                        max(CONFIG["bathy_stride"], 1), time_sel="")
     if not bathy and CONFIG["bathy_dataset"] != "etopo180":
@@ -327,10 +402,14 @@ def analyze():
         bathy = fetch_grid("etopo180", "altitude", box, max(stride, 1), time_sel="")
 
     if not chl or not sst:
-        msg = ("BiteCast: couldn't load the satellite grids (service busy or a dataset id "
-               "needs a tweak). No analysis this run.")
+        missing = " and ".join(k for k, v in (("chlorophyll", chl), ("sea temperature", sst)) if not v)
+        msg = (f"BiteCast: no FRESH satellite {missing} today — every source in the ladder was "
+               "down or older than its limit. No edge report this run (the run log lists each "
+               "source and its image date).")
         print(msg)
         return push(msg, title="BiteCast — data unavailable", tags="warning,fish")
+    data_line = (f"Data: SST {sst['source']['label']} ({sst['date']}) · "
+                 f"chl {chl['source']['label']} ({chl['date']})")
 
     lats, lons = chl["lats"], chl["lons"]
     C = chl["grid"]
@@ -449,7 +528,7 @@ def analyze():
         })
 
     # a one-line read on the current/weed regime for the push
-    regime = []
+    regime = [data_line]
     if cur_kt is not None:
         regime.append(f"Currents live — up to {np.nanmax(cur_kt):.1f} kt in the box "
                       f"(Florida-Current edge & eddies factored in).")
@@ -465,13 +544,25 @@ def analyze():
     openable = [s for s in spots if not s["protected"]][:CONFIG["top_n"]]
     blocked = [s for s in spots if s["protected"]][:4]
 
-    write_geojson(spots[:40])
+    meta = {
+        "generated_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "sst": {"source": sst["source"]["label"], "dataset": sst["source"]["dataset"], "image_date": sst["date"]},
+        "chl": {"source": chl["source"]["label"], "dataset": chl["source"]["dataset"], "image_date": chl["date"],
+                "composite_days": chl["n_times"]},
+        "grid_cells": int(np.isfinite(fish).sum()),
+        "layers": [name for name, on in (("front", True), ("bathymetry", D is not None), ("reefs_wrecks", reefN is not None),
+                                         ("currents", edgeN is not None), ("sargassum", weedN is not None)) if on],
+        "target_species": CONFIG["target_species"],
+    }
+    write_geojson(spots[:40], meta)
     write_structure_geojson(structures)
     return report_and_push(openable, blocked, sp, in_season, moon_ok, p, month, regime)
 
 # ============================ OUTPUT ============================
-def write_geojson(spots):
-    fc = {"type": "FeatureCollection", "features": []}
+def write_geojson(spots, meta=None):
+    # "meta" stamps the file with when it was made and which images fed it, so a stale
+    # file can never pass for a fresh one (the web app can show these dates).
+    fc = {"type": "FeatureCollection", "meta": meta or {}, "features": []}
     for s in spots:
         fc["features"].append({
             "type": "Feature",
