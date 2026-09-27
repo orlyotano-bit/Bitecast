@@ -664,8 +664,9 @@ def analyze():
     write_geojson(spots[:40], meta)
     write_structure_geojson(structures)
     if chl:
-        write_satgrid(lats, lons, C, sst_f, meta)   # only with real colour data — never overwrite the
-    else:                                           # app's last good chlorophyll grid with blanks
+        write_satgrid(lats, lons, C, sst_f, meta,   # only with real colour data — never overwrite the
+                      chl_native=chl, sst_native=sst)   # app's last good chlorophyll grid with blanks
+    else:
         print("satgrid.json left as is (no chlorophyll this run)")
     return report_and_push(openable, blocked, sp, in_season, moon_ok, p, month, regime, degraded=degraded)
 
@@ -684,10 +685,54 @@ def write_geojson(spots, meta=None):
         json.dump(fc, f, indent=1)
     print(f"Wrote hotspots.geojson ({len(spots)} features)")
 
-def write_satgrid(lats, lons, chl, sst_f, meta):
+def _ramp(t, stops):
+    """Piecewise-linear colour ramp: t in 0..1 over a list of (r,g,b) stops."""
+    t = np.clip(t, 0, 1) * (len(stops) - 1)
+    i = np.clip(np.floor(t).astype(int), 0, len(stops) - 2)
+    f = (t - i)[..., None]
+    a = np.array(stops, float)[i]; b = np.array(stops, float)[i + 1]
+    return (a * (1 - f) + b * f).astype(np.uint8)
+
+def render_overlay(grid, lats, lons, kind, upscale=1):
+    """Turn a lat/lon grid into a transparent PNG (base64) + its map bounds, for the web
+    app's map overlay. NaN cells are transparent. Nearest-neighbour upscale keeps the
+    real cell size visible instead of faking detail. Returns None if Pillow is missing."""
+    try:
+        from PIL import Image
+    except ImportError:
+        print("  (Pillow not installed — no map overlays this run)")
+        return None
+    import base64, io
+    g = np.asarray(grid, float)
+    if kind == "chl":   # log scale 0.03 → 10 mg/m³: deep blue → cyan → green → yellow → red
+        t = (np.log10(np.clip(g, 0.03, 10)) - np.log10(0.03)) / (np.log10(10) - np.log10(0.03))
+        stops = [(20, 40, 160), (30, 130, 220), (60, 210, 200), (90, 200, 90), (230, 220, 60), (230, 60, 40)]
+        vmin, vmax, units = 0.03, 10.0, "mg/m³ (log scale)"
+    else:               # SST °F: fixed 74 → 90 so colours mean the same thing every day
+        vmin, vmax, units = 74.0, 90.0, "°F"
+        t = (g - vmin) / (vmax - vmin)
+        stops = [(40, 60, 200), (60, 170, 230), (120, 220, 160), (240, 220, 80), (240, 120, 50), (200, 30, 30)]
+    rgb = _ramp(np.nan_to_num(t, nan=0.0), stops)
+    alpha = np.where(np.isfinite(g), 200, 0).astype(np.uint8)
+    rgba = np.dstack([rgb, alpha])
+    if lats[0] < lats[-1]:            # image rows run north → south
+        rgba = rgba[::-1]
+    img = Image.fromarray(rgba, "RGBA")
+    if upscale > 1:
+        img = img.resize((img.width * upscale, img.height * upscale), Image.NEAREST)
+    buf = io.BytesIO(); img.save(buf, "PNG", optimize=True)
+    dlat = abs(float(lats[1] - lats[0])) / 2 if len(lats) > 1 else 0.02
+    dlon = abs(float(lons[1] - lons[0])) / 2 if len(lons) > 1 else 0.02
+    bounds = [[round(float(min(lats)) - dlat, 4), round(float(min(lons)) - dlon, 4)],
+              [round(float(max(lats)) + dlat, 4), round(float(max(lons)) + dlon, 4)]]
+    return {"png_b64": base64.b64encode(buf.getvalue()).decode("ascii"), "bounds": bounds,
+            "vmin": vmin, "vmax": vmax, "units": units, "px": [img.width, img.height]}
+
+def write_satgrid(lats, lons, chl, sst_f, meta, chl_native=None, sst_native=None):
     """The chlorophyll + sea-temperature values on the analysis grid, for the web app's
-    condition cards. Browsers can't read NOAA's ERDDAP directly (no CORS header), so the
-    app looks up its spot in this file instead, which lives next to it on GitHub Pages."""
+    condition cards, plus the two map overlay pictures drawn from the native grids.
+    Browsers can't read NOAA's ERDDAP directly (no CORS header), so the app reads this
+    file instead, which lives next to it on GitHub Pages."""
     def rows(a, nd):
         return [[None if not np.isfinite(v) else round(float(v), nd) for v in row] for row in a]
     out = {
@@ -698,10 +743,20 @@ def write_satgrid(lats, lons, chl, sst_f, meta):
         "cell_deg": round(float(abs(lats[1] - lats[0])), 4) if len(lats) > 1 else None,
         "lats": [round(float(v), 4) for v in lats], "lons": [round(float(v), 4) for v in lons],
         "chl": rows(chl, 3), "sst_f": rows(sst_f, 1),
+        "overlays": {},
     }
+    if chl_native:
+        cells = chl_native["grid"].size
+        ov = render_overlay(chl_native["grid"], chl_native["lats"], chl_native["lons"], "chl",
+                            upscale=6 if cells < 2000 else (2 if cells < 10000 else 1))
+        if ov: out["overlays"]["chl"] = dict(ov, source=meta["chl"]["source"], image_date=meta["chl"]["image_date"])
+    if sst_native:
+        g = sst_native["grid"] * 9 / 5 + 32       # native grid is °C
+        ov = render_overlay(g, sst_native["lats"], sst_native["lons"], "sst", upscale=1 if g.size > 10000 else 4)
+        if ov: out["overlays"]["sst"] = dict(ov, source=meta["sst"]["source"], image_date=meta["sst"]["image_date"])
     with open("satgrid.json", "w") as f:
         json.dump(out, f, separators=(",", ":"))
-    print(f"Wrote satgrid.json ({len(lats)}x{len(lons)} cells)")
+    print(f"Wrote satgrid.json ({len(lats)}x{len(lons)} cells; overlays: {', '.join(out['overlays']) or 'none'})")
 
 def write_structure_geojson(points):
     fc = {"type": "FeatureCollection",
