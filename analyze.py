@@ -723,7 +723,7 @@ def analyze():
     write_structure_geojson(structures)
     if chl:
         write_satgrid(lats, lons, C, sst_f, meta,   # only with real colour data — never overwrite the
-                      chl_native=chl, sst_native=sst)   # app's last good chlorophyll grid with blanks
+                      chl_native=chl, sst_native=sst, bathy_native=bathy)   # app's last good grid with blanks
     else:
         print("satgrid.json left as is (no chlorophyll this run)")
     return report_and_push(openable, blocked, sp, in_season, moon_ok, p, month, regime, degraded=degraded)
@@ -766,6 +766,12 @@ def render_overlay(grid, lats, lons, kind, upscale=1):
         t = (np.log10(np.clip(g, 0.03, 10)) - np.log10(0.03)) / (np.log10(10) - np.log10(0.03))
         stops = [(20, 40, 160), (30, 130, 220), (60, 210, 200), (90, 200, 90), (230, 220, 60), (230, 60, 40)]
         vmin, vmax, units = 0.03, 10.0, "mg/m³ (log scale)"
+    elif kind == "bathy":   # depth in feet, log-ish: shallows pale aqua → shelf → deep navy; land transparent
+        depth_ft = np.where(g < 0, -g * 3.28084, np.nan)
+        g = depth_ft
+        vmin, vmax, units = 0.0, 2000.0, "ft (log scale)"
+        t = (np.log10(np.clip(depth_ft, 3, 2000)) - np.log10(3)) / (np.log10(2000) - np.log10(3))
+        stops = [(215, 245, 250), (150, 220, 235), (90, 180, 220), (50, 120, 200), (30, 70, 160), (15, 30, 90)]
     else:               # SST °F: fixed 74 → 90 so colours mean the same thing every day
         vmin, vmax, units = 74.0, 90.0, "°F"
         t = (g - vmin) / (vmax - vmin)
@@ -786,7 +792,7 @@ def render_overlay(grid, lats, lons, kind, upscale=1):
     return {"png_b64": base64.b64encode(buf.getvalue()).decode("ascii"), "bounds": bounds,
             "vmin": vmin, "vmax": vmax, "units": units, "px": [img.width, img.height]}
 
-def write_satgrid(lats, lons, chl, sst_f, meta, chl_native=None, sst_native=None):
+def write_satgrid(lats, lons, chl, sst_f, meta, chl_native=None, sst_native=None, bathy_native=None):
     """The chlorophyll + sea-temperature values on the analysis grid, for the web app's
     condition cards, plus the two map overlay pictures drawn from the native grids.
     Browsers can't read NOAA's ERDDAP directly (no CORS header), so the app reads this
@@ -812,6 +818,11 @@ def write_satgrid(lats, lons, chl, sst_f, meta, chl_native=None, sst_native=None
         g = sst_native["grid"] * 9 / 5 + 32       # native grid is °C
         ov = render_overlay(g, sst_native["lats"], sst_native["lons"], "sst", upscale=1 if g.size > 10000 else 4)
         if ov: out["overlays"]["sst"] = dict(ov, source=meta["sst"]["source"], image_date=meta["sst"]["image_date"])
+    if bathy_native:
+        b, k = thin(bathy_native, max_cells=50000)      # ≤ ~50k px keeps the picture under ~100 KB
+        ov = render_overlay(b["grid"], b["lats"], b["lons"], "bathy", upscale=1)
+        if ov: out["overlays"]["bathy"] = dict(ov, source=f"{CONFIG['bathy_dataset']} seafloor (~{cell_km(b):.1f} km)",
+                                               image_date=None, note="planning only — NOT for navigation")
     with open("satgrid.json", "w") as f:
         json.dump(out, f, separators=(",", ":"))
     print(f"Wrote satgrid.json ({len(lats)}x{len(lons)} cells; overlays: {', '.join(out['overlays']) or 'none'})")

@@ -476,6 +476,7 @@
         <button class="lyr" id="lyrSea">⚓ Nautical</button>
         <button class="lyr" id="lyrChl">🌿 Chlorophyll</button>
         <button class="lyr" id="lyrSst">🌡 Sea temp</button>
+        <button class="lyr" id="lyrBathy">🏔 Seafloor</button>
         <button class="lyr" id="lyrRadar">📡 Radar</button>
       </div>
       <span class="maphint">Tap the map to drop your spot</span>
@@ -1600,16 +1601,16 @@ function initMap(){
   const sea =L.tileLayer("https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png",{maxZoom:18,opacity:0.95,attribution:"© OpenSeaMap"});
   // Chlorophyll + sea-temp pictures are drawn by the cloud scan from the very grids it scored
   // (satgrid.json → overlays), not by a third-party tile service. Filled lazily on first toggle.
-  const chl=L.layerGroup(), sst=L.layerGroup();
+  const chl=L.layerGroup(), sst=L.layerGroup(), bathy=L.layerGroup();
   chl.options.attribution="Chlorophyll © NOAA CoastWatch via BiteCast scan"; sst.options.attribution="SST © NOAA via BiteCast scan";
   dark.addTo(map); darkRef.addTo(map);
-  mapState.map=map; mapState.layers={dark,darkRef,sat,depth,depthRef,sea,chl,sst}; mapState.baseName="dark";
+  mapState.map=map; mapState.layers={dark,darkRef,sat,depth,depthRef,sea,chl,sst,bathy}; mapState.baseName="dark";
   if(CURRENT&&CURRENT.latitude!=null) placeMarker(CURRENT.latitude,CURRENT.longitude);
   map.on("click",e=>setSpotFromMap(e.latlng.lat,e.latlng.lng));
 }
 function restackOverlays(){
   const m=mapState.map, Y=mapState.layers; if(!m) return;
-  [["Chl",Y.chl],["Sst",Y.sst],["Sea",Y.sea]].forEach(([id,layer])=>{
+  [["Bathy",Y.bathy],["Chl",Y.chl],["Sst",Y.sst],["Sea",Y.sea]].forEach(([id,layer])=>{
     if($("#lyr"+id).classList.contains("active")){ if(!m.hasLayer(layer)) layer.addTo(m); if(layer.bringToFront) layer.bringToFront(); }
   });
   if($("#lyrRadar").classList.contains("active") && RADAR_LAYER){ if(!m.hasLayer(RADAR_LAYER)) RADAR_LAYER.addTo(m); RADAR_LAYER.bringToFront(); }
@@ -1630,7 +1631,7 @@ function swapBase(which){
 const OVERLAY_STATE={};   // "chl"/"sst" → "loading" | "ok" | "missing"
 async function ensureScanOverlay(kind){
   // Fill the layer group with the scan's picture the first time it's switched on.
-  const group=kind==="chl"? mapState.layers.chl : mapState.layers.sst;
+  const group=kind==="chl"? mapState.layers.chl : kind==="sst"? mapState.layers.sst : mapState.layers.bathy;
   if(!group || OVERLAY_STATE[kind]==="ok" || OVERLAY_STATE[kind]==="loading") return;
   OVERLAY_STATE[kind]="loading"; updateLegend();
   const g=await loadScanFile("satgrid.json");
@@ -1641,17 +1642,18 @@ async function ensureScanOverlay(kind){
   OVERLAY_STATE[kind]="ok"; updateLegend();
 }
 function updateLegend(){
-  const chlOn=$("#lyrChl").classList.contains("active"), sstOn=$("#lyrSst").classList.contains("active");
+  const chlOn=$("#lyrChl").classList.contains("active"), sstOn=$("#lyrSst").classList.contains("active"), bathyOn=$("#lyrBathy").classList.contains("active");
   const radarOn=$("#lyrRadar").classList.contains("active") && RADAR_LAYER && mapState.map && mapState.map.hasLayer(RADAR_LAYER);
   const el=$("#mapLegend"), parts=[];
   const g=SCAN["satgrid.json"], ovs=(g&&g.overlays)||{};
   const stamp=(o)=> o? ` <span style="color:var(--faint)">(${o.source}, ${fmtDay(o.image_date)})</span>` : "";
   const state=(k)=> OVERLAY_STATE[k]==="loading"? " <span style=\"color:var(--faint)\">loading…</span>" : OVERLAY_STATE[k]==="missing"? " <span style=\"color:#f4c87a\">no picture in the last scan</span>" : "";
+  if(bathyOn) parts.push("🏔 Seafloor: pale = shallows → dark = deep (3–2,000 ft, log scale)"+(ovs.bathy?` <span style="color:var(--faint)">(${ovs.bathy.source} — planning only, NOT for navigation)</span>`:"")+state("bathy"));
   if(chlOn) parts.push("🌿 Chlorophyll: blue = clear (0.03) → green → red = rich (10 mg/m³, log scale)"+stamp(ovs.chl)+state("chl"));
   if(sstOn) parts.push("🌡 Sea temp: blue = 74°F → red = 90°F"+stamp(ovs.sst)+state("sst"));
   if(radarOn) parts.push("📡 Radar: green→red = light→heavy returns — rain, plus large bird movements (dawn roost lift-offs, migration). It won't show small feeding flocks — scan with binoculars for those.");
   let suffix="";
-  if(chlOn||sstOn) suffix=" &nbsp;<span style=\"color:var(--faint)\">(drawn by the cloud scan from the grids it scored — blank where cloudy or land)</span>";
+  if(chlOn||sstOn||bathyOn) suffix=" &nbsp;<span style=\"color:var(--faint)\">(drawn by the cloud scan from the grids it scored — blank where cloudy or land)</span>";
   if(parts.length){ el.innerHTML = parts.join(" &nbsp;·&nbsp; ") + suffix; el.classList.remove("hide"); }
   else el.classList.add("hide");
 }
@@ -1699,6 +1701,7 @@ $("#lyrDepth").addEventListener("click",()=>swapBase("depth"));
 $("#lyrSea").addEventListener("click",()=>toggleOverlay("Sea", mapState.layers.sea));
 $("#lyrChl").addEventListener("click",()=>{ toggleOverlay("Chl", mapState.layers.chl); if($("#lyrChl").classList.contains("active")) ensureScanOverlay("chl"); });
 $("#lyrSst").addEventListener("click",()=>{ toggleOverlay("Sst", mapState.layers.sst); if($("#lyrSst").classList.contains("active")) ensureScanOverlay("sst"); });
+$("#lyrBathy").addEventListener("click",()=>{ toggleOverlay("Bathy", mapState.layers.bathy); if($("#lyrBathy").classList.contains("active")) ensureScanOverlay("bathy"); });
 $("#lyrRadar").addEventListener("click",e=>toggleRadar(e.currentTarget));
 
 /* ============ edge / hotspot finder (Florida Keys) — reads the cloud scan ============ */
