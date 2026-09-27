@@ -54,6 +54,7 @@ CONFIG = {
     "target_species": "mutton",        # see SPECIES below
     "home": {"name": "Islamorada", "lat": 24.92, "lon": -80.63},  # for "near you" ranking
     "top_n": 6,
+    "min_separation_nm": 3.0,          # hotspots closer than this to a stronger one are dropped (de-clustering)
     # fusion weights (fish-finding map) — auto-renormalised over whatever layers load
     "w_front": 0.34,        # coincident temp + colour break
     "w_structure": 0.14,    # bottom slope / ledges (from bathymetry)
@@ -337,15 +338,49 @@ def load_from_ladder(kind, sources, box, stride, passes=2):
     return None
 
 def resample_to(src, tgt_lats, tgt_lons):
-    """Nearest-neighbour resample src grid onto target lat/lon axes."""
-    g, sl, so = src["grid"], src["lats"], src["lons"]
-    out = np.full((len(tgt_lats), len(tgt_lons)), np.nan)
-    ii = [int(np.argmin(np.abs(sl - la))) for la in tgt_lats]
-    jj = [int(np.argmin(np.abs(so - lo))) for lo in tgt_lons]
-    for a, i in enumerate(ii):
-        for b, j in enumerate(jj):
-            out[a, b] = g[i, j]
+    """Nearest-neighbour resample src grid onto target lat/lon axes (vectorised)."""
+    g, sl, so = src["grid"], np.asarray(src["lats"], float), np.asarray(src["lons"], float)
+    ii = np.abs(sl[None, :] - np.asarray(tgt_lats, float)[:, None]).argmin(axis=1)
+    jj = np.abs(so[None, :] - np.asarray(tgt_lons, float)[:, None]).argmin(axis=1)
+    return g[np.ix_(ii, jj)]
+
+def resample_bilinear(src, tgt_lats, tgt_lons):
+    """Smooth (bilinear) resample of a coarse grid onto a finer one, so a 9 km colour field
+    laid over a 2 km temperature grid varies gently instead of in blocks — otherwise every
+    block boundary would register as a fake 'front'. Cells whose nearest source cell is
+    missing (land/cloud) stay NaN."""
+    g, sl, so = np.asarray(src["grid"], float), np.asarray(src["lats"], float), np.asarray(src["lons"], float)
+    if sl[0] > sl[-1]:
+        sl, g = sl[::-1], g[::-1, :]
+    if so[0] > so[-1]:
+        so, g = so[::-1], g[:, ::-1]
+    tl, to = np.asarray(tgt_lats, float), np.asarray(tgt_lons, float)
+    fi = np.interp(tl, sl, np.arange(len(sl)))          # fractional row index per target lat
+    fj = np.interp(to, so, np.arange(len(so)))          # fractional col index per target lon
+    i0 = np.clip(np.floor(fi).astype(int), 0, max(len(sl) - 2, 0)); j0 = np.clip(np.floor(fj).astype(int), 0, max(len(so) - 2, 0))
+    i1 = np.minimum(i0 + 1, len(sl) - 1); j1 = np.minimum(j0 + 1, len(so) - 1)
+    di = (fi - i0)[:, None]; dj = (fj - j0)[None, :]
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", category=RuntimeWarning)
+        fill = np.nanmean(g) if np.isfinite(g).any() else 0.0
+    G = np.where(np.isnan(g), fill, g)
+    out = (G[np.ix_(i0, j0)] * (1 - di) * (1 - dj) + G[np.ix_(i1, j0)] * di * (1 - dj)
+           + G[np.ix_(i0, j1)] * (1 - di) * dj + G[np.ix_(i1, j1)] * di * dj)
+    ni = np.clip(np.rint(fi).astype(int), 0, len(sl) - 1); nj = np.clip(np.rint(fj).astype(int), 0, len(so) - 1)
+    out[np.isnan(g[np.ix_(ni, nj)])] = np.nan
     return out
+
+def cell_km(g):
+    """Approximate cell size (km) of a grid dict."""
+    d = abs(float(g["lats"][1] - g["lats"][0])) if len(g["lats"]) > 1 else 0.1
+    return d * 111.0
+
+def thin(g, max_cells=10000):
+    """Stride a dense grid down so it has at most ~max_cells cells."""
+    k = max(1, int(math.ceil(math.sqrt(g["grid"].size / float(max_cells)))))
+    if k == 1:
+        return g, 1
+    return dict(g, grid=g["grid"][::k, ::k], lats=g["lats"][::k], lons=g["lons"][::k]), k
 
 # ----- structure (known wrecks / artificial reefs) -----
 NAME_KEYS = ["Name", "NAME", "name", "Reef_Name", "REEF_NAME", "AR_NAME", "SITE_NAME",
@@ -426,10 +461,16 @@ def nearest_structure(lat, lon, points):
 
 # ============================ MODEL ============================
 def grad_mag(a):
-    filled = np.where(np.isnan(a), np.nanmean(a), a)
-    gy, gx = np.gradient(filled)
-    m = np.hypot(gx, gy)
-    m[np.isnan(a)] = np.nan
+    """Gradient magnitude using only real neighbours. A cell next to land or cloud (NaN)
+    gets NaN instead of a fake 'front' — the old version filled gaps with the box mean,
+    which turned every coastline and cloud edge into the strongest edge on the map (#3)."""
+    a = np.asarray(a, float)
+    m = np.full_like(a, np.nan)
+    if a.shape[0] < 3 or a.shape[1] < 3:
+        return m
+    gy = (a[2:, 1:-1] - a[:-2, 1:-1]) / 2.0        # NaN in any neighbour propagates → NaN
+    gx = (a[1:-1, 2:] - a[1:-1, :-2]) / 2.0
+    m[1:-1, 1:-1] = np.hypot(gx, gy)
     return m
 
 def norm98(a):
@@ -502,18 +543,24 @@ def analyze():
     if degraded:
         print(f"  !! {degraded}")
 
-    # analysis grid: the chlorophyll grid when we have it, else the SST grid thinned to a
-    # sane size (MUR is 1 km — 31k cells over the box — which is more than the fusion needs)
-    if chl:
-        lats, lons = chl["lats"], chl["lons"]
-        C = chl["grid"]
-        S = resample_to(sst, lats, lons) if sst else np.full_like(C, np.nan)
-    else:
-        k = max(1, int(math.ceil(math.sqrt(sst["grid"].size / 12000.0))))
-        lats, lons = sst["lats"][::k], sst["lons"][::k]
-        S = sst["grid"][::k, ::k]
-        C = np.full_like(S, np.nan)
-        print(f"  grid: SST grid thinned x{k} → {len(lats)}x{len(lons)} cells")
+    # analysis grid: the FINER of the two layers (thinned to ~10k cells, i.e. ~2 km when MUR
+    # is in play); the coarser layer is interpolated smoothly onto it. Edges are then placed
+    # by the sharp field and only *qualified* by the coarse one — a 9 km colour grid no longer
+    # snaps every hotspot to a 9 km lattice.
+    fine = min([g for g in (chl, sst) if g], key=cell_km)
+    base, k = thin(fine)
+    lats, lons = base["lats"], base["lons"]
+    which = "chlorophyll" if fine is chl else "SST"
+    print(f"  grid: {which} grid ({cell_km(fine):.1f} km cells{f', thinned x{k}' if k > 1 else ''}) → "
+          f"{len(lats)}x{len(lons)} cells of ~{cell_km(base):.1f} km")
+    def onto_grid(g):
+        if g is None:
+            return np.full((len(lats), len(lons)), np.nan)
+        if g is fine:
+            return base["grid"]
+        return resample_bilinear(g, lats, lons) if cell_km(g) > cell_km(base) * 1.5 else resample_to(g, lats, lons)
+    C = onto_grid(chl)
+    S = onto_grid(sst)
     D = resample_to(bathy, lats, lons) if bathy else None  # metres, negative below sea level
 
     # --- fronts (coincident temp + colour breaks; single-layer when one side is missing) ---
@@ -588,12 +635,23 @@ def analyze():
     spawn = (front * band * (temp_ok.astype(float))) if (in_season and moon_ok) else np.zeros_like(front)
 
     # --- rank hotspots, attach conservation flags ---
-    flat = [(fish[i, j], i, j) for i in range(len(lats)) for j in range(len(lons))
-            if np.isfinite(fish[i, j]) and fish[i, j] >= CONFIG["min_edge_score"]]
-    flat.sort(reverse=True)
+    ii, jj = np.where(np.isfinite(fish) & (fish >= CONFIG["min_edge_score"]))
+    order = np.argsort(-fish[ii, jj])
+    # de-cluster: on a 2 km grid one front lights up a whole string of neighbouring cells,
+    # so keep a cell only if it is at least min_separation_nm from every cell already kept
+    sep = CONFIG.get("min_separation_nm", 3.0)
+    picked = []
+    for o in order:
+        i, j = int(ii[o]), int(jj[o])
+        lat, lon = float(lats[i]), float(lons[j])
+        if all(haversine_nm(lat, lon, plat, plon) >= sep for _, plat, plon in picked):
+            picked.append(((i, j), lat, lon))
+            if len(picked) >= 80:
+                break
+    flat = [(float(fish[i, j]), i, j) for (i, j), _, _ in picked]
 
     spots = []
-    for score, i, j in flat[:80]:
+    for score, i, j in flat:
         lat, lon = float(lats[i]), float(lons[j])
         fl = zone_flags(lat, lon, month)
         protected = any(k == "PROTECTED" or k == "CLOSED" for k, _ in fl)
