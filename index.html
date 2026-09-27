@@ -772,13 +772,42 @@ const CHL_SOURCES=[
 ];
 const timeSel = s => s.days>1 ? `[last-${s.days-1}:last]` : `[(last)]`;
 const ageDays = iso => { const t=Date.parse(iso); return isNaN(t)? null : (Date.now()-t)/864e5; };
+// ERDDAP rejects a request whose bracket count doesn't match the variable's dimensions, and the
+// VIIRS chlorophyll products carry a dummy "altitude" axis the old MODIS ones didn't. So read each
+// dataset's structure (.dds) once and build the request to match: extra axes take index 0.
+const DIMS_CACHE=new Map();
+async function datasetDims(s){
+  const key=s.server+"|"+s.dataset+"|"+s.v;
+  if(DIMS_CACHE.has(key)) return DIMS_CACHE.get(key);
+  let dims=null;
+  try{
+    const r=await fetch(`${s.server}/griddap/${s.dataset}.dds`);
+    if(r.ok){ const txt=await r.text(); const m=txt.match(new RegExp("\\b"+s.v+"((?:\\[\\w+ = \\d+\\])+)"));
+      if(m) dims=[...m[1].matchAll(/\[(\w+) = \d+\]/g)].map(x=>x[1]); }
+  }catch(e){}
+  DIMS_CACHE.set(key,dims); return dims;
+}
+async function buildSel(s, latSel, lonSel){
+  const dims=(await datasetDims(s))||["time","latitude","longitude"];
+  return s.v+dims.map(d=>{ const dl=d.toLowerCase();
+    if(dl==="time") return timeSel(s);
+    if(dl==="latitude"||dl==="lat") return latSel;
+    if(dl==="longitude"||dl==="lon") return lonSel;
+    return "[0]"; }).join("");
+}
+async function fetchGridJSON(s, latSel, lonSel){
+  // one request; if the server dislikes the mixed index/value form for the extra axis, retry with the value form
+  const sel=await buildSel(s, latSel, lonSel);
+  let j=await fetchJSON(`${s.server}/griddap/${s.dataset}.json?${sel}`);
+  if(!j && sel.includes("[0]")) j=await fetchJSON(`${s.server}/griddap/${s.dataset}.json?${sel.replace("[0]","[(0.0)]")}`);
+  return j;
+}
 
 async function getChlorophyll(la,lo){
   // Nearest grid cell, newest non-null reading within the source's window; the source is
   // skipped when its newest image is older than maxAgeDays. Returns {value,time,label,age}.
   for(const s of CHL_SOURCES){
-    const url=`${s.server}/griddap/${s.dataset}.json?${s.v}${timeSel(s)}[(${la})][(${lo})]`;
-    const j=await fetchJSON(url);
+    const j=await fetchGridJSON(s, `[(${la})]`, `[(${lo})]`);
     const t=j&&j.table; const rows=t&&t.rows;
     if(!rows||!rows.length) continue;
     const ct=t.columnNames.indexOf("time"), cv=t.columnNames.indexOf(s.v);
@@ -1698,8 +1727,7 @@ async function fetchGridSrc(s){
   // One source over the Keys box → {grid[lat][lon], lats (desc), lons (asc), time, age, nTimes}.
   // Several daily slices are collapsed to the per-cell MEDIAN (fills cloud holes).
   const b=KEYS_BOX;
-  const url=`${s.server}/griddap/${s.dataset}.json?${s.v}${timeSel(s)}[(${b.latMax}):(${b.latMin})][(${b.lonMin}):(${b.lonMax})]`;
-  const j=await fetchJSON(url);
+  const j=await fetchGridJSON(s, `[(${b.latMax}):(${b.latMin})]`, `[(${b.lonMin}):(${b.lonMax})]`);
   if(!j||!j.table||!j.table.rows) return null;
   const cols=j.table.columnNames, rows=j.table.rows;
   const ci=cols.indexOf("latitude"), cj=cols.indexOf("longitude"), cv=cols.indexOf(s.v), ct=cols.indexOf("time");

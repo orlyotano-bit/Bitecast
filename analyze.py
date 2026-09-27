@@ -185,17 +185,63 @@ def species_closed(species, month):
     return None
 
 # ============================ DATA ============================
+_DIMS_CACHE = {}
+def dataset_dims(server, dataset, var, timeout=30):
+    """Read the dataset's structure (.dds) once and return var's dimension names in order,
+    e.g. ['time','altitude','latitude','longitude']. None if it can't be read.
+    Needed because ERDDAP rejects a request whose bracket count doesn't match: the VIIRS
+    chlorophyll products carry a dummy 'altitude' axis that the old MODIS ones didn't."""
+    key = (server, dataset, var)
+    if key not in _DIMS_CACHE:
+        dims = None
+        try:
+            r = requests.get(f"{server}/griddap/{dataset}.dds", timeout=timeout)
+            if r.status_code == 200:
+                m = re.search(rf"\b{re.escape(var)}((?:\[\w+ = \d+\])+)", r.text)
+                if m:
+                    dims = re.findall(r"\[(\w+) = \d+\]", m.group(1))
+            else:
+                print(f"  ! {dataset}.dds: HTTP {r.status_code}")
+        except Exception as e:
+            print(f"  ! {dataset}.dds: {e}")
+        _DIMS_CACHE[key] = dims
+    return _DIMS_CACHE[key]
+
+def build_selector(var, dims, box, stride, time_sel):
+    """One bracket per dimension, in the dataset's own order. Extra axes (altitude, depth,
+    level…) take index 0. Index and value forms may be mixed per dimension in ERDDAP."""
+    b = box
+    parts = []
+    for d in dims:
+        dl = d.lower()
+        if dl == "time":
+            parts.append(time_sel or "[last]")
+        elif dl in ("latitude", "lat"):
+            parts.append(f"[({b['latmax']}):{stride}:({b['latmin']})]")
+        elif dl in ("longitude", "lon"):
+            parts.append(f"[({b['lonmin']}):{stride}:({b['lonmax']})]")
+        else:
+            parts.append("[0]")
+    return var + "".join(parts)
+
 def fetch_grid(dataset, var, box, stride=1, timeout=90, server=ERDDAP_PFEG, time_sel="[(last)]"):
     """Pull one variable over the box. Returns {"grid","lats","lons","time","n_times"} or None.
     If time_sel spans several slices (e.g. "[last-6:last]") the per-pixel MEDIAN over time
     is returned — a cheap cloud-hole filler. "time" is the newest slice's ISO date."""
-    b = box
-    sel = f"{var}{time_sel}[({b['latmax']}):{stride}:({b['latmin']})][({b['lonmin']}):{stride}:({b['lonmax']})]"
-    url = f"{server}/griddap/{dataset}.json?{urllib.parse.quote(sel, safe='()[]:.,-')}"
+    dims = dataset_dims(server, dataset, var)
+    if not dims:   # structure unreadable — fall back to the classic layout
+        dims = (["time"] if time_sel else []) + ["latitude", "longitude"]
+    sel = build_selector(var, dims, box, stride, time_sel)
     try:
-        r = requests.get(url, timeout=timeout)
+        r = None
+        for attempt in (sel, sel.replace("[0]", "[(0.0)]")):   # 2nd form only if the server dislikes mixed index/value brackets
+            url = f"{server}/griddap/{dataset}.json?{urllib.parse.quote(attempt, safe='()[]:.,-')}"
+            r = requests.get(url, timeout=timeout)
+            if r.status_code == 200 or "[0]" not in sel or r.status_code != 400:
+                break
         if r.status_code != 200:
-            print(f"  ! {dataset}: HTTP {r.status_code}")
+            why = re.sub(r"\s+", " ", r.text)[:160].strip()   # ERDDAP says WHY in the body — keep it in the log
+            print(f"  ! {dataset}: HTTP {r.status_code} {why}")
             return None
         t = r.json().get("table")
         if not t:
