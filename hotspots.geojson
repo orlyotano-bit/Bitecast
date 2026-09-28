@@ -1,7 +1,7 @@
 {
  "type": "FeatureCollection",
  "meta": {
-  "generated_at": "2026-09-28T16:16:13Z",
+  "generated_at": "2026-09-28T22:13:09Z",
   "sst": {
    "source": "MUR 1 km (gap-free analysis)",
    "dataset": "jplMURSST41",
