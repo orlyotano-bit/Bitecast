@@ -1,11 +1,11 @@
 {
  "type": "FeatureCollection",
  "meta": {
-  "generated_at": "2026-10-21T10:28:42Z",
+  "generated_at": "2026-10-21T16:36:07Z",
   "sst": {
    "source": "MUR 1 km (gap-free analysis)",
    "dataset": "jplMURSST41",
-   "image_date": "2026-10-19"
+   "image_date": "2026-10-20"
   },
   "chl": {
    "source": "unavailable this run",
@@ -19,6 +19,7 @@
    "front",
    "bathymetry",
    "reefs_wrecks",
+   "currents",
    "sargassum"
   ],
   "target_species": "mutton"
@@ -29,27 +30,28 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -82.04,
-     24.42
+     -80.12,
+     25.42
     ]
    },
    "properties": {
-    "lat": 24.42,
-    "lon": -82.04,
-    "fish_score": 0.876,
-    "front": 1.0,
-    "structure": 0.622,
-    "sst_f": 84.3,
+    "lat": 25.42,
+    "lon": -80.12,
+    "fish_score": 0.687,
+    "front": 0.85,
+    "structure": 0.62,
+    "sst_f": 84.5,
     "chl": null,
-    "depth_ft": 276,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.311,
+    "depth_ft": 167,
+    "cur_kt": 0.97,
+    "convergence": 1.0,
+    "weed": 0.081,
     "tags": [
+     "convergence/accumulation",
      "on structure"
     ],
-    "near_structure": "USS S-16Sub(SS-121) (reef)",
-    "near_structure_nm": 0.02,
+    "near_structure": "Almirante (reef)",
+    "near_structure_nm": 0.26,
     "spawn_score": 0.0,
     "species": "blackfin",
     "species_label": "Blackfin tuna",
@@ -57,17 +59,17 @@
     "spawning": false,
     "also": [
      {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 0.83
-     },
-     {
       "species": "mahi",
       "label": "Mahi (dolphin)",
-      "score": 0.59
+      "score": 1.0
+     },
+     {
+      "species": "mutton",
+      "label": "Mutton snapper",
+      "score": 1.0
      }
     ],
-    "dist_home_nm": 82.6,
+    "dist_home_nm": 40.9,
     "flags": [],
     "protected": false
    }
@@ -77,28 +79,78 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.6,
-     24.46
+     -80.1,
+     25.48
     ]
    },
    "properties": {
-    "lat": 24.46,
-    "lon": -81.6,
-    "fish_score": 0.834,
-    "front": 1.0,
-    "structure": 0.46,
+    "lat": 25.48,
+    "lon": -80.1,
+    "fish_score": 0.685,
+    "front": 0.888,
+    "structure": 0.691,
+    "sst_f": 85.3,
+    "chl": null,
+    "depth_ft": 154,
+    "cur_kt": 0.97,
+    "convergence": 1.0,
+    "weed": 0.217,
+    "tags": [
+     "convergence/accumulation",
+     "on structure"
+    ],
+    "near_structure": "Turbine Stacks (reef)",
+    "near_structure_nm": 0.53,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mutton",
+      "label": "Mutton snapper",
+      "score": 1.0
+     },
+     {
+      "species": "graysnapper",
+      "label": "Gray snapper",
+      "score": 1.0
+     }
+    ],
+    "dist_home_nm": 44.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.96,
+     24.64
+    ]
+   },
+   "properties": {
+    "lat": 24.64,
+    "lon": -80.96,
+    "fish_score": 0.635,
+    "front": 0.603,
+    "structure": 0.453,
     "sst_f": 84.2,
     "chl": null,
-    "depth_ft": 322,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.406,
+    "depth_ft": 210,
+    "cur_kt": 1.09,
+    "convergence": 0.06,
+    "weed": 0.433,
     "tags": [
+     "current edge",
      "likely weed line",
      "on structure"
     ],
-    "near_structure": "USS Kendrick (DD-612) (reef)",
-    "near_structure_nm": 0.06,
+    "near_structure": "Marathon Reef (reef)",
+    "near_structure_nm": 0.04,
     "spawn_score": 0.0,
     "species": "blackfin",
     "species_label": "Blackfin tuna",
@@ -113,10 +165,10 @@
      {
       "species": "mutton",
       "label": "Mutton snapper",
-      "score": 0.6
+      "score": 0.64
      }
     ],
-    "dist_home_nm": 59.7,
+    "dist_home_nm": 24.6,
     "flags": [],
     "protected": false
    }
@@ -126,116 +178,22 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.76,
-     24.44
+     -81.4,
+     24.52
     ]
    },
    "properties": {
-    "lat": 24.44,
-    "lon": -81.76,
-    "fish_score": 0.806,
+    "lat": 24.52,
+    "lon": -81.4,
+    "fish_score": 0.632,
     "front": 1.0,
-    "structure": 0.536,
-    "sst_f": 84.6,
+    "structure": 0.492,
+    "sst_f": 85.0,
     "chl": null,
-    "depth_ft": 226,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.379,
-    "tags": [
-     "on structure"
-    ],
-    "near_structure": "USS Curb (reef)",
-    "near_structure_nm": 0.52,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 0.83
-     },
-     {
-      "species": "permit",
-      "label": "Permit",
-      "score": 0.77
-     }
-    ],
-    "dist_home_nm": 68.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.86,
-     24.42
-    ]
-   },
-   "properties": {
-    "lat": 24.42,
-    "lon": -81.86,
-    "fish_score": 0.724,
-    "front": 1.0,
-    "structure": 0.626,
-    "sst_f": 84.5,
-    "chl": null,
-    "depth_ft": 302,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.392,
-    "tags": [],
-    "near_structure": "Stargazer Reef (reef)",
-    "near_structure_nm": 2.13,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 0.81
-     },
-     {
-      "species": "mahi",
-      "label": "Mahi (dolphin)",
-      "score": 0.59
-     }
-    ],
-    "dist_home_nm": 73.5,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.2,
-     24.4
-    ]
-   },
-   "properties": {
-    "lat": 24.4,
-    "lon": -82.2,
-    "fish_score": 0.697,
-    "front": 1.0,
-    "structure": 0.377,
-    "sst_f": 84.6,
-    "chl": null,
-    "depth_ft": 308,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.703,
+    "depth_ft": 253,
+    "cur_kt": 0.75,
+    "convergence": 0.019,
+    "weed": 1.0,
     "tags": [
      "likely weed line"
     ],
@@ -255,10 +213,10 @@
      {
       "species": "mutton",
       "label": "Mutton snapper",
-      "score": 0.64
+      "score": 0.71
      }
     ],
-    "dist_home_nm": 91.2,
+    "dist_home_nm": 48.4,
     "flags": [],
     "protected": false
    }
@@ -268,25 +226,28 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -82.12,
-     24.44
+     -81.46,
+     24.52
     ]
    },
    "properties": {
-    "lat": 24.44,
-    "lon": -82.12,
-    "fish_score": 0.669,
-    "front": 1.0,
-    "structure": 0.49,
-    "sst_f": 84.5,
+    "lat": 24.52,
+    "lon": -81.46,
+    "fish_score": 0.627,
+    "front": 0.923,
+    "structure": 0.48,
+    "sst_f": 84.9,
     "chl": null,
-    "depth_ft": 164,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
+    "depth_ft": 161,
+    "cur_kt": 0.75,
+    "convergence": 0.019,
+    "weed": 0.433,
+    "tags": [
+     "likely weed line",
+     "on structure"
+    ],
+    "near_structure": "Adolphus Busch Sr (reef)",
+    "near_structure_nm": 0.65,
     "spawn_score": 0.0,
     "species": "mahi",
     "species_label": "Mahi (dolphin)",
@@ -304,7 +265,7 @@
       "score": 1.0
      }
     ],
-    "dist_home_nm": 86.2,
+    "dist_home_nm": 51.2,
     "flags": [],
     "protected": false
    }
@@ -314,89 +275,46 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.7,
-     24.44
+     -80.82,
+     24.72
     ]
    },
    "properties": {
-    "lat": 24.44,
-    "lon": -81.7,
-    "fish_score": 0.664,
-    "front": 0.94,
-    "structure": 0.461,
-    "sst_f": 84.1,
+    "lat": 24.72,
+    "lon": -80.82,
+    "fish_score": 0.62,
+    "front": 0.792,
+    "structure": 0.416,
+    "sst_f": 84.4,
     "chl": null,
-    "depth_ft": 302,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.365,
-    "tags": [],
-    "near_structure": "Hoyt Vandenberg (reef)",
-    "near_structure_nm": 2.33,
+    "depth_ft": 115,
+    "cur_kt": 1.09,
+    "convergence": 0.06,
+    "weed": 0.176,
+    "tags": [
+     "current edge",
+     "on structure"
+    ],
+    "near_structure": "Long Key Reef #2 (reef)",
+    "near_structure_nm": 0.62,
     "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
     "mode": "troll",
     "spawning": false,
     "also": [
      {
-      "species": "mahi",
-      "label": "Mahi (dolphin)",
-      "score": 0.83
-     },
-     {
       "species": "mutton",
       "label": "Mutton snapper",
-      "score": 0.81
-     }
-    ],
-    "dist_home_nm": 65.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.94,
-     24.44
-    ]
-   },
-   "properties": {
-    "lat": 24.44,
-    "lon": -81.94,
-    "fish_score": 0.657,
-    "front": 1.0,
-    "structure": 0.377,
-    "sst_f": 84.7,
-    "chl": null,
-    "depth_ft": 66,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.108,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
+      "score": 1.0
+     },
      {
       "species": "yellowtail",
       "label": "Yellowtail snapper",
       "score": 1.0
-     },
-     {
-      "species": "graysnapper",
-      "label": "Gray snapper",
-      "score": 1.0
      }
     ],
-    "dist_home_nm": 77.1,
+    "dist_home_nm": 15.9,
     "flags": [],
     "protected": false
    }
@@ -406,91 +324,45 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -82.24,
-     24.44
+     -80.7,
+     24.78
     ]
    },
    "properties": {
-    "lat": 24.44,
-    "lon": -82.24,
-    "fish_score": 0.654,
-    "front": 1.0,
-    "structure": 0.365,
-    "sst_f": 84.1,
+    "lat": 24.78,
+    "lon": -80.7,
+    "fish_score": 0.609,
+    "front": 0.953,
+    "structure": 0.438,
+    "sst_f": 84.7,
     "chl": null,
-    "depth_ft": 210,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.095,
-    "tags": [],
+    "depth_ft": 75,
+    "cur_kt": 1.19,
+    "convergence": 0.0,
+    "weed": 0.352,
+    "tags": [
+     "current edge"
+    ],
     "near_structure": null,
     "near_structure_nm": null,
     "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mahi",
-      "label": "Mahi (dolphin)",
-      "score": 0.83
-     },
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 0.83
-     }
-    ],
-    "dist_home_nm": 92.4,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.16,
-     24.58
-    ]
-   },
-   "properties": {
-    "lat": 24.58,
-    "lon": -81.16,
-    "fish_score": 0.643,
-    "front": 0.574,
-    "structure": 0.431,
-    "sst_f": 84.8,
-    "chl": null,
-    "depth_ft": 223,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.325,
-    "tags": [
-     "on structure"
-    ],
-    "near_structure": "Seven Mile Bridge Reef (reef)",
-    "near_structure_nm": 0.17,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
     "mode": "troll",
     "spawning": false,
     "also": [
      {
       "species": "mutton",
       "label": "Mutton snapper",
-      "score": 0.83
+      "score": 0.87
      },
      {
-      "species": "permit",
-      "label": "Permit",
-      "score": 0.8
+      "species": "yellowtail",
+      "label": "Yellowtail snapper",
+      "score": 0.87
      }
     ],
-    "dist_home_nm": 35.4,
+    "dist_home_nm": 9.2,
     "flags": [],
     "protected": false
    }
@@ -507,14 +379,14 @@
    "properties": {
     "lat": 24.5,
     "lon": -81.56,
-    "fish_score": 0.631,
-    "front": 0.769,
+    "fish_score": 0.592,
+    "front": 0.973,
     "structure": 0.461,
-    "sst_f": 84.3,
+    "sst_f": 84.7,
     "chl": null,
     "depth_ft": 102,
-    "cur_kt": null,
-    "convergence": null,
+    "cur_kt": 0.47,
+    "convergence": 0.01,
     "weed": 0.527,
     "tags": [
      "likely weed line"
@@ -548,28 +420,347 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -80.96,
-     24.64
+     -80.02,
+     25.06
     ]
    },
    "properties": {
-    "lat": 24.64,
-    "lon": -80.96,
-    "fish_score": 0.607,
-    "front": 0.447,
-    "structure": 0.453,
+    "lat": 25.06,
+    "lon": -80.02,
+    "fish_score": 0.581,
+    "front": 1.0,
+    "structure": 1.0,
+    "sst_f": 84.9,
+    "chl": null,
+    "depth_ft": 1378,
+    "cur_kt": 2.14,
+    "convergence": 0.007,
+    "weed": 0.365,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [],
+    "dist_home_nm": 34.2,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.34,
+     24.56
+    ]
+   },
+   "properties": {
+    "lat": 24.56,
+    "lon": -81.34,
+    "fish_score": 0.56,
+    "front": 0.874,
+    "structure": 0.34,
+    "sst_f": 84.8,
+    "chl": null,
+    "depth_ft": 52,
+    "cur_kt": 0.75,
+    "convergence": 0.019,
+    "weed": 0.325,
+    "tags": [],
+    "near_structure": "Big Pine Reef (reef)",
+    "near_structure_nm": 0.8,
+    "spawn_score": 0.0,
+    "species": "mutton",
+    "species_label": "Mutton snapper",
+    "mode": "bottom",
+    "spawning": false,
+    "also": [
+     {
+      "species": "yellowtail",
+      "label": "Yellowtail snapper",
+      "score": 1.0
+     },
+     {
+      "species": "graysnapper",
+      "label": "Gray snapper",
+      "score": 1.0
+     }
+    ],
+    "dist_home_nm": 44.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.16,
+     24.6
+    ]
+   },
+   "properties": {
+    "lat": 24.6,
+    "lon": -81.16,
+    "fish_score": 0.558,
+    "front": 0.639,
+    "structure": 0.421,
     "sst_f": 84.4,
     "chl": null,
-    "depth_ft": 210,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.433,
+    "depth_ft": 121,
+    "cur_kt": 0.82,
+    "convergence": 0.0,
+    "weed": 0.338,
     "tags": [
-     "likely weed line",
+     "current edge",
      "on structure"
     ],
-    "near_structure": "Marathon Reef (reef)",
-    "near_structure_nm": 0.04,
+    "near_structure": "Seven Mile Bridge Reef (reef)",
+    "near_structure_nm": 0.49,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mutton",
+      "label": "Mutton snapper",
+      "score": 1.0
+     },
+     {
+      "species": "yellowtail",
+      "label": "Yellowtail snapper",
+      "score": 1.0
+     }
+    ],
+    "dist_home_nm": 34.7,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.24,
+     24.74
+    ]
+   },
+   "properties": {
+    "lat": 24.74,
+    "lon": -80.24,
+    "fish_score": 0.553,
+    "front": 1.0,
+    "structure": 1.0,
+    "sst_f": 84.5,
+    "chl": null,
+    "depth_ft": 1152,
+    "cur_kt": 2.18,
+    "convergence": 0.0,
+    "weed": 0.338,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.59
+     }
+    ],
+    "dist_home_nm": 23.8,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.88,
+     24.7
+    ]
+   },
+   "properties": {
+    "lat": 24.7,
+    "lon": -80.88,
+    "fish_score": 0.553,
+    "front": 0.804,
+    "structure": 0.292,
+    "sst_f": 84.3,
+    "chl": null,
+    "depth_ft": 49,
+    "cur_kt": 1.09,
+    "convergence": 0.06,
+    "weed": 0.419,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mutton",
+    "species_label": "Mutton snapper",
+    "mode": "bottom",
+    "spawning": false,
+    "also": [
+     {
+      "species": "yellowtail",
+      "label": "Yellowtail snapper",
+      "score": 1.0
+     },
+     {
+      "species": "graysnapper",
+      "label": "Gray snapper",
+      "score": 1.0
+     }
+    ],
+    "dist_home_nm": 19.0,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.16,
+     25.46
+    ]
+   },
+   "properties": {
+    "lat": 25.46,
+    "lon": -80.16,
+    "fish_score": 0.543,
+    "front": 0.902,
+    "structure": 0.018,
+    "sst_f": 84.5,
+    "chl": null,
+    "depth_ft": 20,
+    "cur_kt": 0.97,
+    "convergence": 1.0,
+    "weed": 1.0,
+    "tags": [
+     "convergence/accumulation",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "graysnapper",
+    "species_label": "Gray snapper",
+    "mode": "bottom",
+    "spawning": false,
+    "also": [
+     {
+      "species": "yellowtail",
+      "label": "Yellowtail snapper",
+      "score": 0.88
+     },
+     {
+      "species": "mutton",
+      "label": "Mutton snapper",
+      "score": 0.75
+     }
+    ],
+    "dist_home_nm": 41.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.2,
+     25.18
+    ]
+   },
+   "properties": {
+    "lat": 25.18,
+    "lon": -80.2,
+    "fish_score": 0.54,
+    "front": 0.784,
+    "structure": 0.484,
+    "sst_f": 85.0,
+    "chl": null,
+    "depth_ft": 203,
+    "cur_kt": 2.14,
+    "convergence": 0.007,
+    "weed": 0.446,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.93
+     },
+     {
+      "species": "mutton",
+      "label": "Mutton snapper",
+      "score": 0.55
+     }
+    ],
+    "dist_home_nm": 28.1,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.08,
+     25.58
+    ]
+   },
+   "properties": {
+    "lat": 25.58,
+    "lon": -80.08,
+    "fish_score": 0.539,
+    "front": 0.721,
+    "structure": 0.833,
+    "sst_f": 85.2,
+    "chl": null,
+    "depth_ft": 190,
+    "cur_kt": 0.97,
+    "convergence": 0.194,
+    "weed": 0.608,
+    "tags": [
+     "likely weed line"
+    ],
+    "near_structure": "Blue Fire (reef)",
+    "near_structure_nm": 0.98,
     "spawn_score": 0.0,
     "species": "blackfin",
     "species_label": "Blackfin tuna",
@@ -587,7 +778,7 @@
       "score": 0.83
      }
     ],
-    "dist_home_nm": 24.6,
+    "dist_home_nm": 49.6,
     "flags": [],
     "protected": false
    }
@@ -597,160 +788,115 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.86,
-     25.16
-    ]
-   },
-   "properties": {
-    "lat": 25.16,
-    "lon": -81.86,
-    "fish_score": 0.602,
-    "front": 1.0,
-    "structure": 0.007,
-    "sst_f": 84.2,
-    "chl": null,
-    "depth_ft": 56,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.325,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     },
-     {
-      "species": "graysnapper",
-      "label": "Gray snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 68.4,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.32,
-     25.2
-    ]
-   },
-   "properties": {
-    "lat": 25.2,
-    "lon": -82.32,
-    "fish_score": 0.602,
-    "front": 1.0,
-    "structure": 0.015,
-    "sst_f": 84.4,
-    "chl": null,
-    "depth_ft": 98,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.257,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 1.0
-     },
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 93.4,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.0,
-     24.46
-    ]
-   },
-   "properties": {
-    "lat": 24.46,
-    "lon": -82.0,
-    "fish_score": 0.599,
-    "front": 1.0,
-    "structure": 0.111,
-    "sst_f": 83.9,
-    "chl": null,
-    "depth_ft": 105,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 1.0
-     },
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 79.7,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.34,
+     -80.04,
      25.46
     ]
    },
    "properties": {
     "lat": 25.46,
-    "lon": -82.34,
-    "fish_score": 0.599,
-    "front": 1.0,
-    "structure": 0.009,
+    "lon": -80.04,
+    "fish_score": 0.537,
+    "front": 0.808,
+    "structure": 1.0,
+    "sst_f": 85.2,
+    "chl": null,
+    "depth_ft": 761,
+    "cur_kt": 0.97,
+    "convergence": 1.0,
+    "weed": 0.365,
+    "tags": [
+     "convergence/accumulation"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 45.6,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.12,
+     25.36
+    ]
+   },
+   "properties": {
+    "lat": 25.36,
+    "lon": -80.12,
+    "fish_score": 0.537,
+    "front": 0.441,
+    "structure": 0.689,
     "sst_f": 84.2,
     "chl": null,
-    "depth_ft": 102,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.23,
+    "depth_ft": 308,
+    "cur_kt": 0.97,
+    "convergence": 1.0,
+    "weed": 0.513,
+    "tags": [
+     "convergence/accumulation",
+     "likely weed line",
+     "on structure"
+    ],
+    "near_structure": "Jet Fighters (reef)",
+    "near_structure_nm": 0.59,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.93
+     },
+     {
+      "species": "mutton",
+      "label": "Mutton snapper",
+      "score": 0.7
+     }
+    ],
+    "dist_home_nm": 38.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.36,
+     24.52
+    ]
+   },
+   "properties": {
+    "lat": 24.52,
+    "lon": -80.36,
+    "fish_score": 0.533,
+    "front": 1.0,
+    "structure": 1.0,
+    "sst_f": 84.7,
+    "chl": null,
+    "depth_ft": 2208,
+    "cur_kt": 2.22,
+    "convergence": 0.0,
+    "weed": 0.392,
     "tags": [],
     "near_structure": null,
     "near_structure_nm": null,
@@ -759,19 +905,8 @@
     "species_label": "Mahi (dolphin)",
     "mode": "troll",
     "spawning": false,
-    "also": [
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 1.0
-     },
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 98.4,
+    "also": [],
+    "dist_home_nm": 28.2,
     "flags": [],
     "protected": false
    }
@@ -781,137 +916,41 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.64,
-     24.5
+     -80.02,
+     25.24
     ]
    },
    "properties": {
-    "lat": 24.5,
-    "lon": -81.64,
-    "fish_score": 0.595,
-    "front": 1.0,
-    "structure": 0.202,
-    "sst_f": 84.1,
-    "chl": null,
-    "depth_ft": 26,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.108,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "graysnapper",
-    "species_label": "Gray snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 0.95
-     },
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 0.82
-     }
-    ],
-    "dist_home_nm": 60.6,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.38,
-     25.52
-    ]
-   },
-   "properties": {
-    "lat": 25.52,
-    "lon": -82.38,
-    "fish_score": 0.593,
-    "front": 1.0,
-    "structure": 0.007,
-    "sst_f": 84.2,
-    "chl": null,
-    "depth_ft": 102,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.162,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 1.0
-     },
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 101.7,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.24,
-     25.48
-    ]
-   },
-   "properties": {
-    "lat": 25.48,
-    "lon": -82.24,
-    "fish_score": 0.586,
-    "front": 0.881,
-    "structure": 0.015,
+    "lat": 25.24,
+    "lon": -80.02,
+    "fish_score": 0.525,
+    "front": 0.829,
+    "structure": 1.0,
     "sst_f": 84.4,
     "chl": null,
-    "depth_ft": 85,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.73,
+    "depth_ft": 1119,
+    "cur_kt": 2.14,
+    "convergence": 0.007,
+    "weed": 0.406,
     "tags": [
+     "current edge",
      "likely weed line"
     ],
     "near_structure": null,
     "near_structure_nm": null,
     "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
     "mode": "troll",
     "spawning": false,
     "also": [
      {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 0.75
-     },
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 0.75
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
      }
     ],
-    "dist_home_nm": 93.7,
+    "dist_home_nm": 38.3,
     "flags": [],
     "protected": false
    }
@@ -921,621 +960,24 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -82.38,
-     25.12
-    ]
-   },
-   "properties": {
-    "lat": 25.12,
-    "lon": -82.38,
-    "fish_score": 0.583,
-    "front": 1.0,
-    "structure": 0.0,
-    "sst_f": 84.4,
-    "chl": null,
-    "depth_ft": 102,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.054,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 1.0
-     },
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 96.0,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.32,
-     25.12
-    ]
-   },
-   "properties": {
-    "lat": 25.12,
-    "lon": -82.32,
-    "fish_score": 0.582,
-    "front": 1.0,
-    "structure": 0.018,
-    "sst_f": 84.6,
-    "chl": null,
-    "depth_ft": 95,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 1.0
-     },
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 92.7,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.32,
-     25.54
-    ]
-   },
-   "properties": {
-    "lat": 25.54,
-    "lon": -82.32,
-    "fish_score": 0.582,
-    "front": 1.0,
-    "structure": 0.009,
-    "sst_f": 84.1,
-    "chl": null,
-    "depth_ft": 95,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.014,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 1.0
-     },
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 99.0,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.12,
-     25.02
-    ]
-   },
-   "properties": {
-    "lat": 25.02,
-    "lon": -82.12,
-    "fish_score": 0.581,
-    "front": 1.0,
-    "structure": 0.013,
-    "sst_f": 83.8,
-    "chl": null,
-    "depth_ft": 72,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     },
-     {
-      "species": "graysnapper",
-      "label": "Gray snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 81.3,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.04,
-     25.56
-    ]
-   },
-   "properties": {
-    "lat": 25.56,
-    "lon": -82.04,
-    "fish_score": 0.581,
-    "front": 1.0,
-    "structure": 0.009,
-    "sst_f": 84.1,
-    "chl": null,
-    "depth_ft": 66,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     },
-     {
-      "species": "graysnapper",
-      "label": "Gray snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 85.7,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.04,
+     -80.7,
      24.72
     ]
    },
    "properties": {
     "lat": 24.72,
-    "lon": -82.04,
-    "fish_score": 0.581,
-    "front": 1.0,
-    "structure": 0.029,
-    "sst_f": 83.9,
+    "lon": -80.7,
+    "fish_score": 0.518,
+    "front": 0.877,
+    "structure": 0.4,
+    "sst_f": 84.7,
     "chl": null,
-    "depth_ft": 56,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     },
-     {
-      "species": "graysnapper",
-      "label": "Gray snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 77.8,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.88,
-     25.08
-    ]
-   },
-   "properties": {
-    "lat": 25.08,
-    "lon": -81.88,
-    "fish_score": 0.581,
-    "front": 1.0,
-    "structure": 0.013,
-    "sst_f": 84.1,
-    "chl": null,
-    "depth_ft": 59,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     },
-     {
-      "species": "graysnapper",
-      "label": "Gray snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 68.7,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.98,
-     25.56
-    ]
-   },
-   "properties": {
-    "lat": 25.56,
-    "lon": -81.98,
-    "fish_score": 0.58,
-    "front": 1.0,
-    "structure": 0.007,
-    "sst_f": 84.0,
-    "chl": null,
-    "depth_ft": 62,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     },
-     {
-      "species": "graysnapper",
-      "label": "Gray snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 82.8,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.16,
-     25.12
-    ]
-   },
-   "properties": {
-    "lat": 25.12,
-    "lon": -82.16,
-    "fish_score": 0.58,
-    "front": 1.0,
-    "structure": 0.007,
-    "sst_f": 84.1,
-    "chl": null,
-    "depth_ft": 79,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     },
-     {
-      "species": "graysnapper",
-      "label": "Gray snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 84.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.84,
-     24.94
-    ]
-   },
-   "properties": {
-    "lat": 24.94,
-    "lon": -81.84,
-    "fish_score": 0.579,
-    "front": 1.0,
-    "structure": 0.007,
-    "sst_f": 84.0,
-    "chl": null,
-    "depth_ft": 59,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     },
-     {
-      "species": "graysnapper",
-      "label": "Gray snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 65.9,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.36,
-     25.26
-    ]
-   },
-   "properties": {
-    "lat": 25.26,
-    "lon": -82.36,
-    "fish_score": 0.579,
-    "front": 0.949,
-    "structure": 0.007,
-    "sst_f": 84.2,
-    "chl": null,
-    "depth_ft": 95,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.271,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 1.0
-     },
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 96.3,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.5,
-     24.54
-    ]
-   },
-   "properties": {
-    "lat": 24.54,
-    "lon": -81.5,
-    "fish_score": 0.578,
-    "front": 1.0,
-    "structure": 0.156,
-    "sst_f": 84.3,
-    "chl": null,
-    "depth_ft": 26,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": "American Shoal Reef #3 (reef)",
-    "near_structure_nm": 1.94,
-    "spawn_score": 0.0,
-    "species": "graysnapper",
-    "species_label": "Gray snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 0.95
-     },
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 0.82
-     }
-    ],
-    "dist_home_nm": 52.6,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.82,
-     25.06
-    ]
-   },
-   "properties": {
-    "lat": 25.06,
-    "lon": -81.82,
-    "fish_score": 0.576,
-    "front": 1.0,
-    "structure": 0.007,
-    "sst_f": 84.0,
-    "chl": null,
-    "depth_ft": 56,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     },
-     {
-      "species": "graysnapper",
-      "label": "Gray snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 65.3,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.16,
-     24.36
-    ]
-   },
-   "properties": {
-    "lat": 24.36,
-    "lon": -82.16,
-    "fish_score": 0.576,
-    "front": 1.0,
-    "structure": 0.413,
-    "sst_f": 84.2,
-    "chl": null,
-    "depth_ft": 627,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.662,
+    "depth_ft": 390,
+    "cur_kt": 1.68,
+    "convergence": 0.036,
+    "weed": 0.473,
     "tags": [
+     "current edge",
      "likely weed line"
     ],
     "near_structure": null,
@@ -1549,15 +991,15 @@
      {
       "species": "blackfin",
       "label": "Blackfin tuna",
-      "score": 0.85
+      "score": 0.93
      },
      {
       "species": "wahoo",
       "label": "Wahoo",
-      "score": 0.35
+      "score": 0.39
      }
     ],
-    "dist_home_nm": 90.0,
+    "dist_home_nm": 12.6,
     "flags": [],
     "protected": false
    }
@@ -1567,117 +1009,153 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.62,
-     24.84
+     -80.88,
+     24.54
     ]
    },
    "properties": {
-    "lat": 24.84,
-    "lon": -81.62,
-    "fish_score": 0.57,
-    "front": 0.996,
-    "structure": 0.015,
-    "sst_f": 83.5,
+    "lat": 24.54,
+    "lon": -80.88,
+    "fish_score": 0.513,
+    "front": 1.0,
+    "structure": 0.052,
+    "sst_f": 83.9,
     "chl": null,
-    "depth_ft": 49,
-    "cur_kt": null,
-    "convergence": null,
+    "depth_ft": 653,
+    "cur_kt": 1.09,
+    "convergence": 0.06,
+    "weed": 0.743,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.93
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.39
+     }
+    ],
+    "dist_home_nm": 26.6,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.4,
+     24.48
+    ]
+   },
+   "properties": {
+    "lat": 24.48,
+    "lon": -80.4,
+    "fish_score": 0.513,
+    "front": 1.0,
+    "structure": 1.0,
+    "sst_f": 84.6,
+    "chl": null,
+    "depth_ft": 2110,
+    "cur_kt": 2.15,
+    "convergence": 0.125,
+    "weed": 0.338,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [],
+    "dist_home_nm": 29.2,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.02,
+     25.12
+    ]
+   },
+   "properties": {
+    "lat": 25.12,
+    "lon": -80.02,
+    "fish_score": 0.51,
+    "front": 0.799,
+    "structure": 0.964,
+    "sst_f": 84.9,
+    "chl": null,
+    "depth_ft": 1188,
+    "cur_kt": 2.14,
+    "convergence": 0.007,
+    "weed": 0.406,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 35.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -82.12,
+     24.44
+    ]
+   },
+   "properties": {
+    "lat": 24.44,
+    "lon": -82.12,
+    "fish_score": 0.509,
+    "front": 1.0,
+    "structure": 0.49,
+    "sst_f": 85.6,
+    "chl": null,
+    "depth_ft": 164,
+    "cur_kt": 0.59,
+    "convergence": 0.0,
     "weed": 0.0,
     "tags": [],
     "near_structure": null,
     "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     },
-     {
-      "species": "graysnapper",
-      "label": "Gray snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 54.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.32,
-     25.4
-    ]
-   },
-   "properties": {
-    "lat": 25.4,
-    "lon": -82.32,
-    "fish_score": 0.57,
-    "front": 0.955,
-    "structure": 0.015,
-    "sst_f": 84.1,
-    "chl": null,
-    "depth_ft": 89,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.108,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     },
-     {
-      "species": "graysnapper",
-      "label": "Gray snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 96.3,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.12,
-     24.62
-    ]
-   },
-   "properties": {
-    "lat": 24.62,
-    "lon": -81.12,
-    "fish_score": 0.57,
-    "front": 0.76,
-    "structure": 0.37,
-    "sst_f": 84.5,
-    "chl": null,
-    "depth_ft": 95,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.379,
-    "tags": [],
-    "near_structure": "Seven Mile Bridge Reef (reef)",
-    "near_structure_nm": 2.69,
     "spawn_score": 0.0,
     "species": "mahi",
     "species_label": "Mahi (dolphin)",
@@ -1690,12 +1168,12 @@
       "score": 1.0
      },
      {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
+      "species": "graysnapper",
+      "label": "Gray snapper",
       "score": 1.0
      }
     ],
-    "dist_home_nm": 32.2,
+    "dist_home_nm": 86.2,
     "flags": [],
     "protected": false
    }
@@ -1705,89 +1183,46 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.82,
-     24.48
+     -80.18,
+     25.24
     ]
    },
    "properties": {
-    "lat": 24.48,
-    "lon": -81.82,
-    "fish_score": 0.567,
-    "front": 0.982,
-    "structure": 0.157,
-    "sst_f": 84.7,
+    "lat": 25.24,
+    "lon": -80.18,
+    "fish_score": 0.508,
+    "front": 0.608,
+    "structure": 0.592,
+    "sst_f": 84.2,
     "chl": null,
-    "depth_ft": 23,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": "Stargazer Reef (reef)",
-    "near_structure_nm": 2.96,
+    "depth_ft": 151,
+    "cur_kt": 2.14,
+    "convergence": 0.007,
+    "weed": 0.662,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
     "spawn_score": 0.0,
-    "species": "graysnapper",
-    "species_label": "Gray snapper",
-    "mode": "bottom",
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
     "spawning": false,
     "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 0.91
-     },
      {
       "species": "mutton",
       "label": "Mutton snapper",
-      "score": 0.79
-     }
-    ],
-    "dist_home_nm": 70.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -82.28,
-     24.48
-    ]
-   },
-   "properties": {
-    "lat": 24.48,
-    "lon": -82.28,
-    "fish_score": 0.565,
-    "front": 0.971,
-    "structure": 0.059,
-    "sst_f": 84.1,
-    "chl": null,
-    "depth_ft": 46,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
+      "score": 0.77
      },
      {
       "species": "graysnapper",
       "label": "Gray snapper",
-      "score": 1.0
+      "score": 0.77
      }
     ],
-    "dist_home_nm": 93.8,
+    "dist_home_nm": 31.1,
     "flags": [],
     "protected": false
    }
@@ -1797,69 +1232,111 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.92,
-     24.98
+     -80.64,
+     24.7
     ]
    },
    "properties": {
-    "lat": 24.98,
-    "lon": -81.92,
-    "fish_score": 0.563,
-    "front": 0.893,
-    "structure": 0.009,
-    "sst_f": 83.8,
-    "chl": null,
-    "depth_ft": 62,
-    "cur_kt": null,
-    "convergence": null,
-    "weed": 0.379,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mutton",
-    "species_label": "Mutton snapper",
-    "mode": "bottom",
-    "spawning": false,
-    "also": [
-     {
-      "species": "yellowtail",
-      "label": "Yellowtail snapper",
-      "score": 1.0
-     },
-     {
-      "species": "graysnapper",
-      "label": "Gray snapper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 70.3,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.54,
-     24.96
-    ]
-   },
-   "properties": {
-    "lat": 24.96,
-    "lon": -81.54,
-    "fish_score": 0.56,
+    "lat": 24.7,
+    "lon": -80.64,
+    "fish_score": 0.504,
     "front": 1.0,
-    "structure": 0.009,
+    "structure": 0.291,
+    "sst_f": 84.2,
+    "chl": null,
+    "depth_ft": 584,
+    "cur_kt": 1.68,
+    "convergence": 0.036,
+    "weed": 0.46,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.93
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.39
+     }
+    ],
+    "dist_home_nm": 13.2,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.3,
+     24.6
+    ]
+   },
+   "properties": {
+    "lat": 24.6,
+    "lon": -80.3,
+    "fish_score": 0.503,
+    "front": 0.835,
+    "structure": 1.0,
+    "sst_f": 84.6,
+    "chl": null,
+    "depth_ft": 2415,
+    "cur_kt": 2.22,
+    "convergence": 0.0,
+    "weed": 0.824,
+    "tags": [
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [],
+    "dist_home_nm": 26.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.22,
+     24.64
+    ]
+   },
+   "properties": {
+    "lat": 24.64,
+    "lon": -81.22,
+    "fish_score": 0.502,
+    "front": 0.982,
+    "structure": 0.029,
     "sst_f": 83.9,
     "chl": null,
-    "depth_ft": 36,
-    "cur_kt": null,
-    "convergence": null,
+    "depth_ft": 30,
+    "cur_kt": 0.82,
+    "convergence": 0.0,
     "weed": 0.0,
-    "tags": [],
+    "tags": [
+     "current edge"
+    ],
     "near_structure": null,
     "near_structure_nm": null,
     "spawn_score": 0.0,
@@ -1876,10 +1353,522 @@
      {
       "species": "mutton",
       "label": "Mutton snapper",
-      "score": 0.95
+      "score": 0.88
      }
     ],
-    "dist_home_nm": 49.6,
+    "dist_home_nm": 36.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.34,
+     24.84
+    ]
+   },
+   "properties": {
+    "lat": 24.84,
+    "lon": -80.34,
+    "fish_score": 0.498,
+    "front": 0.947,
+    "structure": 0.494,
+    "sst_f": 84.3,
+    "chl": null,
+    "depth_ft": 594,
+    "cur_kt": 2.15,
+    "convergence": 0.226,
+    "weed": 0.325,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.42
+     }
+    ],
+    "dist_home_nm": 16.5,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.18,
+     25.06
+    ]
+   },
+   "properties": {
+    "lat": 25.06,
+    "lon": -80.18,
+    "fish_score": 0.495,
+    "front": 0.994,
+    "structure": 0.321,
+    "sst_f": 85.1,
+    "chl": null,
+    "depth_ft": 597,
+    "cur_kt": 2.14,
+    "convergence": 0.007,
+    "weed": 0.554,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.93
+     }
+    ],
+    "dist_home_nm": 25.9,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.84,
+     24.58
+    ]
+   },
+   "properties": {
+    "lat": 24.58,
+    "lon": -80.84,
+    "fish_score": 0.493,
+    "front": 1.0,
+    "structure": 0.042,
+    "sst_f": 84.5,
+    "chl": null,
+    "depth_ft": 640,
+    "cur_kt": 1.09,
+    "convergence": 0.06,
+    "weed": 0.446,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.93
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.39
+     }
+    ],
+    "dist_home_nm": 23.4,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -82.2,
+     24.46
+    ]
+   },
+   "properties": {
+    "lat": 24.46,
+    "lon": -82.2,
+    "fish_score": 0.489,
+    "front": 1.0,
+    "structure": 0.36,
+    "sst_f": 85.7,
+    "chl": null,
+    "depth_ft": 43,
+    "cur_kt": 0.59,
+    "convergence": 0.0,
+    "weed": 0.176,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mutton",
+    "species_label": "Mutton snapper",
+    "mode": "bottom",
+    "spawning": false,
+    "also": [
+     {
+      "species": "yellowtail",
+      "label": "Yellowtail snapper",
+      "score": 1.0
+     },
+     {
+      "species": "graysnapper",
+      "label": "Gray snapper",
+      "score": 1.0
+     }
+    ],
+    "dist_home_nm": 90.0,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -82.26,
+     24.46
+    ]
+   },
+   "properties": {
+    "lat": 24.46,
+    "lon": -82.26,
+    "fish_score": 0.489,
+    "front": 1.0,
+    "structure": 0.315,
+    "sst_f": 85.6,
+    "chl": null,
+    "depth_ft": 89,
+    "cur_kt": 0.32,
+    "convergence": 0.0,
+    "weed": 0.081,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mutton",
+    "species_label": "Mutton snapper",
+    "mode": "bottom",
+    "spawning": false,
+    "also": [
+     {
+      "species": "yellowtail",
+      "label": "Yellowtail snapper",
+      "score": 1.0
+     },
+     {
+      "species": "graysnapper",
+      "label": "Gray snapper",
+      "score": 1.0
+     }
+    ],
+    "dist_home_nm": 93.1,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.28,
+     24.68
+    ]
+   },
+   "properties": {
+    "lat": 24.68,
+    "lon": -80.28,
+    "fish_score": 0.489,
+    "front": 0.919,
+    "structure": 0.892,
+    "sst_f": 84.5,
+    "chl": null,
+    "depth_ft": 1191,
+    "cur_kt": 2.22,
+    "convergence": 0.0,
+    "weed": 0.365,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.59
+     }
+    ],
+    "dist_home_nm": 23.9,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.88,
+     24.64
+    ]
+   },
+   "properties": {
+    "lat": 24.64,
+    "lon": -80.88,
+    "fish_score": 0.482,
+    "front": 0.556,
+    "structure": 0.498,
+    "sst_f": 84.5,
+    "chl": null,
+    "depth_ft": 344,
+    "cur_kt": 1.09,
+    "convergence": 0.06,
+    "weed": 0.54,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.93
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.39
+     }
+    ],
+    "dist_home_nm": 21.6,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.3,
+     24.6
+    ]
+   },
+   "properties": {
+    "lat": 24.6,
+    "lon": -81.3,
+    "fish_score": 0.481,
+    "front": 0.765,
+    "structure": 0.009,
+    "sst_f": 84.4,
+    "chl": null,
+    "depth_ft": 43,
+    "cur_kt": 0.75,
+    "convergence": 0.019,
+    "weed": 0.0,
+    "tags": [
+     "on structure"
+    ],
+    "near_structure": "Bahia Honda  Reef (reef)",
+    "near_structure_nm": 0.56,
+    "spawn_score": 0.0,
+    "species": "mutton",
+    "species_label": "Mutton snapper",
+    "mode": "bottom",
+    "spawning": false,
+    "also": [
+     {
+      "species": "yellowtail",
+      "label": "Yellowtail snapper",
+      "score": 1.0
+     },
+     {
+      "species": "graysnapper",
+      "label": "Gray snapper",
+      "score": 1.0
+     }
+    ],
+    "dist_home_nm": 41.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.94,
+     24.52
+    ]
+   },
+   "properties": {
+    "lat": 24.52,
+    "lon": -80.94,
+    "fish_score": 0.481,
+    "front": 1.0,
+    "structure": 0.015,
+    "sst_f": 83.9,
+    "chl": null,
+    "depth_ft": 669,
+    "cur_kt": 1.09,
+    "convergence": 0.06,
+    "weed": 0.298,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.42
+     }
+    ],
+    "dist_home_nm": 29.4,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.2,
+     25.0
+    ]
+   },
+   "properties": {
+    "lat": 25.0,
+    "lon": -80.2,
+    "fish_score": 0.479,
+    "front": 0.908,
+    "structure": 0.277,
+    "sst_f": 84.9,
+    "chl": null,
+    "depth_ft": 669,
+    "cur_kt": 2.14,
+    "convergence": 0.007,
+    "weed": 0.879,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.93
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.39
+     }
+    ],
+    "dist_home_nm": 23.9,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.76,
+     24.5
+    ]
+   },
+   "properties": {
+    "lat": 24.5,
+    "lon": -81.76,
+    "fish_score": 0.469,
+    "front": 1.0,
+    "structure": 0.023,
+    "sst_f": 84.6,
+    "chl": null,
+    "depth_ft": 33,
+    "cur_kt": 0.29,
+    "convergence": 0.0,
+    "weed": 0.0,
+    "tags": [],
+    "near_structure": "Joe's Tug (reef)",
+    "near_structure_nm": 2.47,
+    "spawn_score": 0.0,
+    "species": "yellowtail",
+    "species_label": "Yellowtail snapper",
+    "mode": "bottom",
+    "spawning": false,
+    "also": [
+     {
+      "species": "graysnapper",
+      "label": "Gray snapper",
+      "score": 1.0
+     },
+     {
+      "species": "mutton",
+      "label": "Mutton snapper",
+      "score": 0.91
+     }
+    ],
+    "dist_home_nm": 66.6,
     "flags": [],
     "protected": false
    }
