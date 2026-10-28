@@ -1,7 +1,7 @@
 {
  "type": "FeatureCollection",
  "meta": {
-  "generated_at": "2026-10-28T16:42:36Z",
+  "generated_at": "2026-10-28T21:09:59Z",
   "sst": {
    "source": "unavailable this run",
    "dataset": null,
@@ -10,7 +10,7 @@
   "chl": {
    "source": "VIIRS NOAA-20 4 km, 7-day composite",
    "dataset": "noaacwN20VIIRSchlaDaily",
-   "image_date": "2026-10-25",
+   "image_date": "2026-10-26",
    "composite_days": 7
   },
   "degraded": "sea temperature unavailable this run \u2014 COLOUR-ONLY fronts",
@@ -37,14 +37,14 @@
    "properties": {
     "lat": 24.9937,
     "lon": -80.3813,
-    "fish_score": 0.776,
+    "fish_score": 0.752,
     "front": 1.0,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 0.279,
+    "chl": 0.265,
     "depth_ft": null,
-    "cur_kt": 0.47,
-    "convergence": 0.055,
+    "cur_kt": 0.34,
+    "convergence": 0.0,
     "weed": 0.519,
     "tags": [
      "current edge",
@@ -80,204 +80,6 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -80.1188,
-     25.3687
-    ]
-   },
-   "properties": {
-    "lat": 25.3687,
-    "lon": -80.1188,
-    "fish_score": 0.698,
-    "front": 0.933,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.334,
-    "depth_ft": null,
-    "cur_kt": 0.97,
-    "convergence": 1.0,
-    "weed": 0.487,
-    "tags": [
-     "convergence/accumulation",
-     "likely weed line",
-     "on structure"
-    ],
-    "near_structure": "Jet Fighters (reef)",
-    "near_structure_nm": 0.45,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "blackfin",
-      "label": "Blackfin tuna",
-      "score": 0.93
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.77
-     }
-    ],
-    "dist_home_nm": 38.7,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.1563,
-     25.2937
-    ]
-   },
-   "properties": {
-    "lat": 25.2937,
-    "lon": -80.1563,
-    "fish_score": 0.685,
-    "front": 0.83,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.318,
-    "depth_ft": null,
-    "cur_kt": 0.97,
-    "convergence": 1.0,
-    "weed": 0.519,
-    "tags": [
-     "convergence/accumulation",
-     "likely weed line",
-     "on structure"
-    ],
-    "near_structure": "Alva Chapman Reef (reef)",
-    "near_structure_nm": 0.25,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "blackfin",
-      "label": "Blackfin tuna",
-      "score": 0.93
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.77
-     }
-    ],
-    "dist_home_nm": 34.2,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.4938,
-     24.9187
-    ]
-   },
-   "properties": {
-    "lat": 24.9187,
-    "lon": -80.4938,
-    "fish_score": 0.664,
-    "front": 1.0,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.374,
-    "depth_ft": null,
-    "cur_kt": 0.47,
-    "convergence": 0.055,
-    "weed": 0.519,
-    "tags": [
-     "current edge",
-     "likely weed line"
-    ],
-    "near_structure": "Davis Reef (reef)",
-    "near_structure_nm": 0.87,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "blackfin",
-      "label": "Blackfin tuna",
-      "score": 0.93
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.77
-     }
-    ],
-    "dist_home_nm": 7.4,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.4688,
-     24.5437
-    ]
-   },
-   "properties": {
-    "lat": 24.5437,
-    "lon": -81.4688,
-    "fish_score": 0.658,
-    "front": 0.913,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.621,
-    "depth_ft": null,
-    "cur_kt": 0.74,
-    "convergence": 0.148,
-    "weed": 0.173,
-    "tags": [
-     "current edge",
-     "on structure"
-    ],
-    "near_structure": "American Shoal Reef #2 (reef)",
-    "near_structure_nm": 0.48,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.83
-     },
-     {
-      "species": "mahi",
-      "label": "Mahi (dolphin)",
-      "score": 0.64
-     }
-    ],
-    "dist_home_nm": 51.0,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
      -80.5688,
      24.8812
     ]
@@ -285,13 +87,13 @@
    "properties": {
     "lat": 24.8812,
     "lon": -80.5688,
-    "fish_score": 0.652,
+    "fish_score": 0.713,
     "front": 1.0,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 0.525,
+    "chl": 0.514,
     "depth_ft": null,
-    "cur_kt": 0.31,
+    "cur_kt": 0.56,
     "convergence": 0.0,
     "weed": 0.456,
     "tags": [
@@ -328,200 +130,6 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -80.4563,
-     24.9562
-    ]
-   },
-   "properties": {
-    "lat": 24.9562,
-    "lon": -80.4563,
-    "fish_score": 0.635,
-    "front": 1.0,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.691,
-    "depth_ft": null,
-    "cur_kt": 0.47,
-    "convergence": 0.055,
-    "weed": 0.677,
-    "tags": [
-     "current edge",
-     "likely weed line"
-    ],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "blackfin",
-      "label": "Blackfin tuna",
-      "score": 0.93
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.77
-     }
-    ],
-    "dist_home_nm": 9.7,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.1938,
-     25.2562
-    ]
-   },
-   "properties": {
-    "lat": 25.2562,
-    "lon": -80.1938,
-    "fish_score": 0.617,
-    "front": 1.0,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.476,
-    "depth_ft": null,
-    "cur_kt": 0.97,
-    "convergence": 1.0,
-    "weed": 0.487,
-    "tags": [
-     "convergence/accumulation",
-     "likely weed line"
-    ],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "blackfin",
-      "label": "Blackfin tuna",
-      "score": 0.65
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.55
-     }
-    ],
-    "dist_home_nm": 31.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.3063,
-     25.0687
-    ]
-   },
-   "properties": {
-    "lat": 25.0687,
-    "lon": -80.3063,
-    "fish_score": 0.613,
-    "front": 1.0,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.456,
-    "depth_ft": null,
-    "cur_kt": 0.72,
-    "convergence": 0.0,
-    "weed": 0.362,
-    "tags": [
-     "on structure"
-    ],
-    "near_structure": "Spiegel Grove (reef)",
-    "near_structure_nm": 0.28,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.83
-     },
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 0.83
-     }
-    ],
-    "dist_home_nm": 19.8,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.1188,
-     25.4812
-    ]
-   },
-   "properties": {
-    "lat": 25.4812,
-    "lon": -80.1188,
-    "fish_score": 0.598,
-    "front": 1.0,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.727,
-    "depth_ft": null,
-    "cur_kt": 0.97,
-    "convergence": 1.0,
-    "weed": 0.205,
-    "tags": [
-     "convergence/accumulation"
-    ],
-    "near_structure": "Turbine Stacks (reef)",
-    "near_structure_nm": 1.47,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "blackfin",
-      "label": "Blackfin tuna",
-      "score": 0.85
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.71
-     }
-    ],
-    "dist_home_nm": 43.7,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
      -80.6063,
      24.8438
     ]
@@ -529,13 +137,13 @@
    "properties": {
     "lat": 24.8438,
     "lon": -80.6063,
-    "fish_score": 0.595,
+    "fish_score": 0.656,
     "front": 1.0,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 0.384,
+    "chl": 0.446,
     "depth_ft": null,
-    "cur_kt": 0.31,
+    "cur_kt": 0.56,
     "convergence": 0.0,
     "weed": 0.566,
     "tags": [
@@ -571,75 +179,27 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -80.2313,
-     25.1812
+     -80.5313,
+     24.9187
     ]
    },
    "properties": {
-    "lat": 25.1812,
-    "lon": -80.2313,
-    "fish_score": 0.589,
+    "lat": 24.9187,
+    "lon": -80.5313,
+    "fish_score": 0.652,
     "front": 1.0,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 0.586,
+    "chl": 1.118,
     "depth_ft": null,
-    "cur_kt": 0.79,
-    "convergence": 0.117,
-    "weed": 0.535,
-    "tags": [
-     "likely weed line"
-    ],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "blackfin",
-      "label": "Blackfin tuna",
-      "score": 0.85
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.71
-     }
-    ],
-    "dist_home_nm": 26.8,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.3938,
-     24.5812
-    ]
-   },
-   "properties": {
-    "lat": 24.5812,
-    "lon": -81.3938,
-    "fish_score": 0.579,
-    "front": 1.0,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.804,
-    "depth_ft": null,
-    "cur_kt": 0.74,
-    "convergence": 0.148,
-    "weed": 0.016,
+    "cur_kt": 0.56,
+    "convergence": 0.0,
+    "weed": 0.393,
     "tags": [
      "current edge"
     ],
-    "near_structure": null,
-    "near_structure_nm": null,
+    "near_structure": "Davis Reef (reef)",
+    "near_structure_nm": 1.25,
     "spawn_score": 0.0,
     "species": "blackfin",
     "species_label": "Blackfin tuna",
@@ -657,7 +217,7 @@
       "score": 0.83
      }
     ],
-    "dist_home_nm": 46.3,
+    "dist_home_nm": 5.4,
     "flags": [],
     "protected": false
    }
@@ -674,16 +234,17 @@
    "properties": {
     "lat": 24.7312,
     "lon": -80.8313,
-    "fish_score": 0.579,
-    "front": 0.877,
+    "fish_score": 0.642,
+    "front": 0.815,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 0.545,
+    "chl": 0.539,
     "depth_ft": null,
-    "cur_kt": 0.18,
-    "convergence": 0.042,
+    "cur_kt": 1.11,
+    "convergence": 0.0,
     "weed": 0.157,
     "tags": [
+     "current edge",
      "on structure"
     ],
     "near_structure": "Long Key Reef (reef)",
@@ -700,60 +261,12 @@
       "score": 0.83
      },
      {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 0.83
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.64
      }
     ],
     "dist_home_nm": 15.8,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.3188,
-     24.6187
-    ]
-   },
-   "properties": {
-    "lat": 24.6187,
-    "lon": -81.3188,
-    "fish_score": 0.578,
-    "front": 1.0,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.956,
-    "depth_ft": null,
-    "cur_kt": 0.74,
-    "convergence": 0.148,
-    "weed": 0.0,
-    "tags": [
-     "current edge"
-    ],
-    "near_structure": "Bahia Honda  Reef (reef)",
-    "near_structure_nm": 2.06,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mahi",
-      "label": "Mahi (dolphin)",
-      "score": 0.83
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.83
-     }
-    ],
-    "dist_home_nm": 41.7,
     "flags": [],
     "protected": false
    }
@@ -770,13 +283,13 @@
    "properties": {
     "lat": 24.8062,
     "lon": -80.6813,
-    "fish_score": 0.577,
+    "fish_score": 0.638,
     "front": 1.0,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 0.483,
+    "chl": 0.491,
     "depth_ft": null,
-    "cur_kt": 0.31,
+    "cur_kt": 0.56,
     "convergence": 0.0,
     "weed": 0.346,
     "tags": [
@@ -811,22 +324,120 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.2813,
-     24.6562
+     -80.2313,
+     25.1812
     ]
    },
    "properties": {
-    "lat": 24.6562,
-    "lon": -81.2813,
-    "fish_score": 0.574,
-    "front": 0.992,
+    "lat": 25.1812,
+    "lon": -80.2313,
+    "fish_score": 0.624,
+    "front": 1.0,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 2.013,
+    "chl": 0.455,
     "depth_ft": null,
-    "cur_kt": 0.74,
-    "convergence": 0.148,
-    "weed": 0.0,
+    "cur_kt": 0.71,
+    "convergence": 0.208,
+    "weed": 0.535,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.93
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.77
+     }
+    ],
+    "dist_home_nm": 26.8,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.1938,
+     25.2188
+    ]
+   },
+   "properties": {
+    "lat": 25.2188,
+    "lon": -80.1938,
+    "fish_score": 0.623,
+    "front": 1.0,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 0.253,
+    "depth_ft": null,
+    "cur_kt": 0.71,
+    "convergence": 0.208,
+    "weed": 0.519,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.93
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.77
+     }
+    ],
+    "dist_home_nm": 29.7,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.3813,
+     24.5062
+    ]
+   },
+   "properties": {
+    "lat": 24.5062,
+    "lon": -80.3813,
+    "fish_score": 0.619,
+    "front": 1.0,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 0.129,
+    "depth_ft": null,
+    "cur_kt": 0.97,
+    "convergence": 0.026,
+    "weed": 0.378,
     "tags": [
      "current edge"
     ],
@@ -849,7 +460,7 @@
       "score": 0.83
      }
     ],
-    "dist_home_nm": 38.9,
+    "dist_home_nm": 28.3,
     "flags": [],
     "protected": false
    }
@@ -859,121 +470,72 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.3188,
-     24.5437
+     -80.3063,
+     25.0687
     ]
    },
    "properties": {
-    "lat": 24.5437,
-    "lon": -81.3188,
-    "fish_score": 0.564,
-    "front": 0.599,
+    "lat": 25.0687,
+    "lon": -80.3063,
+    "fish_score": 0.613,
+    "front": 1.0,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 0.211,
+    "chl": 0.491,
     "depth_ft": null,
-    "cur_kt": 0.74,
-    "convergence": 0.148,
-    "weed": 0.378,
+    "cur_kt": 0.14,
+    "convergence": 0.0,
+    "weed": 0.362,
+    "tags": [
+     "on structure"
+    ],
+    "near_structure": "Spiegel Grove (reef)",
+    "near_structure_nm": 0.28,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     },
+     {
+      "species": "mutton",
+      "label": "Mutton snapper",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 19.8,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.4563,
+     24.9562
+    ]
+   },
+   "properties": {
+    "lat": 24.9562,
+    "lon": -80.4563,
+    "fish_score": 0.611,
+    "front": 1.0,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 1.386,
+    "depth_ft": null,
+    "cur_kt": 0.34,
+    "convergence": 0.0,
+    "weed": 0.677,
     "tags": [
      "current edge",
-     "on structure"
-    ],
-    "near_structure": "Big Pine Reef (reef)",
-    "near_structure_nm": 0.29,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.83
-     },
-     {
-      "species": "mahi",
-      "label": "Mahi (dolphin)",
-      "score": 0.64
-     }
-    ],
-    "dist_home_nm": 43.8,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.0813,
-     25.5562
-    ]
-   },
-   "properties": {
-    "lat": 25.5562,
-    "lon": -80.0813,
-    "fish_score": 0.545,
-    "front": 0.818,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.311,
-    "depth_ft": null,
-    "cur_kt": 0.95,
-    "convergence": 0.233,
-    "weed": 0.409,
-    "tags": [
-     "likely weed line",
-     "on structure"
-    ],
-    "near_structure": "Railroad Barge (reef)",
-    "near_structure_nm": 0.42,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mahi",
-      "label": "Mahi (dolphin)",
-      "score": 0.83
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.83
-     }
-    ],
-    "dist_home_nm": 48.5,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.5438,
-     24.6187
-    ]
-   },
-   "properties": {
-    "lat": 24.6187,
-    "lon": -81.5438,
-    "fish_score": 0.539,
-    "front": 0.856,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 3.769,
-    "depth_ft": null,
-    "cur_kt": 0.73,
-    "convergence": 0.0,
-    "weed": 1.0,
-    "tags": [
      "likely weed line"
     ],
     "near_structure": null,
@@ -987,15 +549,15 @@
      {
       "species": "blackfin",
       "label": "Blackfin tuna",
-      "score": 0.85
+      "score": 0.93
      },
      {
       "species": "wahoo",
       "label": "Wahoo",
-      "score": 0.71
+      "score": 0.77
      }
     ],
-    "dist_home_nm": 53.0,
+    "dist_home_nm": 9.7,
     "flags": [],
     "protected": false
    }
@@ -1012,16 +574,18 @@
    "properties": {
     "lat": 24.7687,
     "lon": -80.7563,
-    "fish_score": 0.537,
-    "front": 0.991,
+    "fish_score": 0.603,
+    "front": 1.0,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 0.674,
+    "chl": 0.685,
     "depth_ft": null,
-    "cur_kt": 0.72,
-    "convergence": 0.0,
+    "cur_kt": 1.59,
+    "convergence": 0.099,
     "weed": 0.205,
-    "tags": [],
+    "tags": [
+     "current edge"
+    ],
     "near_structure": null,
     "near_structure_nm": null,
     "spawn_score": 0.0,
@@ -1051,242 +615,6 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -80.3438,
-     25.1812
-    ]
-   },
-   "properties": {
-    "lat": 25.1812,
-    "lon": -80.3438,
-    "fish_score": 0.526,
-    "front": 0.999,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 3.867,
-    "depth_ft": null,
-    "cur_kt": 0.72,
-    "convergence": 0.0,
-    "weed": 1.0,
-    "tags": [
-     "likely weed line"
-    ],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "blackfin",
-      "label": "Blackfin tuna",
-      "score": 0.85
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.71
-     }
-    ],
-    "dist_home_nm": 22.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.9188,
-     24.5062
-    ]
-   },
-   "properties": {
-    "lat": 24.5062,
-    "lon": -81.9188,
-    "fish_score": 0.525,
-    "front": 0.964,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 1.418,
-    "depth_ft": null,
-    "cur_kt": 0.23,
-    "convergence": 0.0,
-    "weed": 0.0,
-    "tags": [
-     "current edge"
-    ],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mahi",
-      "label": "Mahi (dolphin)",
-      "score": 0.83
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.83
-     }
-    ],
-    "dist_home_nm": 74.6,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.5813,
-     24.5812
-    ]
-   },
-   "properties": {
-    "lat": 24.5812,
-    "lon": -81.5813,
-    "fish_score": 0.524,
-    "front": 1.0,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 1.971,
-    "depth_ft": null,
-    "cur_kt": 0.73,
-    "convergence": 0.0,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mahi",
-      "label": "Mahi (dolphin)",
-      "score": 0.83
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.83
-     }
-    ],
-    "dist_home_nm": 55.7,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.6938,
-     24.5437
-    ]
-   },
-   "properties": {
-    "lat": 24.5437,
-    "lon": -81.6938,
-    "fish_score": 0.524,
-    "front": 1.0,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 1.699,
-    "depth_ft": null,
-    "cur_kt": 0.73,
-    "convergence": 0.0,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mahi",
-      "label": "Mahi (dolphin)",
-      "score": 0.83
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.83
-     }
-    ],
-    "dist_home_nm": 62.3,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.1938,
-     25.3313
-    ]
-   },
-   "properties": {
-    "lat": 25.3313,
-    "lon": -80.1938,
-    "fish_score": 0.52,
-    "front": 0.869,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 1.73,
-    "depth_ft": null,
-    "cur_kt": 0.97,
-    "convergence": 1.0,
-    "weed": 0.0,
-    "tags": [
-     "convergence/accumulation"
-    ],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "blackfin",
-      "label": "Blackfin tuna",
-      "score": 0.85
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.71
-     }
-    ],
-    "dist_home_nm": 34.2,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
      -81.0563,
      24.6562
     ]
@@ -1294,16 +622,18 @@
    "properties": {
     "lat": 24.6562,
     "lon": -81.0563,
-    "fish_score": 0.515,
-    "front": 0.964,
+    "fish_score": 0.591,
+    "front": 0.916,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 0.663,
+    "chl": 0.617,
     "depth_ft": null,
-    "cur_kt": 0.3,
+    "cur_kt": 0.77,
     "convergence": 0.0,
     "weed": 0.0,
-    "tags": [],
+    "tags": [
+     "current edge"
+    ],
     "near_structure": null,
     "near_structure_nm": null,
     "spawn_score": 0.0,
@@ -1333,71 +663,25 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -80.1563,
-     25.4437
+     -81.0938,
+     24.8438
     ]
    },
    "properties": {
-    "lat": 25.4437,
-    "lon": -80.1563,
-    "fish_score": 0.511,
-    "front": 0.847,
+    "lat": 24.8438,
+    "lon": -81.0938,
+    "fish_score": 0.59,
+    "front": 0.891,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 1.518,
+    "chl": 7.877,
     "depth_ft": null,
-    "cur_kt": 0.97,
-    "convergence": 1.0,
-    "weed": 0.0,
+    "cur_kt": 1.41,
+    "convergence": 0.023,
+    "weed": 0.047,
     "tags": [
-     "convergence/accumulation"
+     "current edge"
     ],
-    "near_structure": "Almirante (reef)",
-    "near_structure_nm": 2.66,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "blackfin",
-      "label": "Blackfin tuna",
-      "score": 0.85
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.71
-     }
-    ],
-    "dist_home_nm": 40.6,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.0188,
-     25.1062
-    ]
-   },
-   "properties": {
-    "lat": 25.1062,
-    "lon": -81.0188,
-    "fish_score": 0.51,
-    "front": 1.0,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 2.816,
-    "depth_ft": null,
-    "cur_kt": 0.93,
-    "convergence": 0.02,
-    "weed": 0.0,
-    "tags": [],
     "near_structure": null,
     "near_structure_nm": null,
     "spawn_score": 0.0,
@@ -1417,7 +701,7 @@
       "score": 0.83
      }
     ],
-    "dist_home_nm": 23.9,
+    "dist_home_nm": 25.7,
     "flags": [],
     "protected": false
    }
@@ -1427,25 +711,75 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.1313,
+     -81.4688,
+     24.5437
+    ]
+   },
+   "properties": {
+    "lat": 24.5437,
+    "lon": -81.4688,
+    "fish_score": 0.576,
+    "front": 0.854,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 0.605,
+    "depth_ft": null,
+    "cur_kt": 0.27,
+    "convergence": 0.126,
+    "weed": 0.173,
+    "tags": [
+     "on structure"
+    ],
+    "near_structure": "American Shoal Reef #2 (reef)",
+    "near_structure_nm": 0.48,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     },
+     {
+      "species": "mutton",
+      "label": "Mutton snapper",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 51.0,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.0938,
      24.6187
     ]
    },
    "properties": {
     "lat": 24.6187,
-    "lon": -81.1313,
-    "fish_score": 0.508,
-    "front": 0.92,
+    "lon": -81.0938,
+    "fish_score": 0.567,
+    "front": 0.817,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 0.406,
+    "chl": 0.317,
     "depth_ft": null,
-    "cur_kt": 0.3,
+    "cur_kt": 0.77,
     "convergence": 0.0,
-    "weed": 0.157,
-    "tags": [],
-    "near_structure": "Seven Mile Bridge Reef (reef)",
-    "near_structure_nm": 2.09,
+    "weed": 0.252,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
     "spawn_score": 0.0,
     "species": "blackfin",
     "species_label": "Blackfin tuna",
@@ -1463,7 +797,151 @@
       "score": 0.83
      }
     ],
-    "dist_home_nm": 32.8,
+    "dist_home_nm": 31.1,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.2438,
+     24.6562
+    ]
+   },
+   "properties": {
+    "lat": 24.6562,
+    "lon": -81.2438,
+    "fish_score": 0.558,
+    "front": 0.84,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 1.172,
+    "depth_ft": null,
+    "cur_kt": 0.77,
+    "convergence": 0.0,
+    "weed": 0.0,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 37.0,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.1313,
+     24.6562
+    ]
+   },
+   "properties": {
+    "lat": 24.6562,
+    "lon": -81.1313,
+    "fish_score": 0.543,
+    "front": 0.808,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 0.926,
+    "depth_ft": null,
+    "cur_kt": 0.77,
+    "convergence": 0.0,
+    "weed": 0.0,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 31.6,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.1688,
+     24.6187
+    ]
+   },
+   "properties": {
+    "lat": 24.6187,
+    "lon": -81.1688,
+    "fish_score": 0.542,
+    "front": 0.685,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 0.419,
+    "depth_ft": null,
+    "cur_kt": 0.77,
+    "convergence": 0.0,
+    "weed": 0.047,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Seven Mile Bridge Reef (reef)",
+    "near_structure_nm": 0.8,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 34.5,
     "flags": [],
     "protected": false
    }
@@ -1480,14 +958,14 @@
    "properties": {
     "lat": 24.5437,
     "lon": -82.1438,
-    "fish_score": 0.5,
-    "front": 0.855,
+    "fish_score": 0.534,
+    "front": 0.898,
     "structure": 0.0,
     "sst_f": null,
     "chl": 2.113,
     "depth_ft": null,
-    "cur_kt": 0.31,
-    "convergence": 0.064,
+    "cur_kt": 0.22,
+    "convergence": 0.115,
     "weed": 1.0,
     "tags": [
      "likely weed line"
@@ -1521,21 +999,21 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.4313,
-     24.6187
+     -81.0188,
+     24.6937
     ]
    },
    "properties": {
-    "lat": 24.6187,
-    "lon": -81.4313,
-    "fish_score": 0.498,
-    "front": 0.821,
+    "lat": 24.6937,
+    "lon": -81.0188,
+    "fish_score": 0.533,
+    "front": 0.785,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 2.909,
+    "chl": 0.911,
     "depth_ft": null,
-    "cur_kt": 0.74,
-    "convergence": 0.148,
+    "cur_kt": 0.77,
+    "convergence": 0.0,
     "weed": 0.0,
     "tags": [
      "current edge"
@@ -1559,7 +1037,526 @@
       "score": 0.83
      }
     ],
-    "dist_home_nm": 47.3,
+    "dist_home_nm": 25.2,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.3563,
+     24.6187
+    ]
+   },
+   "properties": {
+    "lat": 24.6187,
+    "lon": -81.3563,
+    "fish_score": 0.522,
+    "front": 1.0,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 1.433,
+    "depth_ft": null,
+    "cur_kt": 0.27,
+    "convergence": 0.126,
+    "weed": 0.0,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 43.5,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.3188,
+     24.6562
+    ]
+   },
+   "properties": {
+    "lat": 24.6562,
+    "lon": -81.3188,
+    "fish_score": 0.522,
+    "front": 1.0,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 4.855,
+    "depth_ft": null,
+    "cur_kt": 0.27,
+    "convergence": 0.126,
+    "weed": 0.0,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 40.7,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.5313,
+     24.5812
+    ]
+   },
+   "properties": {
+    "lat": 24.5812,
+    "lon": -80.5313,
+    "fish_score": 0.52,
+    "front": 0.873,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 0.078,
+    "depth_ft": null,
+    "cur_kt": 1.07,
+    "convergence": 0.101,
+    "weed": 0.378,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 21.0,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.3188,
+     24.5437
+    ]
+   },
+   "properties": {
+    "lat": 24.5437,
+    "lon": -81.3188,
+    "fish_score": 0.504,
+    "front": 0.588,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 0.212,
+    "depth_ft": null,
+    "cur_kt": 0.27,
+    "convergence": 0.126,
+    "weed": 0.378,
+    "tags": [
+     "on structure"
+    ],
+    "near_structure": "Big Pine Reef (reef)",
+    "near_structure_nm": 0.29,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     },
+     {
+      "species": "mutton",
+      "label": "Mutton snapper",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 43.8,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.8688,
+     24.6937
+    ]
+   },
+   "properties": {
+    "lat": 24.6937,
+    "lon": -80.8688,
+    "fish_score": 0.503,
+    "front": 0.777,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 0.299,
+    "depth_ft": null,
+    "cur_kt": 1.11,
+    "convergence": 0.0,
+    "weed": 0.614,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": "Long Key Reef #1 (reef)",
+    "near_structure_nm": 2.94,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.93
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.77
+     }
+    ],
+    "dist_home_nm": 18.8,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.9813,
+     24.6562
+    ]
+   },
+   "properties": {
+    "lat": 24.6562,
+    "lon": -80.9813,
+    "fish_score": 0.503,
+    "front": 0.772,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 0.307,
+    "depth_ft": null,
+    "cur_kt": 1.11,
+    "convergence": 0.0,
+    "weed": 0.142,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": "Thunderbolt (reef)",
+    "near_structure_nm": 0.89,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 24.8,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.0563,
+     24.8062
+    ]
+   },
+   "properties": {
+    "lat": 24.8062,
+    "lon": -81.0563,
+    "fish_score": 0.501,
+    "front": 0.701,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 2.3,
+    "depth_ft": null,
+    "cur_kt": 1.41,
+    "convergence": 0.023,
+    "weed": 0.0,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 24.2,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.1688,
+     25.3313
+    ]
+   },
+   "properties": {
+    "lat": 25.3313,
+    "lon": -81.1688,
+    "fish_score": 0.495,
+    "front": 0.812,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 7.311,
+    "depth_ft": null,
+    "cur_kt": 0.6,
+    "convergence": 1.0,
+    "weed": 0.0,
+    "tags": [
+     "convergence/accumulation"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.85
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.71
+     }
+    ],
+    "dist_home_nm": 38.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.5438,
+     24.6187
+    ]
+   },
+   "properties": {
+    "lat": 24.6187,
+    "lon": -81.5438,
+    "fish_score": 0.494,
+    "front": 0.862,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 3.829,
+    "depth_ft": null,
+    "cur_kt": 0.33,
+    "convergence": 0.037,
+    "weed": 1.0,
+    "tags": [
+     "likely weed line"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.85
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.71
+     }
+    ],
+    "dist_home_nm": 53.0,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.3938,
+     24.5812
+    ]
+   },
+   "properties": {
+    "lat": 24.5812,
+    "lon": -81.3938,
+    "fish_score": 0.491,
+    "front": 0.927,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 0.75,
+    "depth_ft": null,
+    "cur_kt": 0.27,
+    "convergence": 0.126,
+    "weed": 0.016,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 46.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.5688,
+     24.5437
+    ]
+   },
+   "properties": {
+    "lat": 24.5437,
+    "lon": -80.5688,
+    "fish_score": 0.48,
+    "front": 0.789,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 0.106,
+    "depth_ft": null,
+    "cur_kt": 1.07,
+    "convergence": 0.101,
+    "weed": 0.346,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 22.8,
     "flags": [],
     "protected": false
    }
@@ -1576,13 +1573,13 @@
    "properties": {
     "lat": 25.1062,
     "lon": -80.2688,
-    "fish_score": 0.492,
-    "front": 1.0,
+    "fish_score": 0.478,
+    "front": 0.969,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 0.271,
+    "chl": 0.23,
     "depth_ft": null,
-    "cur_kt": 0.72,
+    "cur_kt": 0.14,
     "convergence": 0.0,
     "weed": 0.566,
     "tags": [
@@ -1617,21 +1614,256 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.7688,
+     -81.6938,
      24.5437
     ]
    },
    "properties": {
     "lat": 24.5437,
-    "lon": -81.7688,
-    "fish_score": 0.478,
-    "front": 0.859,
+    "lon": -81.6938,
+    "fish_score": 0.477,
+    "front": 1.0,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 2.234,
+    "chl": 1.702,
     "depth_ft": null,
-    "cur_kt": 0.23,
+    "cur_kt": 0.33,
+    "convergence": 0.037,
+    "weed": 0.0,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 62.3,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.5813,
+     24.5812
+    ]
+   },
+   "properties": {
+    "lat": 24.5812,
+    "lon": -81.5813,
+    "fish_score": 0.477,
+    "front": 1.0,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 2.04,
+    "depth_ft": null,
+    "cur_kt": 0.33,
+    "convergence": 0.037,
+    "weed": 0.0,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 55.7,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.0188,
+     24.6187
+    ]
+   },
+   "properties": {
+    "lat": 24.6187,
+    "lon": -81.0188,
+    "fish_score": 0.47,
+    "front": 0.578,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 0.194,
+    "depth_ft": null,
+    "cur_kt": 0.77,
     "convergence": 0.0,
+    "weed": 0.378,
+    "tags": [
+     "current edge"
+    ],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 27.9,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.2063,
+     24.5812
+    ]
+   },
+   "properties": {
+    "lat": 24.5812,
+    "lon": -81.2063,
+    "fish_score": 0.467,
+    "front": 0.557,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 0.249,
+    "depth_ft": null,
+    "cur_kt": 0.77,
+    "convergence": 0.0,
+    "weed": 0.456,
+    "tags": [
+     "current edge",
+     "likely weed line"
+    ],
+    "near_structure": "Seven Mile Bridge Reef (reef)",
+    "near_structure_nm": 2.54,
+    "spawn_score": 0.0,
+    "species": "mahi",
+    "species_label": "Mahi (dolphin)",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "blackfin",
+      "label": "Blackfin tuna",
+      "score": 0.93
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.77
+     }
+    ],
+    "dist_home_nm": 37.4,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.9188,
+     24.5062
+    ]
+   },
+   "properties": {
+    "lat": 24.5062,
+    "lon": -81.9188,
+    "fish_score": 0.463,
+    "front": 0.988,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 1.67,
+    "depth_ft": null,
+    "cur_kt": 0.15,
+    "convergence": 0.0,
+    "weed": 0.0,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "mahi",
+      "label": "Mahi (dolphin)",
+      "score": 0.83
+     },
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 0.83
+     }
+    ],
+    "dist_home_nm": 74.6,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.0188,
+     24.8438
+    ]
+   },
+   "properties": {
+    "lat": 24.8438,
+    "lon": -81.0188,
+    "fish_score": 0.461,
+    "front": 0.611,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 4.099,
+    "depth_ft": null,
+    "cur_kt": 1.41,
+    "convergence": 0.023,
     "weed": 0.0,
     "tags": [
      "current edge"
@@ -1655,55 +1887,7 @@
       "score": 0.83
      }
     ],
-    "dist_home_nm": 66.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.2813,
-     24.5812
-    ]
-   },
-   "properties": {
-    "lat": 24.5812,
-    "lon": -81.2813,
-    "fish_score": 0.464,
-    "front": 0.681,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.367,
-    "depth_ft": null,
-    "cur_kt": 0.74,
-    "convergence": 0.148,
-    "weed": 0.016,
-    "tags": [
-     "current edge"
-    ],
-    "near_structure": "Bahia Honda  Reef (reef)",
-    "near_structure_nm": 0.99,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mahi",
-      "label": "Mahi (dolphin)",
-      "score": 0.83
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.83
-     }
-    ],
-    "dist_home_nm": 40.9,
+    "dist_home_nm": 21.7,
     "flags": [],
     "protected": false
    }
@@ -1724,9 +1908,9 @@
     "front": 1.0,
     "structure": 0.0,
     "sst_f": null,
-    "chl": 0.691,
+    "chl": 1.151,
     "depth_ft": null,
-    "cur_kt": 0.72,
+    "cur_kt": 0.14,
     "convergence": 0.0,
     "weed": 0.157,
     "tags": [],
@@ -1750,197 +1934,6 @@
      }
     ],
     "dist_home_nm": 17.0,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -80.0813,
-     25.4437
-    ]
-   },
-   "properties": {
-    "lat": 25.4437,
-    "lon": -80.0813,
-    "fish_score": 0.456,
-    "front": 0.623,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.236,
-    "depth_ft": null,
-    "cur_kt": 0.97,
-    "convergence": 1.0,
-    "weed": 0.582,
-    "tags": [
-     "convergence/accumulation",
-     "likely weed line"
-    ],
-    "near_structure": "Turbine Stacks (reef)",
-    "near_structure_nm": 2.52,
-    "spawn_score": 0.0,
-    "species": "mahi",
-    "species_label": "Mahi (dolphin)",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "blackfin",
-      "label": "Blackfin tuna",
-      "score": 0.65
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.55
-     }
-    ],
-    "dist_home_nm": 43.3,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.3563,
-     24.6562
-    ]
-   },
-   "properties": {
-    "lat": 24.6562,
-    "lon": -81.3563,
-    "fish_score": 0.456,
-    "front": 0.727,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 9.971,
-    "depth_ft": null,
-    "cur_kt": 0.74,
-    "convergence": 0.148,
-    "weed": 0.0,
-    "tags": [
-     "current edge"
-    ],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mahi",
-      "label": "Mahi (dolphin)",
-      "score": 0.83
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.83
-     }
-    ],
-    "dist_home_nm": 42.6,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.1688,
-     24.5812
-    ]
-   },
-   "properties": {
-    "lat": 24.5812,
-    "lon": -81.1688,
-    "fish_score": 0.453,
-    "front": 0.539,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.209,
-    "depth_ft": null,
-    "cur_kt": 0.3,
-    "convergence": 0.0,
-    "weed": 0.33,
-    "tags": [
-     "on structure"
-    ],
-    "near_structure": "Seven Mile Bridge Reef (reef)",
-    "near_structure_nm": 0.5,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.83
-     },
-     {
-      "species": "mutton",
-      "label": "Mutton snapper",
-      "score": 0.83
-     }
-    ],
-    "dist_home_nm": 35.7,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     -81.6563,
-     24.5062
-    ]
-   },
-   "properties": {
-    "lat": 24.5062,
-    "lon": -81.6563,
-    "fish_score": 0.452,
-    "front": 0.839,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 0.694,
-    "depth_ft": null,
-    "cur_kt": 0.73,
-    "convergence": 0.0,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "mahi",
-      "label": "Mahi (dolphin)",
-      "score": 0.83
-     },
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 0.83
-     }
-    ],
-    "dist_home_nm": 61.2,
     "flags": [],
     "protected": false
    }
