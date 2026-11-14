@@ -1,7 +1,7 @@
 {
  "type": "FeatureCollection",
  "meta": {
-  "generated_at": "2026-11-14T16:20:45Z",
+  "generated_at": "2026-11-14T20:32:05Z",
   "sst": {
    "source": "unavailable this run",
    "dataset": null,
@@ -1465,52 +1465,6 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -81.6938,
-     24.5437
-    ]
-   },
-   "properties": {
-    "lat": 24.5437,
-    "lon": -81.6938,
-    "fish_score": 0.472,
-    "front": 1.0,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 1.104,
-    "depth_ft": null,
-    "cur_kt": 0.42,
-    "convergence": 0.042,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 1.0
-     },
-     {
-      "species": "grouper",
-      "label": "Black / gag grouper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 62.3,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
      -81.5813,
      24.5812
     ]
@@ -1548,6 +1502,52 @@
      }
     ],
     "dist_home_nm": 55.7,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -81.6938,
+     24.5437
+    ]
+   },
+   "properties": {
+    "lat": 24.5437,
+    "lon": -81.6938,
+    "fish_score": 0.472,
+    "front": 1.0,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 1.104,
+    "depth_ft": null,
+    "cur_kt": 0.42,
+    "convergence": 0.042,
+    "weed": 0.0,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 1.0
+     },
+     {
+      "species": "grouper",
+      "label": "Black / gag grouper",
+      "score": 1.0
+     }
+    ],
+    "dist_home_nm": 62.3,
     "flags": [],
     "protected": false
    }
@@ -1835,52 +1835,6 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -80.3438,
-     25.1812
-    ]
-   },
-   "properties": {
-    "lat": 25.1812,
-    "lon": -80.3438,
-    "fish_score": 0.447,
-    "front": 1.0,
-    "structure": 0.0,
-    "sst_f": null,
-    "chl": 3.445,
-    "depth_ft": null,
-    "cur_kt": 1.39,
-    "convergence": 0.0,
-    "weed": 0.0,
-    "tags": [],
-    "near_structure": null,
-    "near_structure_nm": null,
-    "spawn_score": 0.0,
-    "species": "blackfin",
-    "species_label": "Blackfin tuna",
-    "mode": "troll",
-    "spawning": false,
-    "also": [
-     {
-      "species": "wahoo",
-      "label": "Wahoo",
-      "score": 1.0
-     },
-     {
-      "species": "grouper",
-      "label": "Black / gag grouper",
-      "score": 1.0
-     }
-    ],
-    "dist_home_nm": 22.1,
-    "flags": [],
-    "protected": false
-   }
-  },
-  {
-   "type": "Feature",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
      -80.3813,
      25.1438
     ]
@@ -1918,6 +1872,52 @@
      }
     ],
     "dist_home_nm": 19.1,
+    "flags": [],
+    "protected": false
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -80.3438,
+     25.1812
+    ]
+   },
+   "properties": {
+    "lat": 25.1812,
+    "lon": -80.3438,
+    "fish_score": 0.447,
+    "front": 1.0,
+    "structure": 0.0,
+    "sst_f": null,
+    "chl": 3.445,
+    "depth_ft": null,
+    "cur_kt": 1.39,
+    "convergence": 0.0,
+    "weed": 0.0,
+    "tags": [],
+    "near_structure": null,
+    "near_structure_nm": null,
+    "spawn_score": 0.0,
+    "species": "blackfin",
+    "species_label": "Blackfin tuna",
+    "mode": "troll",
+    "spawning": false,
+    "also": [
+     {
+      "species": "wahoo",
+      "label": "Wahoo",
+      "score": 1.0
+     },
+     {
+      "species": "grouper",
+      "label": "Black / gag grouper",
+      "score": 1.0
+     }
+    ],
+    "dist_home_nm": 22.1,
     "flags": [],
     "protected": false
    }
