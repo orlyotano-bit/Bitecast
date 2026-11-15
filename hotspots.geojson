@@ -1,15 +1,15 @@
 {
  "type": "FeatureCollection",
  "meta": {
-  "generated_at": "2026-11-15T16:50:35Z",
+  "generated_at": "2026-11-15T20:53:34Z",
   "sst": {
    "source": "MUR 1 km (gap-free analysis)",
    "dataset": "jplMURSST41",
    "image_date": "2026-11-14"
   },
   "chl": {
-   "source": "VIIRS NOAA-20 4 km, 7-day composite (mirror)",
-   "dataset": "nesdisVHNnoaa20chlaDaily",
+   "source": "VIIRS NOAA-20 4 km, 7-day composite",
+   "dataset": "noaacwN20VIIRSchlaDaily",
    "image_date": "2026-11-13",
    "composite_days": 7
   },
